@@ -85,18 +85,18 @@ export default function PricePage() {
         </p>
 
         {/* Discount Banner */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-6 mb-12">
+        <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 backdrop-blur-xl rounded-2xl p-6 mb-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
               <h2 className="text-2xl font-bold">🎁 Скидки постоянным клиентам</h2>
-              <p className="text-blue-100 mt-2">
+              <p className="text-amber-100 mt-2">
                 От 5 до 20% в зависимости от количества заказов
               </p>
             </div>
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition whitespace-nowrap"
+              className="btn-secondary whitespace-nowrap"
             >
               Узнать свою скидку
             </a>
@@ -106,8 +106,8 @@ export default function PricePage() {
         {/* Price Tables */}
         <div className="grid md:grid-cols-2 gap-8">
           {Object.entries(priceList).map(([key, category]) => (
-            <div key={key} className="bg-gray-800 rounded-2xl overflow-hidden">
-              <div className="bg-gray-700 px-6 py-4">
+            <div key={key} className="card overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500/10 to-transparent border-b border-white/5 px-6 py-4">
                 <h2 className="text-xl font-bold">{category.title}</h2>
               </div>
               <div className="p-6">
@@ -119,7 +119,7 @@ export default function PricePage() {
                         className="border-b border-gray-700 last:border-0"
                       >
                         <td className="py-3">{item.name}</td>
-                        <td className="py-3 text-right font-semibold text-blue-400">
+                        <td className="py-3 text-right font-semibold text-amber-400">
                           {item.price}
                         </td>
                       </tr>
@@ -132,7 +132,7 @@ export default function PricePage() {
         </div>
 
         {/* Note */}
-        <div className="mt-12 bg-gray-800 rounded-2xl p-8">
+        <div className="mt-12 card">
           <h3 className="text-xl font-bold mb-4">📌 Важная информация</h3>
           <ul className="space-y-2 text-gray-300">
             <li>• Цены указаны за работу с одним файлом прошивки</li>
@@ -152,7 +152,7 @@ export default function PricePage() {
           <a
             href="https://t.me/MotorSoftBot"
             target="_blank"
-            className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-semibold text-lg transition inline-flex items-center gap-2"
+            className="btn-gradient inline-flex items-center gap-2 text-lg"
           >
             🤖 Заказать в Telegram
           </a>

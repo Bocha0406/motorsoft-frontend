@@ -33,7 +33,7 @@ export default function ContactsPage() {
               <a
                 href="https://t.me/MotorSoftBot"
                 target="_blank"
-                className="flex items-center gap-4 bg-gray-800 hover:bg-gray-700 rounded-xl p-6 transition group"
+                className="card flex items-center gap-4 group"
               >
                 <div className="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center text-2xl">
                   🤖
@@ -49,7 +49,7 @@ export default function ContactsPage() {
               {/* Phone */}
               <a
                 href="tel:+79000000000"
-                className="flex items-center gap-4 bg-gray-800 hover:bg-gray-700 rounded-xl p-6 transition group"
+                className="card flex items-center gap-4 group"
               >
                 <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-2xl">
                   📞
@@ -65,7 +65,7 @@ export default function ContactsPage() {
               {/* Email */}
               <a
                 href="mailto:info@motorsoft.pro"
-                className="flex items-center gap-4 bg-gray-800 hover:bg-gray-700 rounded-xl p-6 transition group"
+                className="card flex items-center gap-4 group"
               >
                 <div className="w-14 h-14 bg-red-500 rounded-full flex items-center justify-center text-2xl">
                   ✉️
@@ -82,7 +82,7 @@ export default function ContactsPage() {
               <a
                 href="https://wa.me/79000000000"
                 target="_blank"
-                className="flex items-center gap-4 bg-gray-800 hover:bg-gray-700 rounded-xl p-6 transition group"
+                className="card flex items-center gap-4 group"
               >
                 <div className="w-14 h-14 bg-green-600 rounded-full flex items-center justify-center text-2xl">
                   💬
@@ -100,7 +100,7 @@ export default function ContactsPage() {
           {/* Info Card */}
           <div className="space-y-6">
             {/* Working hours */}
-            <div className="bg-gray-800 rounded-xl p-6">
+            <div className="card">
               <h3 className="font-semibold mb-4 flex items-center gap-2">
                 <span className="text-2xl">🕐</span> Режим работы
               </h3>
@@ -112,7 +112,7 @@ export default function ContactsPage() {
             </div>
 
             {/* Location */}
-            <div className="bg-gray-800 rounded-xl p-6">
+            <div className="card">
               <h3 className="font-semibold mb-4 flex items-center gap-2">
                 <span className="text-2xl">📍</span> Расположение
               </h3>

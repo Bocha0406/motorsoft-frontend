@@ -31,7 +31,7 @@ export default function CatalogPage() {
             <Link
               key={cat.id}
               href={`/catalog/${cat.slug}`}
-              className="group bg-gray-800 hover:bg-gray-750 rounded-2xl p-8 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10"
+              className="group card"
             >
               <div className="text-6xl mb-4">{cat.icon}</div>
               <h2 className="text-2xl font-bold mb-2 group-hover:text-blue-400 transition">

@@ -41,7 +41,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="bg-gray-800 rounded-2xl p-8">
+          <div className="card">
             <h2 className="text-2xl font-bold mb-6">Наши преимущества</h2>
             <ul className="space-y-4">
               {[
