@@ -39,13 +39,13 @@ export default function HomePage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-3 bg-black/50 border border-amber-500/30 rounded-full px-5 py-2.5 mb-8 backdrop-blur-xl">
               <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse shadow-lg shadow-amber-500/50"></span>
-              <span className="text-sm text-amber-500 tracking-[0.2em] uppercase font-semibold">Premium Chip Tuning Since 2014</span>
+              <span className="text-sm text-amber-500 tracking-[0.2em] uppercase font-semibold">Профессиональный Чип-Тюнинг с 2014</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-wider">
-              <span className="text-white drop-shadow-2xl">UNLOCK YOUR</span>
+              <span className="text-white drop-shadow-2xl">РАСКРОЙТЕ</span>
               <br />
-              <span className="gradient-text text-glow">ENGINE POWER</span>
+              <span className="gradient-text text-glow">МОЩНОСТЬ МОТОРА</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
@@ -199,12 +199,6 @@ export default function HomePage() {
                   {cat.name}
                 </h3>
                 <p className="text-gray-500 text-xs tracking-wide">{cat.description}</p>
-                <div className="mt-4 inline-flex items-center gap-1 text-amber-500 text-xs font-semibold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                  <span>Запрос</span>
-                </div>
               </a>
             ))}
           </div>
@@ -350,7 +344,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-5 py-2 mb-6">
               <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
-              <span className="text-cyan-400 text-xs tracking-[0.2em] uppercase font-semibold">System Process</span>
+              <span className="text-cyan-400 text-xs tracking-[0.2em] uppercase font-semibold">Процесс заказа</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
               ВСЕГО <span className="text-cyan-400" style={{textShadow: '0 0 20px rgba(0,195,255,0.5)'}}>3 КЛИКА</span>
@@ -372,19 +366,19 @@ export default function HomePage() {
             {[
               {
                 step: "01",
-                title: "UPLOAD FILE",
+                title: "ЗАГРУЗКА ФАЙЛА",
                 desc: "Отправьте стоковую прошивку боту в Telegram. Мы автоматически определим марку и тип ЭБУ.",
                 iconPath: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               },
               {
                 step: "02",
-                title: "SELECT OPTIONS",
+                title: "ВЫБОР ОПЦИЙ",
                 desc: "Укажите нужные модификации: Stage 1/2, отключение экологии, и другие опции.",
                 iconPath: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z"
               },
               {
                 step: "03",
-                title: "DOWNLOAD RESULT",
+                title: "СКАЧИВАНИЕ",
                 desc: "Скачайте готовую модифицированную прошивку после оплаты. Обычно 15-30 минут.",
                 iconPath: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
               },
@@ -423,7 +417,7 @@ export default function HomePage() {
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
               </svg>
-              <span>Initialize System</span>
+              <span>Начать заказ</span>
             </a>
           </div>
         </div>
@@ -434,10 +428,10 @@ export default function HomePage() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-6">
-              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">Garage</span>
+              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">Наши работы</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
-              <span className="gradient-text">PORTFOLIO</span>
+              <span className="gradient-text">ПОРТФОЛИО</span>
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto tracking-wide">
               Примеры автомобилей, которые прошли через наши руки
@@ -452,7 +446,7 @@ export default function HomePage() {
               { img: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&q=80", name: "BMW M4", power: "+78 HP" },
               { img: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80", name: "Porsche 911", power: "+65 HP" },
               { img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&q=80", name: "Ferrari 488", power: "+72 HP" },
-              { img: "https://images.unsplash.com/photo-1542362567-b07e54358753?w=600&q=80", name: "Lamborghini", power: "+90 HP" },
+              { img: "https://images.unsplash.com/photo-1542362567-b07e54358753?w=600&q=80", name: "McLaren 720S", power: "+90 HP" },
               { img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80", name: "Chevrolet", power: "+110 HP" },
             ].map((car, i) => (
               <div key={i} className="portfolio-card group">
@@ -509,22 +503,22 @@ export default function HomePage() {
             {[
               {
                 icon: "🛡️",
-                title: "LIFETIME WARRANTY",
+                title: "ПОЖИЗНЕННАЯ ГАРАНТИЯ",
                 desc: "На весь срок службы автомобиля независимо от пробега",
               },
               {
                 icon: "🔄",
-                title: "FREE UPDATES",
+                title: "БЕСПЛАТНЫЕ ОБНОВЛЕНИЯ",
                 desc: "Обновление программы на актуальную версию в любое время",
               },
               {
                 icon: "💰",
-                title: "MONEY BACK",
+                title: "ВОЗВРАТ ДЕНЕГ",
                 desc: "Если результат не устроил — вернём деньги в течение месяца",
               },
               {
                 icon: "📞",
-                title: "24/7 SUPPORT",
+                title: "ПОДДЕРЖКА 24/7",
                 desc: "Всегда на связи в Telegram, ответим в течение 5 минут",
               },
             ].map((item, i) => (
@@ -572,11 +566,11 @@ export default function HomePage() {
           </div>
           
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-wider drop-shadow-2xl">
-            <span className="gradient-text text-glow">UNLOCK</span>
-            <span className="text-white"> YOUR</span>
+            <span className="gradient-text text-glow">РАСКРОЙТЕ</span>
+            <span className="text-white"> ПОТЕНЦИАЛ</span>
             <br />
-            <span className="text-white">ENGINE </span>
-            <span className="gradient-text text-glow">POTENTIAL</span>
+            <span className="text-white">ВАШЕГО </span>
+            <span className="gradient-text text-glow">ДВИГАТЕЛЯ</span>
           </h2>
           
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto tracking-wide">
