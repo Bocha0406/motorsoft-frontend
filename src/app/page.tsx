@@ -48,7 +48,7 @@ export default function HomePage() {
               <span className="gradient-text text-glow">ENGINE POWER</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed tracking-wide">
+            <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
               До <strong className="text-amber-500 text-glow text-3xl">+50%</strong> мощности
               <span className="mx-4 text-amber-500/50">|</span>
               Отключение экологии
@@ -56,22 +56,37 @@ export default function HomePage() {
               <strong className="text-amber-500">7000+</strong> прошивок в базе
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            {/* START ENGINE Button - Sports Car Style */}
+            <div className="flex flex-col items-center gap-8">
               <a
                 href="https://t.me/MotorSoftBot"
                 target="_blank"
-                className="btn-gradient group text-lg px-10 py-5 shadow-2xl shadow-amber-500/30"
+                className="btn-engine group"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.144.12.1.153.235.168.332.015.097.033.318.019.49z"/></svg>
-                <span className="tracking-widest uppercase font-black">START ENGINE</span>
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                <span className="btn-engine-text">PRESS TO</span>
+                <span className="btn-engine-title group-hover:animate-pulse">START</span>
+                <span className="btn-engine-text">ENGINE</span>
+                {/* Telegram icon overlay */}
+                <div className="absolute bottom-6 opacity-30 group-hover:opacity-60 transition-opacity">
+                  <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.144.12.1.153.235.168.332.015.097.033.318.019.49z"/></svg>
+                </div>
               </a>
-              <Link
-                href="/price"
-                className="btn-secondary text-lg"
-              >
-                Смотреть прайс
-              </Link>
+              
+              <div className="flex items-center gap-6">
+                <Link
+                  href="/price"
+                  className="btn-secondary text-sm"
+                >
+                  Смотреть прайс
+                </Link>
+                <span className="text-gray-600 text-sm">или</span>
+                <Link
+                  href="/catalog"
+                  className="text-amber-500 hover:text-amber-400 text-sm font-semibold tracking-widest uppercase transition"
+                >
+                  Каталог →
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -239,6 +254,9 @@ export default function HomePage() {
                 ],
                 price: "от 8 000 ₽",
                 power: "+30%",
+                stageClass: "stage-1",
+                badgeClass: "stage-badge-1",
+                accentColor: "blue",
               },
               {
                 icon: "🔥",
@@ -253,6 +271,9 @@ export default function HomePage() {
                 price: "от 15 000 ₽",
                 power: "+50%",
                 popular: true,
+                stageClass: "stage-2",
+                badgeClass: "stage-badge-2",
+                accentColor: "orange",
               },
               {
                 icon: "🌿",
@@ -266,30 +287,42 @@ export default function HomePage() {
                 ],
                 price: "от 3 000 ₽",
                 power: "ECO",
+                stageClass: "stage-eco",
+                badgeClass: "stage-badge-eco",
+                accentColor: "green",
               },
             ].map((service, i) => (
               <div
                 key={i}
-                className={`card relative group overflow-hidden ${service.popular ? 'ring-2 ring-amber-500/50 shadow-[0_0_40px_rgba(245,158,11,0.15)]' : ''}`}
+                className={`stage-card ${service.stageClass} relative group`}
               >
                 {service.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-black text-xs font-bold px-5 py-1.5 rounded-full tracking-widest uppercase shadow-lg z-10">
-                    ТОП ВЫБОР
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-5 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-orange-500/30 z-10">
+                    🔥 ТОП ВЫБОР
                   </div>
                 )}
                 {/* Power badge */}
-                <div className="absolute top-4 right-4 bg-amber-500/20 text-amber-500 text-xs font-bold px-3 py-1 rounded-full tracking-widest">
+                <div className={`stage-badge ${service.badgeClass} absolute top-4 right-4`}>
                   {service.power}
                 </div>
                 <div className="text-4xl mb-4">{service.icon}</div>
                 <h3 className="text-2xl font-black mb-1 tracking-wider">{service.title}</h3>
-                <p className="text-amber-500 font-semibold mb-4 text-sm tracking-widest uppercase">{service.subtitle}</p>
+                <p className={`font-semibold mb-4 text-sm tracking-widest uppercase ${
+                  service.accentColor === 'blue' ? 'text-blue-400' : 
+                  service.accentColor === 'orange' ? 'text-orange-400' : 'text-green-400'
+                }`}>{service.subtitle}</p>
                 <p className="text-gray-400 mb-6">{service.desc}</p>
                 <ul className="space-y-3 mb-8">
                   {service.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded bg-amber-500/20 flex items-center justify-center">
-                        <svg className="w-3 h-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                      <div className={`w-5 h-5 rounded flex items-center justify-center ${
+                        service.accentColor === 'blue' ? 'bg-blue-500/20' : 
+                        service.accentColor === 'orange' ? 'bg-orange-500/20' : 'bg-green-500/20'
+                      }`}>
+                        <svg className={`w-3 h-3 ${
+                          service.accentColor === 'blue' ? 'text-blue-400' : 
+                          service.accentColor === 'orange' ? 'text-orange-400' : 'text-green-400'
+                        }`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <span className="text-gray-300 text-sm tracking-wide">{f}</span>
                     </li>
@@ -304,49 +337,79 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="py-24 relative">
+      {/* How it works - Iron Man / Jarvis Style */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Tech background lines */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+          <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
+          <div className="absolute top-3/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
+        </div>
+        
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-6">
-              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">Процесс</span>
+            <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-5 py-2 mb-6">
+              <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
+              <span className="text-cyan-400 text-xs tracking-[0.2em] uppercase font-semibold">System Process</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
-              ВСЕГО <span className="gradient-text">3 КЛИКА</span>
+              ВСЕГО <span className="text-cyan-400" style={{textShadow: '0 0 20px rgba(0,195,255,0.5)'}}>3 КЛИКА</span>
             </h2>
             <p className="text-lg text-gray-500 tracking-wide">
               Максимально простой процесс через Telegram
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+            {/* Connection lines */}
+            <div className="hidden md:block absolute top-1/2 left-1/3 w-1/3 h-0.5 -translate-y-1/2">
+              <div className="h-full bg-gradient-to-r from-cyan-500/50 to-cyan-500/20 animate-pulse"></div>
+            </div>
+            <div className="hidden md:block absolute top-1/2 right-1/3 w-1/3 h-0.5 -translate-y-1/2">
+              <div className="h-full bg-gradient-to-r from-cyan-500/20 to-cyan-500/50 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+            </div>
+            
             {[
               {
                 step: "01",
-                title: "ЗАГРУЗИТЕ ФАЙЛ",
+                title: "UPLOAD FILE",
                 desc: "Отправьте стоковую прошивку боту в Telegram. Мы автоматически определим марку и тип ЭБУ.",
-                icon: "📤"
+                iconPath: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
               },
               {
                 step: "02",
-                title: "ВЫБЕРИТЕ ОПЦИИ",
+                title: "SELECT OPTIONS",
                 desc: "Укажите нужные модификации: Stage 1/2, отключение экологии, и другие опции.",
-                icon: "⚙️"
+                iconPath: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z"
               },
               {
                 step: "03",
-                title: "ПОЛУЧИТЕ РЕЗУЛЬТАТ",
+                title: "DOWNLOAD RESULT",
                 desc: "Скачайте готовую модифицированную прошивку после оплаты. Обычно 15-30 минут.",
-                icon: "📥"
+                iconPath: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
               },
             ].map((item, i) => (
-              <div key={i} className="card text-center group">
-                <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">{item.icon}</div>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-black font-black text-lg mb-6 shadow-lg shadow-amber-500/20">
+              <div key={i} className="tech-step text-center group relative">
+                {/* Tech icon */}
+                <div className="tech-icon">
+                  <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.iconPath} />
+                  </svg>
+                </div>
+                
+                {/* Step number */}
+                <div className="text-cyan-400 text-3xl font-black mb-4 tracking-widest" style={{textShadow: '0 0 10px rgba(0,195,255,0.5)'}}>
                   {item.step}
                 </div>
-                <h3 className="text-lg font-bold mb-3 tracking-wider">{item.title}</h3>
+                
+                <h3 className="text-lg font-bold mb-3 tracking-widest text-white">{item.title}</h3>
                 <p className="text-gray-500 text-sm tracking-wide">{item.desc}</p>
+                
+                {/* Corner decorations */}
+                <div className="absolute top-2 left-2 w-3 h-3 border-l border-t border-cyan-500/30"></div>
+                <div className="absolute top-2 right-2 w-3 h-3 border-r border-t border-cyan-500/30"></div>
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-l border-b border-cyan-500/30"></div>
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-r border-b border-cyan-500/30"></div>
               </div>
             ))}
           </div>
@@ -355,23 +418,23 @@ export default function HomePage() {
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="btn-gradient inline-flex items-center gap-3"
+              className="inline-flex items-center gap-3 bg-cyan-500/10 border border-cyan-500/30 hover:border-cyan-500/60 text-cyan-400 hover:text-cyan-300 px-8 py-4 rounded-lg font-bold tracking-widest uppercase transition-all hover:shadow-[0_0_30px_rgba(0,195,255,0.2)]"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
               </svg>
-              <span className="tracking-widest uppercase font-bold">Попробовать сейчас</span>
+              <span>Initialize System</span>
             </a>
           </div>
         </div>
       </section>
 
-      {/* Car Gallery Showcase */}
-      <section className="py-24 relative overflow-hidden">
+      {/* Car Gallery Showcase - NFS Garage Style */}
+      <section className="py-24 relative overflow-hidden bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-6">
-              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">Наши работы</span>
+              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">Garage</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
               <span className="gradient-text">PORTFOLIO</span>
@@ -392,23 +455,35 @@ export default function HomePage() {
               { img: "https://images.unsplash.com/photo-1542362567-b07e54358753?w=600&q=80", name: "Lamborghini", power: "+90 HP" },
               { img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80", name: "Chevrolet", power: "+110 HP" },
             ].map((car, i) => (
-              <div key={i} className="group relative aspect-square overflow-hidden rounded-xl">
+              <div key={i} className="portfolio-card group">
                 <Image 
                   src={car.img}
                   alt={car.name}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <div className="text-xs text-amber-500 font-bold tracking-widest mb-1">{car.power}</div>
-                  <div className="text-white font-bold tracking-wider">{car.name}</div>
+                {/* Dark overlay - lifts on hover */}
+                <div className="absolute inset-0 bg-black/70 group-hover:bg-black/30 transition-all duration-500 z-[1]"></div>
+                
+                {/* Spotlight beam on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 z-[2]" 
+                     style={{background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,255,255,0.4) 0%, transparent 60%)'}}>
                 </div>
-                {/* Hover overlay */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="w-12 h-12 rounded-full bg-amber-500/20 backdrop-blur-sm flex items-center justify-center border border-amber-500/50">
-                    <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                
+                {/* Car info - always visible at bottom */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 z-[3]">
+                  {/* Neon HP text */}
+                  <div className="neon-text text-lg font-black tracking-widest mb-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                    {car.power}
                   </div>
+                  <div className="text-white font-bold tracking-wider text-sm opacity-70 group-hover:opacity-100 transition-opacity">
+                    {car.name}
+                  </div>
+                </div>
+                
+                {/* Scanlines effect */}
+                <div className="absolute inset-0 z-[4] pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity"
+                     style={{background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)'}}>
                 </div>
               </div>
             ))}
