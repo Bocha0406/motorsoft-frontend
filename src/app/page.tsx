@@ -14,25 +14,25 @@ export default function HomePage() {
               <span className="gradient-text">чип-тюнинг</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Увеличение мощности до <strong className="text-white">50%</strong>, 
+              Увеличение мощности до <strong className="text-amber-500">50%</strong>, 
               отключение экологии, индивидуальная калибровка. 
               <br className="hidden md:block" />
-              Более <strong className="text-zinc-300">7000 прошивок</strong> в базе. 
+              Более <strong className="text-amber-500">7000 прошивок</strong> в базе. 
               Работаем с 2014 года.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="https://t.me/MotorSoftBot"
                 target="_blank"
-                className="btn-primary text-lg px-10 py-5"
+                className="btn-primary"
               >
-                🤖 Заказать в Telegram
+                Заказать в Telegram
               </a>
               <Link
                 href="/price"
-                className="bg-white/10 hover:bg-white/20 backdrop-blur px-10 py-5 rounded-xl font-semibold text-lg transition text-center border border-white/20"
+                className="border border-white/30 hover:border-amber-500 px-8 py-4 rounded font-semibold transition text-center"
               >
-                📋 Посмотреть прайс
+                Посмотреть прайс
               </Link>
             </div>
           </div>
@@ -47,9 +47,9 @@ export default function HomePage() {
             ].map((stat, i) => (
               <div
                 key={i}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center"
+                className="border border-white/10 rounded p-6 text-center"
               >
-                <div className="text-4xl md:text-5xl font-bold text-zinc-300 mb-2">
+                <div className="text-4xl md:text-5xl font-bold text-amber-500 mb-2">
                   {stat.value}
                 </div>
                 <div className="text-gray-400 text-lg">{stat.label}</div>
@@ -63,8 +63,8 @@ export default function HomePage() {
       <section className="py-20 bg-gray-900/50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              ✓ Автоматически через базу
+            <div className="inline-block bg-amber-500/20 text-amber-500 px-4 py-2 rounded text-sm font-semibold mb-4">
+              Автоматически через базу
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Легковые авто и <span className="gradient-text">джипы</span>
@@ -79,14 +79,14 @@ export default function HomePage() {
               <Link
                 key={cat.id}
                 href={`/catalog/${cat.slug}`}
-                className="group card hover:border-green-500/50 text-center"
+                className="group card hover:border-amber-500 text-center"
               >
-                <div className="text-7xl mb-5">{cat.icon}</div>
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-green-400 transition">
+                <div className="text-5xl mb-4">{cat.icon}</div>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-amber-500 transition">
                   {cat.name}
                 </h3>
-                <p className="text-gray-400 text-base leading-relaxed">{cat.description}</p>
-                <div className="mt-6 inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-lg text-sm font-medium">
+                <p className="text-gray-400 text-sm">{cat.description}</p>
+                <div className="mt-4 text-amber-500 text-sm font-medium">
                   Выбрать марку →
                 </div>
               </Link>
@@ -99,8 +99,8 @@ export default function HomePage() {
       <section className="py-20">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-block bg-orange-500/20 text-orange-400 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              📞 По запросу
+            <div className="inline-block bg-amber-500/10 text-amber-500 px-4 py-2 rounded text-sm font-semibold mb-4">
+              По запросу
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Спецтехника и <span className="gradient-text">водный транспорт</span>
@@ -116,14 +116,14 @@ export default function HomePage() {
                 key={cat.id}
                 href="https://t.me/MotorSoftBot"
                 target="_blank"
-                className="group card hover:border-orange-500/50 text-center"
+                className="group card hover:border-amber-500 text-center"
               >
-                <div className="text-6xl mb-4">{cat.icon}</div>
-                <h3 className="text-xl font-bold mb-2 group-hover:text-orange-400 transition">
+                <div className="text-4xl mb-3">{cat.icon}</div>
+                <h3 className="text-lg font-bold mb-1 group-hover:text-amber-500 transition">
                   {cat.name}
                 </h3>
                 <p className="text-gray-500 text-sm">{cat.description}</p>
-                <div className="mt-4 text-orange-400 text-sm font-medium">
+                <div className="mt-3 text-amber-500 text-sm font-medium">
                   Написать →
                 </div>
               </a>
@@ -186,21 +186,21 @@ export default function HomePage() {
             ].map((service, i) => (
               <div
                 key={i}
-                className={`card relative ${service.popular ? 'border-zinc-500/50 ring-2 ring-zinc-500/20' : ''}`}
+                className={`card relative ${service.popular ? 'border-amber-500' : ''}`}
               >
                 {service.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-zinc-600 text-white text-sm font-bold px-4 py-1 rounded-full">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-black text-sm font-bold px-4 py-1 rounded">
                     Популярно
                   </div>
                 )}
-                <div className="text-5xl mb-4">{service.icon}</div>
-                <h3 className="text-3xl font-bold mb-1">{service.title}</h3>
-                <p className="text-zinc-400 font-medium mb-4">{service.subtitle}</p>
+                <div className="text-4xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold mb-1">{service.title}</h3>
+                <p className="text-amber-500 font-medium mb-4">{service.subtitle}</p>
                 <p className="text-gray-400 mb-6 text-lg">{service.desc}</p>
                 <ul className="space-y-3 mb-6">
                   {service.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3 text-lg">
-                      <span className="text-green-400 text-xl">✓</span>
+                    <li key={j} className="flex items-center gap-3">
+                      <span className="text-amber-500">✓</span>
                       <span className="text-gray-300">{f}</span>
                     </li>
                   ))}
@@ -243,11 +243,11 @@ export default function HomePage() {
               },
             ].map((item, i) => (
               <div key={i} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-zinc-500 to-zinc-700 rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg shadow-zinc-500/30">
+                <div className="w-16 h-16 bg-amber-500 text-black rounded flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   {item.step}
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-gray-400 text-lg leading-relaxed">{item.desc}</p>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-gray-400">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -256,9 +256,9 @@ export default function HomePage() {
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="btn-primary text-lg px-10 py-5"
+              className="btn-primary"
             >
-              🤖 Попробовать сейчас
+              Попробовать сейчас
             </a>
           </div>
         </div>
@@ -307,21 +307,19 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-zinc-800 to-zinc-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="py-20 bg-amber-500 relative">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
             Готовы увеличить мощность?
           </h2>
-          <p className="text-xl text-zinc-300 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-black/70 mb-10 max-w-2xl mx-auto">
             Присоединяйтесь к 2783 довольным клиентам. 
-            <br />
-            <strong className="text-white">Первый заказ со скидкой 10%!</strong>
+            <strong className="text-black">Первый заказ со скидкой 10%!</strong>
           </p>
           <a
             href="https://t.me/MotorSoftBot"
             target="_blank"
-            className="bg-white text-zinc-900 hover:bg-zinc-200 px-10 py-5 rounded-xl font-bold text-xl transition inline-block shadow-lg"
+            className="bg-black text-white hover:bg-gray-900 px-10 py-4 rounded font-bold text-lg transition inline-block uppercase tracking-wide"
           >
             Начать в Telegram →
           </a>

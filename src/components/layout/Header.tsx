@@ -13,18 +13,18 @@ export default function Header() {
       <div className="bg-gray-800 py-2">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex items-center gap-4">
-            <a href="tel:+79000000000" className="hover:text-zinc-300">
-              📞 +7 (900) 000-00-00
+            <a href="tel:+79000000000" className="hover:text-amber-500">
+              +7 (900) 000-00-00
             </a>
-            <a href="mailto:info@motorsoft.pro" className="hover:text-zinc-300">
-              ✉️ info@motorsoft.pro
+            <a href="mailto:info@motorsoft.pro" className="hover:text-amber-500">
+              info@motorsoft.pro
             </a>
           </div>
           <div className="flex items-center gap-4">
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="bg-zinc-700 px-3 py-1 rounded hover:bg-zinc-600 transition"
+              className="bg-amber-500 text-black px-3 py-1 rounded font-medium hover:bg-amber-400 transition"
             >
               🤖 Telegram Bot
             </a>
@@ -38,18 +38,18 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <span className="text-3xl">⚡</span>
-            <span className="text-2xl font-bold">
-              Motor<span className="text-zinc-400">Soft</span>
+            <span className="text-2xl font-bold tracking-tight">
+              MOTOR<span className="text-amber-500">SOFT</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="hover:text-zinc-300 transition">
+            <Link href="/" className="hover:text-amber-500 transition">
               Главная
             </Link>
             <div className="relative group">
-              <button className="hover:text-zinc-300 transition flex items-center gap-1">
+              <button className="hover:text-amber-500 transition flex items-center gap-1">
                 Каталог <span>▼</span>
               </button>
               <div className="absolute top-full left-0 bg-gray-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[200px]">
@@ -64,16 +64,16 @@ export default function Header() {
                 ))}
               </div>
             </div>
-            <Link href="/price" className="hover:text-zinc-300 transition">
+            <Link href="/price" className="hover:text-amber-500 transition">
               Прайс
             </Link>
-            <Link href="/about" className="hover:text-zinc-300 transition">
+            <Link href="/about" className="hover:text-amber-500 transition">
               О нас
             </Link>
-            <Link href="/faq" className="hover:text-zinc-300 transition">
+            <Link href="/faq" className="hover:text-amber-500 transition">
               FAQ
             </Link>
-            <Link href="/contacts" className="hover:text-zinc-300 transition">
+            <Link href="/contacts" className="hover:text-amber-500 transition">
               Контакты
             </Link>
           </nav>
@@ -83,7 +83,7 @@ export default function Header() {
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="bg-zinc-700 hover:bg-zinc-600 px-6 py-2 rounded-lg font-semibold transition border border-zinc-600"
+              className="bg-amber-500 text-black px-6 py-2 rounded font-semibold hover:bg-amber-400 transition uppercase text-sm tracking-wide"
             >
               Заказать прошивку
             </a>
@@ -104,7 +104,7 @@ export default function Header() {
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
-                className="py-2 hover:text-zinc-300"
+                className="py-2 hover:text-amber-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Главная
@@ -116,7 +116,7 @@ export default function Header() {
                     <Link
                       key={cat.id}
                       href={`/catalog/${cat.slug}`}
-                      className="py-1 hover:text-zinc-300"
+                      className="py-1 hover:text-amber-500"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {cat.icon} {cat.name}
@@ -126,28 +126,28 @@ export default function Header() {
               </div>
               <Link
                 href="/price"
-                className="py-2 hover:text-zinc-300"
+                className="py-2 hover:text-amber-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Прайс
               </Link>
               <Link
                 href="/about"
-                className="py-2 hover:text-zinc-300"
+                className="py-2 hover:text-amber-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 О нас
               </Link>
               <Link
                 href="/faq"
-                className="py-2 hover:text-zinc-300"
+                className="py-2 hover:text-amber-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 FAQ
               </Link>
               <Link
                 href="/contacts"
-                className="py-2 hover:text-zinc-300"
+                className="py-2 hover:text-amber-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Контакты
@@ -155,7 +155,7 @@ export default function Header() {
               <a
                 href="https://t.me/MotorSoftBot"
                 target="_blank"
-                className="bg-zinc-700 text-center py-2 rounded-lg mt-2 border border-zinc-600"
+                className="bg-amber-500 text-black text-center py-2 rounded mt-2 font-semibold"
               >
                 🤖 Заказать в Telegram
               </a>

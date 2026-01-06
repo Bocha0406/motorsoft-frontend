@@ -10,8 +10,8 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
               <span className="text-3xl">⚡</span>
-              <span className="text-2xl font-bold text-white">
-                Motor<span className="text-zinc-400">Soft</span>
+              <span className="text-2xl font-bold text-white tracking-tight">
+                MOTOR<span className="text-amber-500">SOFT</span>
               </span>
             </Link>
             <p className="text-sm text-gray-400">
@@ -28,7 +28,7 @@ export default function Footer() {
                 <li key={cat.id}>
                   <Link
                     href={`/catalog/${cat.slug}`}
-                    className="hover:text-zinc-300 transition text-sm"
+                    className="hover:text-amber-500 transition text-sm"
                   >
                     {cat.icon} {cat.name}
                   </Link>
@@ -44,7 +44,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/price"
-                  className="hover:text-zinc-300 transition text-sm"
+                  className="hover:text-amber-500 transition text-sm"
                 >
                   Прайс-лист
                 </Link>
@@ -52,7 +52,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="hover:text-zinc-300 transition text-sm"
+                  className="hover:text-amber-500 transition text-sm"
                 >
                   О компании
                 </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/faq"
-                  className="hover:text-zinc-300 transition text-sm"
+                  className="hover:text-amber-500 transition text-sm"
                 >
                   Частые вопросы
                 </Link>
@@ -68,7 +68,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contacts"
-                  className="hover:text-zinc-300 transition text-sm"
+                  className="hover:text-amber-500 transition text-sm"
                 >
                   Контакты
                 </Link>
@@ -76,7 +76,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="hover:text-zinc-300 transition text-sm"
+                  className="hover:text-amber-500 transition text-sm"
                 >
                   Политика конфиденциальности
                 </Link>
@@ -91,24 +91,24 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+79000000000"
-                  className="hover:text-zinc-300 transition text-sm flex items-center gap-2"
+                  className="hover:text-amber-500 transition text-sm flex items-center gap-2"
                 >
-                  📞 +7 (900) 000-00-00
+                  +7 (900) 000-00-00
                 </a>
               </li>
               <li>
                 <a
                   href="mailto:info@motorsoft.pro"
-                  className="hover:text-zinc-300 transition text-sm flex items-center gap-2"
+                  className="hover:text-amber-500 transition text-sm flex items-center gap-2"
                 >
-                  ✉️ info@motorsoft.pro
+                  info@motorsoft.pro
                 </a>
               </li>
               <li>
                 <a
                   href="https://t.me/MotorSoftBot"
                   target="_blank"
-                  className="hover:text-zinc-300 transition text-sm flex items-center gap-2"
+                  className="hover:text-amber-500 transition text-sm flex items-center gap-2"
                 >
                   🤖 Telegram Bot
                 </a>
@@ -129,7 +129,7 @@ export default function Footer() {
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="text-gray-400 hover:text-zinc-300 transition"
+              className="text-gray-400 hover:text-amber-500 transition"
             >
               Telegram
             </a>
