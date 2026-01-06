@@ -551,71 +551,41 @@ section {
   padding: 2rem;
   overflow: visible;
   transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.stage-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 2rem;
-  padding: 2px;
-  background: var(--stage-color, linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.5;
-  transition: opacity 0.4s ease;
-}
-
-.stage-card:hover::before {
-  opacity: 1;
-}
-
-.stage-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background: var(--stage-glow, transparent);
-  opacity: 0.1;
-  transition: opacity 0.4s ease;
-}
-
-.stage-card:hover::after {
-  opacity: 0.2;
+.stage-card:hover {
+  border-color: var(--stage-border-color, rgba(255, 255, 255, 0.15));
 }
 
 /* Stage 1 - Calm Blue */
 .stage-1 {
-  --stage-color: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  --stage-glow: linear-gradient(180deg, #3b82f6 0%, transparent 100%);
+  --stage-border-color: rgba(59, 130, 246, 0.4);
 }
 
 .stage-1:hover {
-  box-shadow: 0 0 60px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
 /* Stage 2 - Aggressive Red/Orange */
 .stage-2 {
-  --stage-color: linear-gradient(135deg, #f97316, #dc2626);
-  --stage-glow: linear-gradient(180deg, #f97316 0%, transparent 100%);
+  --stage-border-color: rgba(249, 115, 22, 0.4);
 }
 
 .stage-2:hover {
-  box-shadow: 0 0 60px rgba(249, 115, 22, 0.3);
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.2);
+  border-color: rgba(249, 115, 22, 0.5);
 }
 
 /* Eco - Green */
 .stage-eco {
-  --stage-color: linear-gradient(135deg, #22c55e, #16a34a);
-  --stage-glow: linear-gradient(180deg, #22c55e 0%, transparent 100%);
+  --stage-border-color: rgba(34, 197, 94, 0.4);
 }
 
 .stage-eco:hover {
-  box-shadow: 0 0 60px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.5);
 }
 
 /* Stage badge */

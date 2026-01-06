@@ -148,23 +148,6 @@ export default function ContactsPage() {
             </div>
           </div>
         </div>
-
-        {/* CTA */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">
-            Самый быстрый способ связи
-          </h2>
-          <p className="text-blue-100 mb-6 max-w-xl mx-auto">
-            Напишите нашему Telegram боту и получите ответ в течение 5 минут
-          </p>
-          <a
-            href="https://t.me/MotorSoftBot"
-            target="_blank"
-            className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition inline-block hover:bg-gray-100"
-          >
-            🤖 Написать в Telegram
-          </a>
-        </div>
       </div>
     </div>
   );
