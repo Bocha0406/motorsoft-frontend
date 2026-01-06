@@ -6,7 +6,7 @@ export default function HomePage() {
     <div>
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-orange-900/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/20 via-transparent to-zinc-700/20"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
@@ -17,7 +17,7 @@ export default function HomePage() {
               Увеличение мощности до <strong className="text-white">50%</strong>, 
               отключение экологии, индивидуальная калибровка. 
               <br className="hidden md:block" />
-              Более <strong className="text-red-400">7000 прошивок</strong> в базе. 
+              Более <strong className="text-zinc-300">7000 прошивок</strong> в базе. 
               Работаем с 2014 года.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -49,7 +49,7 @@ export default function HomePage() {
                 key={i}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center"
               >
-                <div className="text-4xl md:text-5xl font-bold text-red-500 mb-2">
+                <div className="text-4xl md:text-5xl font-bold text-zinc-300 mb-2">
                   {stat.value}
                 </div>
                 <div className="text-gray-400 text-lg">{stat.label}</div>
@@ -186,16 +186,16 @@ export default function HomePage() {
             ].map((service, i) => (
               <div
                 key={i}
-                className={`card relative ${service.popular ? 'border-red-500/50 ring-2 ring-red-500/20' : ''}`}
+                className={`card relative ${service.popular ? 'border-zinc-500/50 ring-2 ring-zinc-500/20' : ''}`}
               >
                 {service.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-600 text-white text-sm font-bold px-4 py-1 rounded-full">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-zinc-600 text-white text-sm font-bold px-4 py-1 rounded-full">
                     Популярно
                   </div>
                 )}
                 <div className="text-5xl mb-4">{service.icon}</div>
                 <h3 className="text-3xl font-bold mb-1">{service.title}</h3>
-                <p className="text-red-400 font-medium mb-4">{service.subtitle}</p>
+                <p className="text-zinc-400 font-medium mb-4">{service.subtitle}</p>
                 <p className="text-gray-400 mb-6 text-lg">{service.desc}</p>
                 <ul className="space-y-3 mb-6">
                   {service.features.map((f, j) => (
@@ -243,7 +243,7 @@ export default function HomePage() {
               },
             ].map((item, i) => (
               <div key={i} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg shadow-red-500/30">
+                <div className="w-20 h-20 bg-gradient-to-br from-zinc-500 to-zinc-700 rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-6 shadow-lg shadow-zinc-500/30">
                   {item.step}
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
@@ -307,13 +307,13 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-red-600 to-red-800 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-zinc-800 to-zinc-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Готовы увеличить мощность?
           </h2>
-          <p className="text-xl text-red-100 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-zinc-300 mb-10 max-w-2xl mx-auto">
             Присоединяйтесь к 2783 довольным клиентам. 
             <br />
             <strong className="text-white">Первый заказ со скидкой 10%!</strong>
@@ -321,7 +321,7 @@ export default function HomePage() {
           <a
             href="https://t.me/MotorSoftBot"
             target="_blank"
-            className="bg-white text-red-600 hover:bg-gray-100 px-10 py-5 rounded-xl font-bold text-xl transition inline-block shadow-lg"
+            className="bg-white text-zinc-900 hover:bg-zinc-200 px-10 py-5 rounded-xl font-bold text-xl transition inline-block shadow-lg"
           >
             Начать в Telegram →
           </a>
