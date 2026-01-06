@@ -98,12 +98,12 @@ export default function AboutPage() {
           ].map((stat, i) => (
             <div
               key={i}
-              className="bg-gray-800 rounded-xl p-6 text-center"
+              className="stat-card backdrop-blur-xl"
             >
-              <div className="text-3xl md:text-4xl font-bold text-blue-400">
+              <div className="text-3xl md:text-4xl font-bold text-amber-400 tracking-wider">
                 {stat.value}
               </div>
-              <div className="text-gray-400 mt-2">{stat.label}</div>
+              <div className="text-gray-400 mt-2 text-sm uppercase tracking-wider">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -129,8 +129,8 @@ export default function AboutPage() {
                 desc: "Диностенд для проверки результатов",
               },
             ].map((item, i) => (
-              <div key={i} className="bg-gray-800 rounded-xl p-6">
-                <span className="text-4xl">{item.icon}</span>
+              <div key={i} className="card group">
+                <span className="text-4xl grayscale group-hover:grayscale-0 transition-all">{item.icon}</span>
                 <h3 className="text-lg font-semibold mt-4">{item.title}</h3>
                 <p className="text-gray-400 mt-2">{item.desc}</p>
               </div>
@@ -139,19 +139,23 @@ export default function AboutPage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Готовы начать?</h2>
-          <p className="text-blue-100 mb-6 max-w-xl mx-auto">
-            Отправьте файл прошивки в Telegram и получите результат уже через
-            15-30 минут
-          </p>
-          <a
-            href="https://t.me/MotorSoftBot"
-            target="_blank"
-            className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition inline-block hover:bg-gray-100"
-          >
-            🤖 Связаться в Telegram
-          </a>
+        <div className="mt-16 relative overflow-hidden rounded-2xl p-8 text-center border border-amber-500/20"
+             style={{background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.05) 100%)'}}>
+          <div className="absolute inset-0 bg-gradient-radial from-amber-500/20 via-transparent to-transparent opacity-50"></div>
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold mb-4">Готовы начать?</h2>
+            <p className="text-gray-300 mb-6 max-w-xl mx-auto">
+              Отправьте файл прошивки в Telegram и получите результат уже через
+              15-30 минут
+            </p>
+            <a
+              href="https://t.me/MotorSoftBot"
+              target="_blank"
+              className="btn-gradient inline-flex items-center gap-2 text-lg"
+            >
+              🤖 Связаться в Telegram
+            </a>
+          </div>
         </div>
       </div>
     </div>
