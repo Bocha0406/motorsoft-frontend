@@ -549,7 +549,7 @@ section {
   backdrop-filter: blur(20px);
   border-radius: 1.5rem;
   padding: 2rem;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.4s ease;
 }
 
