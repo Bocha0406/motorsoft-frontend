@@ -547,7 +547,7 @@ section {
   position: relative;
   background: rgba(10, 10, 10, 0.7);
   backdrop-filter: blur(20px);
-  border-radius: 1.5rem;
+  border-radius: 1.75rem;
   padding: 2rem;
   overflow: visible;
   transition: all 0.4s ease;
@@ -557,7 +557,7 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 1.5rem;
+  border-radius: 1.75rem;
   padding: 2px;
   background: var(--stage-color, linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
