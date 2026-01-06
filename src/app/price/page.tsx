@@ -85,8 +85,9 @@ export default function PricePage() {
         </p>
 
         {/* Discount Banner */}
-        <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 backdrop-blur-xl rounded-2xl p-6 mb-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="relative overflow-hidden rounded-2xl p-6 mb-12 border border-amber-500/20 backdrop-blur-xl"
+             style={{background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%)'}}>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
             <div>
               <h2 className="text-2xl font-bold">🎁 Скидки постоянным клиентам</h2>
               <p className="text-amber-100 mt-2">
@@ -116,7 +117,7 @@ export default function PricePage() {
                     {category.items.map((item, i) => (
                       <tr
                         key={i}
-                        className="border-b border-gray-700 last:border-0"
+                        className="border-b border-white/5 last:border-0"
                       >
                         <td className="py-3">{item.name}</td>
                         <td className="py-3 text-right font-semibold text-amber-400">
