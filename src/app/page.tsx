@@ -234,7 +234,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto pt-8">
             {[
               {
                 icon: "⚡",
@@ -288,7 +288,7 @@ export default function HomePage() {
             ].map((service, i) => (
               <div
                 key={i}
-                className={`stage-card ${service.stageClass} relative group overflow-visible ${service.popular ? 'mt-6' : ''}`}
+                className={`stage-card ${service.stageClass} relative group overflow-visible`}
               >
                 {service.popular && (
                   <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-5 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-orange-500/30 z-20 whitespace-nowrap">
