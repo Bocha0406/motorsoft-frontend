@@ -46,9 +46,9 @@ export default function Header() {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all">
+            <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-red-500/30 group-hover:shadow-red-500/50 transition-all">
               <Image
-                src="/logo-icon.png"
+                src="/logo-icon-transparent.png"
                 alt="MotorSoft"
                 width={40}
                 height={40}
