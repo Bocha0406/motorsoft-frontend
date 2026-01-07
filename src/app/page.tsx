@@ -240,7 +240,6 @@ export default function HomePage() {
                   "Увеличение давления турбины",
                 ],
                 price: "от 8 000 ₽",
-                power: "+30%",
                 stageClass: "stage-1",
                 badgeClass: "stage-badge-1",
                 accentColor: "blue",
@@ -256,7 +255,6 @@ export default function HomePage() {
                   "Впускная система",
                 ],
                 price: "от 15 000 ₽",
-                power: "+50%",
                 popular: true,
                 stageClass: "stage-2",
                 badgeClass: "stage-badge-2",
@@ -288,10 +286,6 @@ export default function HomePage() {
                     🔥 ТОП ВЫБОР
                   </div>
                 )}
-                {/* Power badge */}
-                <div className={`stage-badge ${service.badgeClass} absolute top-4 right-4`}>
-                  {service.power}
-                </div>
                 <div className="text-4xl mb-4">{service.icon}</div>
                 <h3 className="text-2xl font-black mb-1 tracking-wider">{service.title}</h3>
                 <p className={`font-semibold mb-4 text-sm tracking-widest uppercase ${
