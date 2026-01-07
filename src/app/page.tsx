@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { mainCategories, requestCategories } from "@/lib/categories";
+import { requestCategories } from "@/lib/categories";
 import PriceRequestButton from "@/components/PriceRequestButton";
 
 export default function HomePage() {
@@ -109,7 +109,7 @@ export default function HomePage() {
               { value: "20000+", label: "Прошивок", icon: "⚡" },
               { value: "2783", label: "Клиентов", icon: "👥" },
               { value: "18+", label: "Лет опыта", icon: "🏆" },
-              { value: "24/7", label: "Поддержка", icon: "🛡️" },
+              { value: "✓", label: "Техподдержка", icon: "🛡️" },
             ].map((stat, i) => (
               <div key={i} className="stat-card group backdrop-blur-xl bg-black/40">
                 <div className="text-2xl mb-2 grayscale group-hover:grayscale-0 transition-all">{stat.icon}</div>
@@ -155,31 +155,11 @@ export default function HomePage() {
               <span className="text-amber-500 text-xs tracking-[0.2em] uppercase font-semibold">Автоматически</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
-              ЛЕГКОВЫЕ АВТО И <span className="gradient-text">ДЖИПЫ</span>
+              АВТОМАТИЧЕСКИЙ <span className="gradient-text">ФАЙЛОВЫЙ СЕРВИС</span>
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto tracking-wide">
-              Более 7000 готовых прошивок. Отправьте файл — получите результат за 15-30 минут
+              Более 10000 готовых прошивок. Отправьте файл — получите результат за 15-30 минут
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {mainCategories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/catalog/${cat.slug}`}
-                className="group card text-center"
-              >
-                <div className="text-4xl mb-4 grayscale group-hover:grayscale-0 transition-all duration-300">{cat.icon}</div>
-                <h3 className="text-lg font-bold mb-2 tracking-wider uppercase group-hover:text-amber-500 transition">
-                  {cat.name}
-                </h3>
-                <p className="text-gray-500 text-sm tracking-wide">{cat.description}</p>
-                <div className="mt-5 inline-flex items-center gap-2 text-amber-500 text-xs font-semibold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all">
-                  <span>Выбрать</span>
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                </div>
-              </Link>
-            ))}
           </div>
         </div>
       </section>
@@ -545,7 +525,7 @@ export default function HomePage() {
               },
               {
                 icon: "📞",
-                title: "ПОДДЕРЖКА 24/7",
+                title: "ТЕХПОДДЕРЖКА",
                 desc: "Всегда на связи в Telegram, ответим в течение 5 минут",
               },
             ].map((item, i) => (
