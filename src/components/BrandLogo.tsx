@@ -1,49 +1,55 @@
-import Image from 'next/image';
-
 interface BrandLogoProps {
   brandName: string;
   className?: string;
 }
 
-// Маппинг брендов на URL логотипов
+// Маппинг брендов на URL логотипов из Simple Icons
 const brandLogos: Record<string, string> = {
-  'Alfa Romeo': 'https://cdn.simpleicons.org/alfaromeo/FF0000',
-  'Audi': 'https://cdn.simpleicons.org/audi/FF0000',
-  'BMW': 'https://cdn.simpleicons.org/bmw/FF0000',
-  'Citroën': 'https://cdn.simpleicons.org/citroen/FF0000',
-  'Fiat': 'https://cdn.simpleicons.org/fiat/FF0000',
-  'Jaguar': 'https://cdn.simpleicons.org/jaguar/FF0000',
-  'Lamborghini': 'https://cdn.simpleicons.org/lamborghini/FF0000',
-  'Land Rover': 'https://cdn.simpleicons.org/landrover/FF0000',
-  'Mercedes-Benz': 'https://cdn.simpleicons.org/mercedes/FF0000',
-  'Mini': 'https://cdn.simpleicons.org/mini/FF0000',
-  'Opel': 'https://cdn.simpleicons.org/opel/FF0000',
-  'Peugeot': 'https://cdn.simpleicons.org/peugeot/FF0000',
-  'Porsche': 'https://cdn.simpleicons.org/porsche/FF0000',
-  'Renault': 'https://cdn.simpleicons.org/renault/FF0000',
-  'Saab': 'https://cdn.simpleicons.org/saab/FF0000',
-  'Seat': 'https://cdn.simpleicons.org/seat/FF0000',
-  'Škoda': 'https://cdn.simpleicons.org/skoda/FF0000',
-  'Smart': 'https://cdn.simpleicons.org/smart/FF0000',
-  'Volkswagen': 'https://cdn.simpleicons.org/volkswagen/FF0000',
-  'Volvo': 'https://cdn.simpleicons.org/volvo/FF0000',
-  'Cadillac': 'https://cdn.simpleicons.org/cadillac/FF0000',
-  'Chevrolet': 'https://cdn.simpleicons.org/chevrolet/FF0000',
-  'Chrysler': 'https://cdn.simpleicons.org/chrysler/FF0000',
-  'Dodge': 'https://cdn.simpleicons.org/dodge/FF0000',
-  'Ford': 'https://cdn.simpleicons.org/ford/FF0000',
-  'Tesla': 'https://cdn.simpleicons.org/tesla/FF0000',
-  'Honda': 'https://cdn.simpleicons.org/honda/FF0000',
-  'Hyundai': 'https://cdn.simpleicons.org/hyundai/FF0000',
-  'Infiniti': 'https://cdn.simpleicons.org/infiniti/FF0000',
-  'Kia': 'https://cdn.simpleicons.org/kia/FF0000',
-  'Lexus': 'https://cdn.simpleicons.org/lexus/FF0000',
-  'Mazda': 'https://cdn.simpleicons.org/mazda/FF0000',
-  'Mitsubishi': 'https://cdn.simpleicons.org/mitsubishi/FF0000',
-  'Nissan': 'https://cdn.simpleicons.org/nissan/FF0000',
-  'Subaru': 'https://cdn.simpleicons.org/subaru/FF0000',
-  'Suzuki': 'https://cdn.simpleicons.org/suzuki/FF0000',
-  'Toyota': 'https://cdn.simpleicons.org/toyota/FF0000',
+  // Европа
+  'Alfa Romeo': 'https://cdn.simpleicons.org/alfaromeo/ff4500',
+  'Audi': 'https://cdn.simpleicons.org/audi/ff4500',
+  'BMW': 'https://cdn.simpleicons.org/bmw/ff4500',
+  'Citroën': 'https://cdn.simpleicons.org/citroen/ff4500',
+  'Fiat': 'https://cdn.simpleicons.org/fiat/ff4500',
+  'Jaguar': 'https://cdn.simpleicons.org/jaguar/ff4500',
+  'Lamborghini': 'https://cdn.simpleicons.org/lamborghini/ff4500',
+  'Land Rover': 'https://cdn.simpleicons.org/landrover/ff4500',
+  'Mercedes-Benz': 'https://cdn.simpleicons.org/mercedes/ff4500',
+  'Mini': 'https://cdn.simpleicons.org/mini/ff4500',
+  'Opel': 'https://cdn.simpleicons.org/opel/ff4500',
+  'Peugeot': 'https://cdn.simpleicons.org/peugeot/ff4500',
+  'Porsche': 'https://cdn.simpleicons.org/porsche/ff4500',
+  'Renault': 'https://cdn.simpleicons.org/renault/ff4500',
+  'Saab': 'https://cdn.simpleicons.org/saab/ff4500',
+  'Seat': 'https://cdn.simpleicons.org/seat/ff4500',
+  'Škoda': 'https://cdn.simpleicons.org/skoda/ff4500',
+  'Smart': 'https://cdn.simpleicons.org/smart/ff4500',
+  'Volkswagen': 'https://cdn.simpleicons.org/volkswagen/ff4500',
+  'Volvo': 'https://cdn.simpleicons.org/volvo/ff4500',
+  
+  // Америка
+  'Cadillac': 'https://cdn.simpleicons.org/cadillac/ff4500',
+  'Chevrolet': 'https://cdn.simpleicons.org/chevrolet/ff4500',
+  'Chrysler': 'https://cdn.simpleicons.org/chrysler/ff4500',
+  'Dodge': 'https://cdn.simpleicons.org/dodge/ff4500',
+  'Ford': 'https://cdn.simpleicons.org/ford/ff4500',
+  'Jeep': 'https://cdn.simpleicons.org/jeep/ff4500',
+  'Tesla': 'https://cdn.simpleicons.org/tesla/ff4500',
+  
+  // Азия
+  'Honda': 'https://cdn.simpleicons.org/honda/ff4500',
+  'Hyundai': 'https://cdn.simpleicons.org/hyundai/ff4500',
+  'Infiniti': 'https://cdn.simpleicons.org/infiniti/ff4500',
+  'Isuzu': 'https://cdn.simpleicons.org/isuzu/ff4500',
+  'Kia': 'https://cdn.simpleicons.org/kia/ff4500',
+  'Lexus': 'https://cdn.simpleicons.org/lexus/ff4500',
+  'Mazda': 'https://cdn.simpleicons.org/mazda/ff4500',
+  'Mitsubishi': 'https://cdn.simpleicons.org/mitsubishi/ff4500',
+  'Nissan': 'https://cdn.simpleicons.org/nissan/ff4500',
+  'Ssangyong': 'https://cdn.simpleicons.org/ssangyong/ff4500',
+  'Subaru': 'https://cdn.simpleicons.org/subaru/ff4500',
+  'Suzuki': 'https://cdn.simpleicons.org/suzuki/ff4500',
+  'Toyota': 'https://cdn.simpleicons.org/toyota/ff4500',
 };
 
 export default function BrandLogo({ brandName, className = '' }: BrandLogoProps) {
@@ -56,39 +62,38 @@ export default function BrandLogo({ brandName, className = '' }: BrandLogoProps)
       <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-red-500/10 to-orange-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       
       {/* Brand Logo or Letter */}
-      <div className="relative z-10 flex items-center justify-center w-full h-full p-6">
+      <div className="relative z-10 flex items-center justify-center w-full h-full p-8">
         {logoUrl ? (
           <img 
             src={logoUrl}
             alt={brandName}
-            className="w-full h-full object-contain filter brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ filter: 'brightness(0) saturate(100%) invert(47%) sepia(97%) saturate(2476%) hue-rotate(360deg) brightness(101%) contrast(107%)' }}
+            className="w-full h-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
           />
         ) : (
-          <div className="font-black text-6xl bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 bg-clip-text text-transparent">
+          <div className="font-black text-5xl bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
             {firstLetter}
           </div>
         )}
       </div>
       
       {/* Decorative Grid Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id={`grid-${brandName}`} width="20" height="20" patternUnits="userSpaceOnUse">
+            <pattern id={`grid-${brandName.replace(/\s+/g, '-')}`} width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-orange-500/50"/>
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill={`url(#grid-${brandName})`} />
+          <rect width="100%" height="100%" fill={`url(#grid-${brandName.replace(/\s+/g, '-')})`} />
         </svg>
       </div>
       
       {/* Corner Accent */}
-      <div className="absolute top-2 right-2 w-6 h-6">
+      <div className="absolute top-2 right-2 w-6 h-6 opacity-40 group-hover:opacity-100 transition-opacity duration-300">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 0L24 24L0 0H24Z" fill="url(#cornerGradient)" opacity="0.4"/>
+          <path d="M24 0L24 24L0 0H24Z" fill="url(#cornerGradient-${brandName.replace(/\s+/g, '-')})" opacity="0.6"/>
           <defs>
-            <linearGradient id="cornerGradient" x1="24" y1="0" x2="0" y2="24">
+            <linearGradient id={`cornerGradient-${brandName.replace(/\s+/g, '-')}`} x1="24" y1="0" x2="0" y2="24">
               <stop offset="0%" stopColor="#ff4500" />
               <stop offset="100%" stopColor="#ff6b00" />
             </linearGradient>
@@ -97,7 +102,7 @@ export default function BrandLogo({ brandName, className = '' }: BrandLogoProps)
       </div>
       
       {/* Glow Effect on Hover */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[inset_0_0_30px_rgba(255,69,0,0.3)]"></div>
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[inset_0_0_30px_rgba(255,69,0,0.2)]"></div>
     </div>
   );
 }
