@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { categories } from "@/lib/categories";
+import PriceRequestButton from "@/components/PriceRequestButton";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -94,7 +95,10 @@ export default function Header() {
           </nav>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
+            <PriceRequestButton variant="secondary" size="sm">
+              💰 Цена
+            </PriceRequestButton>
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
@@ -168,14 +172,19 @@ export default function Header() {
               >
                 FAQ
               </Link>
-              <a
-                href="https://t.me/MotorSoftBot"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gradient text-center py-3 mt-4 text-sm tracking-widest uppercase font-bold cursor-pointer"
-              >
-                🚀 Заказать прошивку
-              </a>
+              <div className="mt-4 flex flex-col gap-3">
+                <PriceRequestButton variant="outline" size="md" className="w-full">
+                  💰 Запросить цену
+                </PriceRequestButton>
+                <a
+                  href="https://t.me/MotorSoftBot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-gradient text-center py-3 text-sm tracking-widest uppercase font-bold cursor-pointer"
+                >
+                  🚀 Заказать прошивку
+                </a>
+              </div>
             </div>
           </nav>
         )}

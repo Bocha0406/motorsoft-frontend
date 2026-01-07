@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { mainCategories, requestCategories } from "@/lib/categories";
+import PriceRequestButton from "@/components/PriceRequestButton";
 
 export default function HomePage() {
   return (
@@ -87,6 +88,11 @@ export default function HomePage() {
                   Смотреть прайс
                 </Link>
                 <span className="text-gray-600 text-sm">или</span>
+                <PriceRequestButton variant="outline" size="sm">
+                  💰 Запросить цену
+                </PriceRequestButton>
+              </div>
+              <div className="mt-4">
                 <Link
                   href="/catalog"
                   className="text-amber-500 hover:text-amber-400 text-sm font-semibold tracking-widest uppercase transition"

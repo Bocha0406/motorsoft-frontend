@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PriceRequestButton from "@/components/PriceRequestButton";
 
 export const metadata = {
   title: "Прайс-лист | MotorSoft",
@@ -148,15 +149,20 @@ export default function PricePage() {
         <div className="mt-12 text-center">
           <h2 className="text-2xl font-bold mb-4">Готовы сделать заказ?</h2>
           <p className="text-gray-400 mb-6">
-            Отправьте файл прошивки в Telegram и получите точную стоимость
+            Отправьте файл прошивки в Telegram или запросите индивидуальный расчёт
           </p>
-          <a
-            href="https://t.me/MotorSoftBot"
-            target="_blank"
-            className="btn-gradient inline-flex items-center gap-2 text-lg"
-          >
-            🤖 Заказать в Telegram
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://t.me/MotorSoftBot"
+              target="_blank"
+              className="btn-gradient inline-flex items-center gap-2 text-lg"
+            >
+              🤖 Заказать в Telegram
+            </a>
+            <PriceRequestButton variant="outline" size="lg">
+              💰 Запросить цену
+            </PriceRequestButton>
+          </div>
         </div>
       </div>
     </div>
