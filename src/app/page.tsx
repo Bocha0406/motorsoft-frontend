@@ -239,7 +239,6 @@ export default function HomePage() {
                   "Коррекция углов зажигания",
                   "Увеличение давления турбины",
                 ],
-                price: "от 8 000 ₽",
                 stageClass: "stage-1",
                 badgeClass: "stage-badge-1",
                 accentColor: "blue",
@@ -254,7 +253,6 @@ export default function HomePage() {
                   "Даунпайп / выхлоп",
                   "Впускная система",
                 ],
-                price: "от 15 000 ₽",
                 popular: true,
                 stageClass: "stage-2",
                 badgeClass: "stage-badge-2",
@@ -270,8 +268,6 @@ export default function HomePage() {
                   "Отключение AdBlue",
                   "Удаление DPF/FAP",
                 ],
-                price: "от 3 000 ₽",
-                power: "ECO",
                 stageClass: "stage-eco",
                 badgeClass: "stage-badge-eco",
                 accentColor: "green",
@@ -310,7 +306,6 @@ export default function HomePage() {
                   ))}
                 </ul>
                 <div className="border-t border-white/5 pt-6 mt-auto">
-                  <div className="text-3xl font-black text-white tracking-wider mb-4">{service.price}</div>
                   <a
                     href="https://t.me/MotorSoftBot"
                     target="_blank"
