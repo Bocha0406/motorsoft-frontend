@@ -36,28 +36,17 @@ export default function HomePage() {
         
         <div className="container mx-auto px-6 relative z-10 py-32">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Full Logo Image with glow effect */}
-            <div className="mb-12 relative">
-              {/* Red/Amber glow effect behind logo */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[600px] h-[300px] bg-gradient-radial from-red-500/30 via-amber-500/20 to-transparent blur-3xl animate-pulse"></div>
-              </div>
-              {/* Additional subtle red glow */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[400px] h-[200px] bg-red-500/20 blur-[100px]"></div>
-              </div>
-              {/* Logo with transparent background */}
-              <div className="relative">
-                <Image
-                  src="/logo-full-transparent.png"
-                  alt="Motorsoft - профессиональный чип-тюнинг"
-                  width={800}
-                  height={246}
-                  className="mx-auto w-full max-w-3xl h-auto drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]"
-                  priority
-                />
-              </div>
+            {/* Badge */}
+            <div className="inline-flex items-center gap-3 bg-black/50 border border-amber-500/30 rounded-full px-5 py-2.5 mb-8 backdrop-blur-xl">
+              <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse shadow-lg shadow-amber-500/50"></span>
+              <span className="text-sm text-amber-500 tracking-[0.2em] uppercase font-semibold">Профессиональный Чип-Тюнинг с 2014</span>
             </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-wider">
+              <span className="text-white drop-shadow-2xl">РАСКРОЙТЕ</span>
+              <br />
+              <span className="gradient-text text-glow">МОЩНОСТЬ МОТОРА</span>
+            </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
               До <strong className="text-amber-500 text-glow text-3xl">+50%</strong> мощности

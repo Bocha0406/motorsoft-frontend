@@ -10,9 +10,9 @@ export default function Footer() {
           {/* Logo & Description */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-red-500/30 group-hover:shadow-red-500/50 transition-all">
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all">
                 <Image
-                  src="/logo-icon-transparent.png"
+                  src="/logo-icon.png"
                   alt="MotorSoft"
                   width={40}
                   height={40}
