@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { categories } from "@/lib/categories";
 import PriceRequestButton from "@/components/PriceRequestButton";
 
 export default function Header() {
@@ -66,23 +65,9 @@ export default function Header() {
             <Link href="/" className="text-sm tracking-widest uppercase text-gray-300 hover:text-amber-500 transition font-medium">
               Главная
             </Link>
-            <div className="relative group">
-              <button className="text-sm tracking-widest uppercase text-gray-300 hover:text-amber-500 transition font-medium flex items-center gap-1">
-                Каталог
-                <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-              </button>
-              <div className="absolute top-full left-0 mt-2 bg-black/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] overflow-hidden">
-                {categories.map((cat) => (
-                  <Link
-                    key={cat.id}
-                    href={`/catalog/${cat.slug}`}
-                    className="block px-5 py-3 hover:bg-amber-500/10 text-gray-300 hover:text-amber-500 transition text-sm tracking-wide border-b border-white/5 last:border-0"
-                  >
-                    <span className="mr-2">{cat.icon}</span> {cat.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <Link href="/catalog" className="text-sm tracking-widest uppercase text-gray-300 hover:text-amber-500 transition font-medium">
+              Каталог
+            </Link>
             <Link href="/price" className="text-sm tracking-widest uppercase text-gray-300 hover:text-amber-500 transition font-medium">
               Прайс
             </Link>
@@ -136,21 +121,13 @@ export default function Header() {
               >
                 Главная
               </Link>
-              <div className="py-3 px-4">
-                <span className="text-gray-500 text-xs tracking-widest uppercase">Каталог</span>
-                <div className="mt-2 flex flex-col gap-1">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.id}
-                      href={`/catalog/${cat.slug}`}
-                      className="py-2 px-4 rounded-lg hover:bg-amber-500/10 text-gray-300 hover:text-amber-500 transition text-sm"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <span className="mr-2">{cat.icon}</span> {cat.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+              <Link
+                href="/catalog"
+                className="py-3 px-4 rounded-lg hover:bg-white/5 text-sm tracking-widest uppercase font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Каталог
+              </Link>
               <Link
                 href="/price"
                 className="py-3 px-4 rounded-lg hover:bg-white/5 text-sm tracking-widest uppercase font-medium"

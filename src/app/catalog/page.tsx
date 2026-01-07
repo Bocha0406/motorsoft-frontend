@@ -1,50 +1,112 @@
-import Link from "next/link";
-import { categories } from "@/lib/categories";
+import { brands, getBrandsByRegion, regionNames } from '@/lib/brands';
+import Link from 'next/link';
 
 export const metadata = {
-  title: "Каталог прошивок | MotorSoft",
-  description: "Чип-тюнинг для автомобилей, мотоциклов, гидроциклов, снегоходов и спецтехники",
+  title: 'Каталог марок автомобилей | MotorSoft',
+  description: 'Полный каталог автомобильных марок для чип-тюнинга: европейские, американские, азиатские и китайские бренды.',
 };
 
 export default function CatalogPage() {
+  const regions = ['europe', 'america', 'asia', 'china'] as const;
+
   return (
-    <div className="pt-40 pb-12">
-      <div className="container mx-auto px-4">
-        {/* Breadcrumbs */}
-        <nav className="text-sm mb-8">
-          <Link href="/" className="text-gray-400 hover:text-white">
-            Главная
-          </Link>
-          <span className="mx-2 text-gray-600">/</span>
-          <span className="text-white">Каталог</span>
-        </nav>
-
-        <h1 className="text-4xl font-bold mb-4">Каталог прошивок</h1>
-        <p className="text-gray-400 mb-12 max-w-2xl">
-          Выберите категорию техники для просмотра доступных марок и моделей.
-          В нашей базе более 7000 калибровок для различных ЭБУ.
-        </p>
-
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/catalog/${cat.slug}`}
-              className="group card"
-            >
-              <div className="text-6xl mb-4">{cat.icon}</div>
-              <h2 className="text-2xl font-bold mb-2 group-hover:text-blue-400 transition">
-                {cat.name}
-              </h2>
-              <p className="text-gray-400">{cat.description}</p>
-              <div className="mt-4 text-blue-400 flex items-center gap-2 group-hover:gap-4 transition-all">
-                Смотреть марки <span>→</span>
-              </div>
-            </Link>
-          ))}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      {/* Hero Section */}
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,69,0,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(255,140,0,0.1),transparent_50%)]"></div>
+        
+        <div className="relative max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 bg-clip-text text-transparent">
+              Каталог марок
+            </span>
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Выберите марку вашего автомобиля для получения информации о возможностях чип-тюнинга
+          </p>
         </div>
-      </div>
+      </section>
+
+      {/* Catalog Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-16">
+          {regions.map((region) => {
+            const regionBrands = getBrandsByRegion(region);
+            
+            return (
+              <div key={region} className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <h2 className="text-3xl font-bold text-white">
+                    {regionNames[region]}
+                  </h2>
+                  <div className="flex-1 h-px bg-gradient-to-r from-orange-500/50 to-transparent"></div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {regionBrands.map((brand) => (
+                    <Link
+                      key={brand.id}
+                      href={`/catalog/${brand.slug}`}
+                      className="group relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20"
+                    >
+                      {/* Placeholder for logo */}
+                      <div className="aspect-square bg-gray-700/30 rounded-lg mb-3 flex items-center justify-center">
+                        <span className="text-3xl font-bold text-gray-500 group-hover:text-orange-500 transition-colors">
+                          {brand.name.charAt(0)}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-center font-semibold text-white group-hover:text-orange-500 transition-colors text-sm">
+                        {brand.name}
+                      </h3>
+
+                      {/* Hover effect */}
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-orange-500/0 to-red-500/0 group-hover:from-orange-500/10 group-hover:to-red-500/10 transition-all duration-300"></div>
+                    </Link>
+                  ))}
+                </div>
+
+                {region === 'china' && (
+                  <div className="mt-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
+                    <p className="text-orange-400 text-sm">
+                      🇨🇳 Работаем с китайскими брендами: полная диагностика, Stage 1-3, ECO-тюнинг
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-8 border border-orange-500/30">
+            <h2 className="text-2xl font-bold text-white mb-4 text-center">
+              Не нашли свою марку?
+            </h2>
+            <p className="text-gray-300 text-center mb-6">
+              Свяжитесь с нами — работаем практически со всеми марками автомобилей!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="tel:+79882435620"
+                className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 text-center"
+              >
+                📞 Позвонить
+              </a>
+              <a
+                href="https://t.me/motorsoft"
+                className="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300 text-center"
+              >
+                💬 Написать в Telegram
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
