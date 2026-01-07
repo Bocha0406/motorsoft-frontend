@@ -25,11 +25,11 @@ export default function Footer() {
             </Link>
             <p className="text-sm text-gray-500 tracking-wide leading-relaxed">
               Профессиональный чип-тюнинг с 2006 года. Более 20000+ прошивок в
-              базе. Гарантия качества и поддержка 24/7.
+              базе. Гарантия качества и техподдержка.
             </p>
             <div className="flex items-center gap-2 mt-6">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-xs tracking-widest uppercase text-gray-500">Online 24/7</span>
+              <span className="text-xs tracking-widest uppercase text-gray-500">ONLINE</span>
             </div>
           </div>
 
