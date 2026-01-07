@@ -100,9 +100,9 @@ export default function HomePage() {
           {/* Stats Dashboard */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 max-w-5xl mx-auto">
             {[
-              { value: "7000+", label: "Прошивок", icon: "⚡" },
+              { value: "20000+", label: "Прошивок", icon: "⚡" },
               { value: "2783", label: "Клиентов", icon: "👥" },
-              { value: "10+", label: "Лет опыта", icon: "🏆" },
+              { value: "18+", label: "Лет опыта", icon: "🏆" },
               { value: "24/7", label: "Поддержка", icon: "🛡️" },
             ].map((stat, i) => (
               <div key={i} className="stat-card group backdrop-blur-xl bg-black/40">

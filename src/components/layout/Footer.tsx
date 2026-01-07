@@ -24,7 +24,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-500 tracking-wide leading-relaxed">
-              Профессиональный чип-тюнинг с 2014 года. Более 7000 прошивок в
+              Профессиональный чип-тюнинг с 2006 года. Более 20000+ прошивок в
               базе. Гарантия качества и поддержка 24/7.
             </p>
             <div className="flex items-center gap-2 mt-6">
@@ -145,7 +145,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/5 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-600 tracking-wide">
-            © 2014–{new Date().getFullYear()} MOTORSOFT. All rights reserved.
+            © 2006–{new Date().getFullYear()} MOTORSOFT. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a
