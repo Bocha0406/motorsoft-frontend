@@ -1,5 +1,6 @@
 import { brands, getBrandsByRegion, regionNames } from '@/lib/brands';
 import Link from 'next/link';
+import BrandLogo from '@/components/BrandLogo';
 
 export const metadata = {
   title: 'Каталог марок автомобилей | MotorSoft',
@@ -48,13 +49,11 @@ export default function CatalogPage() {
                     <Link
                       key={brand.id}
                       href={`/catalog/${brand.slug}`}
-                      className="group relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20"
+                      className="group relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20"
                     >
-                      {/* Placeholder for logo */}
-                      <div className="aspect-square bg-gray-700/30 rounded-lg mb-3 flex items-center justify-center">
-                        <span className="text-3xl font-bold text-gray-500 group-hover:text-orange-500 transition-colors">
-                          {brand.name.charAt(0)}
-                        </span>
+                      {/* Brand Logo */}
+                      <div className="aspect-square mb-3">
+                        <BrandLogo brandName={brand.name} className="w-full h-full" />
                       </div>
                       
                       <h3 className="text-center font-semibold text-white group-hover:text-orange-500 transition-colors text-sm">

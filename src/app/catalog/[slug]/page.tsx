@@ -2,6 +2,7 @@ import { brands, getBrandBySlug } from '@/lib/brands';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import PriceRequestButton from '@/components/PriceRequestButton';
+import BrandLogo from '@/components/BrandLogo';
 
 interface PageProps {
   params: {
@@ -54,11 +55,8 @@ export default function BrandPage({ params }: PageProps) {
           </div>
 
           <div className="text-center space-y-6">
-            {/* Brand Logo Placeholder */}
-            <div className="inline-flex items-center justify-center w-32 h-32 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50">
-              <span className="text-6xl font-bold text-gray-500">
-                {brand.name.charAt(0)}
-              </span>
+            <div className="inline-block w-32 h-32">
+              <BrandLogo brandName={brand.name} className="w-full h-full" />
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
@@ -68,16 +66,54 @@ export default function BrandPage({ params }: PageProps) {
             </h1>
 
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Профессиональная настройка двигателя для максимальной производительности и экономии
+              Узнайте точную стоимость и возможности для вашей модели
             </p>
 
+            {/* Главная форма запроса */}
+            <div className="max-w-2xl mx-auto mt-8">
+              <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-orange-500/50 shadow-2xl shadow-orange-500/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                    <span className="text-2xl">💰</span>
+                  </div>
+                  <div className="text-left">
+                    <h3 className="text-xl font-bold text-white">Узнайте стоимость прямо сейчас</h3>
+                    <p className="text-sm text-gray-300">Расчёт для вашей модели {brand.name}</p>
+                  </div>
+                </div>
+                
+                <p className="text-gray-300 mb-6 text-left">
+                  Заполните короткую форму, и мы рассчитаем точную стоимость чип-тюнинга
+                  с учётом всех характеристик вашего автомобиля
+                </p>
+                
+                <PriceRequestButton variant="primary" size="lg" className="w-full text-lg py-4">
+                  📋 Заполнить форму запроса
+                </PriceRequestButton>
+                
+                <div className="mt-4 flex items-center justify-center gap-4 text-sm text-gray-400">
+                  <span className="flex items-center gap-1">
+                    ✓ Бесплатная консультация
+                  </span>
+                  <span className="flex items-center gap-1">
+                    ✓ Ответ за 15 минут
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <PriceRequestButton variant="primary" size="lg" />
               <a
                 href="tel:+79882435620"
                 className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300 text-center"
               >
                 📞 +7 (988) 243-56-20
+              </a>
+              <a
+                href="https://t.me/motorsoft"
+                className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300 text-center"
+              >
+                💬 Telegram
               </a>
             </div>
           </div>
@@ -159,7 +195,7 @@ export default function BrandPage({ params }: PageProps) {
                 </div>
 
                 <p className="text-gray-300 text-sm mb-4">{program.description}</p>
-
+                
                 <ul className="space-y-2">
                   {program.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm text-gray-400">
