@@ -36,13 +36,6 @@ export default function HomePage() {
         
         <div className="container mx-auto px-6 relative z-10 py-32">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Main Slogan */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[0.05em] uppercase mb-8 text-white">
-              <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(245,158,11,0.5)]">
-                БОЛЬШЕ ЧЕМ ПРОСТО<br />ЧИП-ТЮНИНГ
-              </span>
-            </h1>
-            
             {/* Logo with glow effect - transparent background */}
             <div className="relative mb-12 group cursor-pointer">
               {/* Red glow behind logo - intensifies on hover */}
@@ -65,7 +58,7 @@ export default function HomePage() {
             <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
               Премиальная настройка двигателя и КПП
               <span className="mx-4 text-amber-500/50">|</span>
-              Ресурсный тюнинг, отключение любой экологии
+              Ресурсный тюнинг | отключение любой экологии
               <span className="mx-4 text-amber-500/50">|</span>
               Удобный автоматический файл-сервис с поиском по файлу
             </p>
