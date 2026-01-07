@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function ContactsPage() {
   return (
-    <div className="pt-32 pb-12">
+    <div className="pt-40 pb-12">
       <div className="container mx-auto px-4">
         {/* Breadcrumbs */}
         <nav className="text-sm mb-8">
