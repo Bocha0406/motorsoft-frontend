@@ -37,19 +37,19 @@ export default function HomePage() {
         <div className="container mx-auto px-6 relative z-10 py-32">
           <div className="max-w-5xl mx-auto text-center">
             {/* Logo with glow effect - transparent background */}
-            <div className="relative mb-12">
-              {/* Amber/Red glow behind logo */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[800px] h-[400px] bg-gradient-radial from-amber-500/40 via-red-500/20 to-transparent blur-3xl"></div>
+            <div className="relative mb-12 group cursor-pointer">
+              {/* Red glow behind logo - intensifies on hover */}
+              <div className="absolute inset-0 flex items-center justify-center transition-all duration-500">
+                <div className="w-[800px] h-[400px] bg-gradient-radial from-red-500/20 via-red-500/10 to-transparent blur-3xl group-hover:from-red-500/40 group-hover:via-red-500/20 transition-all duration-500"></div>
               </div>
-              {/* Logo image with transparency */}
+              {/* Logo image with transparency - red glow on hover */}
               <div className="relative">
                 <Image
                   src="/logo-hero-transparent.png"
                   alt="Motorsoft - профессиональный чип-тюнинг"
                   width={900}
                   height={277}
-                  className="mx-auto w-full max-w-4xl h-auto drop-shadow-[0_0_40px_rgba(245,158,11,0.4)]"
+                  className="mx-auto w-full max-w-4xl h-auto drop-shadow-[0_0_20px_rgba(239,68,68,0.3)] group-hover:drop-shadow-[0_0_40px_rgba(239,68,68,0.6)] transition-all duration-500"
                   priority
                 />
               </div>
