@@ -169,13 +169,13 @@ export default function HomePage() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-6">
-              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">По запросу</span>
+              <span className="text-gray-400 text-xs tracking-[0.2em] uppercase font-semibold">Эксклюзивный тюнинг</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
-              СПЕЦТЕХНИКА И <span className="gradient-text">ВОДНЫЙ ТРАНСПОРТ</span>
+              ЭКСТРЕМАЛЬНЫЙ <span className="gradient-text">ТРАНСПОРТ</span>
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto tracking-wide">
-              Индивидуальная работа с каждым запросом. Напишите нам — рассчитаем стоимость
+              Тюнинг соревновательного уровня для спортсменов. Готовим технику для гонок и экстремальных условий
             </p>
           </div>
 
