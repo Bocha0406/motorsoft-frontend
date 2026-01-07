@@ -36,16 +36,24 @@ export default function HomePage() {
         
         <div className="container mx-auto px-6 relative z-10 py-32">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Full Logo Image */}
-            <div className="mb-12">
-              <Image
-                src="/logo-full.png"
-                alt="Motorsoft - профессиональный чип-тюнинг"
-                width={800}
-                height={246}
-                className="mx-auto w-full max-w-3xl h-auto drop-shadow-2xl"
-                priority
-              />
+            {/* Full Logo Image with blur edges effect */}
+            <div className="mb-12 relative">
+              {/* Glow effect behind logo */}
+              <div className="absolute inset-0 bg-gradient-radial from-amber-500/20 via-transparent to-transparent blur-3xl scale-150"></div>
+              {/* Logo with mask for soft edges */}
+              <div className="relative" style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)'
+              }}>
+                <Image
+                  src="/logo-full.png"
+                  alt="Motorsoft - профессиональный чип-тюнинг"
+                  width={800}
+                  height={246}
+                  className="mx-auto w-full max-w-3xl h-auto drop-shadow-2xl rounded-2xl"
+                  priority
+                />
+              </div>
             </div>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
