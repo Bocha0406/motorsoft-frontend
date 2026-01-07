@@ -7,7 +7,7 @@ export default function Footer() {
       {/* Gradient line on top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
       
-      <div className="container mx-auto px-6 pt-20 pb-16">
+      <div className="container mx-auto px-6 pt-24 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo & Description */}
           <div>
@@ -123,7 +123,8 @@ export default function Footer() {
                 <a
                   href="https://t.me/MotorSoftBot"
                   target="_blank"
-                  className="hover:text-amber-500 transition text-sm flex items-center gap-3 tracking-wide"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-500 transition text-sm flex items-center gap-3 tracking-wide cursor-pointer"
                 >
                   <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -146,14 +147,16 @@ export default function Footer() {
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
-              className="text-gray-500 hover:text-amber-500 transition text-xs tracking-widest uppercase"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-amber-500 transition text-xs tracking-widest uppercase cursor-pointer"
             >
               Telegram
             </a>
             <a
               href="https://wa.me/79000000000"
               target="_blank"
-              className="text-gray-500 hover:text-green-500 transition text-xs tracking-widest uppercase"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-green-500 transition text-xs tracking-widest uppercase cursor-pointer"
             >
               WhatsApp
             </a>
