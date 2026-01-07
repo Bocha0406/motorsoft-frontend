@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { categories } from "@/lib/categories";
 
 export default function Footer() {
@@ -9,8 +10,14 @@ export default function Footer() {
           {/* Logo & Description */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="relative w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all">
-                <span className="text-black font-black text-lg">M</span>
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all">
+                <Image
+                  src="/logo-icon.png"
+                  alt="MotorSoft"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
               </div>
               <span className="text-xl font-black tracking-[0.1em] uppercase text-white">
                 MOTOR<span className="text-amber-500">SOFT</span>
