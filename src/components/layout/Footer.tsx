@@ -3,7 +3,7 @@ import { categories } from "@/lib/categories";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#050505] text-gray-400 border-t border-white/5 mt-8">
+    <footer className="relative bg-[#050505] text-gray-400 mt-8">
       <div className="container mx-auto px-6 pt-16 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo & Description */}
