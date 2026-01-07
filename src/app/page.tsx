@@ -36,21 +36,24 @@ export default function HomePage() {
         
         <div className="container mx-auto px-6 relative z-10 py-32">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Full Logo Image with blur edges effect */}
+            {/* Full Logo Image with glow effect */}
             <div className="mb-12 relative">
-              {/* Glow effect behind logo */}
-              <div className="absolute inset-0 bg-gradient-radial from-amber-500/20 via-transparent to-transparent blur-3xl scale-150"></div>
-              {/* Logo with mask for soft edges */}
-              <div className="relative" style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)'
-              }}>
+              {/* Red/Amber glow effect behind logo */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[600px] h-[300px] bg-gradient-radial from-red-500/30 via-amber-500/20 to-transparent blur-3xl animate-pulse"></div>
+              </div>
+              {/* Additional subtle red glow */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[400px] h-[200px] bg-red-500/20 blur-[100px]"></div>
+              </div>
+              {/* Logo with transparent background */}
+              <div className="relative">
                 <Image
-                  src="/logo-full.png"
+                  src="/logo-full-transparent.png"
                   alt="Motorsoft - профессиональный чип-тюнинг"
                   width={800}
                   height={246}
-                  className="mx-auto w-full max-w-3xl h-auto drop-shadow-2xl rounded-2xl"
+                  className="mx-auto w-full max-w-3xl h-auto drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]"
                   priority
                 />
               </div>
