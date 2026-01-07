@@ -142,7 +142,7 @@ ${formData.comment || "Нет"}
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/90 backdrop-blur-md"
         onClick={onClose}
       />
       
@@ -391,21 +391,6 @@ ${formData.comment || "Нет"}
                 className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500/50 transition resize-none"
                 placeholder="Что именно хотите сделать? Stage 1, отключение EGR, и т.д."
               />
-            </div>
-
-            {/* Info Box */}
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-              <div className="flex gap-3">
-                <div className="text-2xl">💡</div>
-                <div>
-                  <p className="text-sm text-blue-300 font-semibold mb-1">Примерные цены на чип-тюнинг:</p>
-                  <ul className="text-xs text-blue-200/70 space-y-1">
-                    <li>• Stage 1 — от 15 000 ₽ (прирост до +30% мощности)</li>
-                    <li>• Stage 2 — от 20 000 ₽ (прирост до +50% мощности)</li>
-                    <li>• Отключение DPF/EGR/AdBlue — от 10 000 ₽</li>
-                  </ul>
-                </div>
-              </div>
             </div>
 
             {/* Submit Button */}
