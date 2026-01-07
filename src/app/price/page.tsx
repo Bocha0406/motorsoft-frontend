@@ -105,8 +105,8 @@ export default function PricePage() {
       {/* Important Notice */}
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-6 border-2 border-orange-500/50">
-            <div className="flex items-start gap-4">
+          <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-orange-500/50">
+            <div className="flex items-start gap-4 mb-6">
               <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
                 <span className="text-2xl">💡</span>
               </div>
@@ -118,6 +118,10 @@ export default function PricePage() {
                 </p>
               </div>
             </div>
+            
+            <PriceRequestButton variant="primary" size="lg" className="w-full text-lg">
+              💰 Узнать стоимость
+            </PriceRequestButton>
           </div>
         </div>
       </section>
