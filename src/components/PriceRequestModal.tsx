@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface PriceRequestModalProps {
   isOpen: boolean;
@@ -138,16 +139,20 @@ ${formData.comment || "Нет"}
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Backdrop */}
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+      {/* Backdrop - полностью чёрный */}
       <div 
-        className="absolute inset-0 bg-black backdrop-blur-xl"
+        className="fixed inset-0 bg-black"
+        style={{ zIndex: 9998 }}
         onClick={onClose}
       />
       
       {/* Modal */}
-      <div className="relative bg-[#0a0a0a] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl shadow-amber-500/10">
+      <div 
+        className="relative bg-[#0a0a0a] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl shadow-amber-500/10"
+        style={{ zIndex: 9999 }}
+      >
         {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-white/10 px-6 py-4 flex items-center justify-between z-10">
           <div>
@@ -425,4 +430,11 @@ ${formData.comment || "Нет"}
       </div>
     </div>
   );
+
+  // Рендерим через Portal в body для правильного z-index
+  if (typeof document !== 'undefined') {
+    return createPortal(modalContent, document.body);
+  }
+  
+  return modalContent;
 }
