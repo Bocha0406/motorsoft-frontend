@@ -56,11 +56,11 @@ export default function HomePage() {
             </div>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed tracking-wide">
-              До <strong className="text-amber-500 text-glow text-3xl">+50%</strong> мощности
+              Премиальная настройка двигателя и КПП
               <span className="mx-4 text-amber-500/50">|</span>
-              Отключение экологии
+              Ресурсный тюнинг, отключение любой экологии
               <span className="mx-4 text-amber-500/50">|</span>
-              <strong className="text-amber-500">7000+</strong> прошивок в базе
+              Автоматический файл-сервис <strong className="text-amber-500">24/7</strong>
             </p>
             
             {/* START ENGINE Button - Sports Car Style */}
