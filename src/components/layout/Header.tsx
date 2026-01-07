@@ -46,13 +46,13 @@ export default function Header() {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 rounded-lg overflow-hidden shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all">
+            <div className="relative w-10 h-10">
               <Image
-                src="/logo-icon.png"
+                src="/logo-m.png"
                 alt="MotorSoft"
                 width={40}
                 height={40}
-                className="object-contain"
+                className="object-contain drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.7)] transition-all"
               />
             </div>
             <span className="text-xl font-black tracking-[0.1em] uppercase">
