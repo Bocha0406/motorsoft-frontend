@@ -174,7 +174,7 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
               ЭКСТРЕМАЛЬНЫЙ <span className="gradient-text">ТРАНСПОРТ</span>
             </h2>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto tracking-wide">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto tracking-wide">
               Тюнинг соревновательного уровня для спортсменов. Готовим технику для гонок и экстремальных условий
             </p>
           </div>
