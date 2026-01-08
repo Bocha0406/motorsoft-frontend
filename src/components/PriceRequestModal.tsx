@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 interface PriceRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialBrand?: string;
 }
 
 const carBrands = [
@@ -14,7 +15,9 @@ const carBrands = [
   "Ford", "Chevrolet", "Opel", "Peugeot", "Renault", "Citroen", "Volvo",
   "Land Rover", "Jaguar", "Infiniti", "Cadillac", "Jeep", "Dodge", "Chrysler",
   "Fiat", "Alfa Romeo", "Skoda", "SEAT", "Mini", "Smart", "Lada", "UAZ",
-  "Haval", "Chery", "Geely", "Great Wall", "Другая"
+  "Haval", "Chery", "Geely", "Great Wall", "Changan", "JAC", "Exeed", "Tank", "Omoda", "Jetour",
+  "Lamborghini", "Citroën", "Škoda", "Smart", "Tesla", "Ssangyong", "Isuzu", "Suzuki", "Saab",
+  "Другая"
 ];
 
 const cities = [
@@ -33,13 +36,13 @@ const contactMethods = [
   { id: "whatsapp", label: "WhatsApp" },
 ];
 
-export default function PriceRequestModal({ isOpen, onClose }: PriceRequestModalProps) {
+export default function PriceRequestModal({ isOpen, onClose, initialBrand = "" }: PriceRequestModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     city: "",
-    brand: "",
+    brand: initialBrand,
     model: "",
     year: "",
     engine: "",
@@ -50,6 +53,13 @@ export default function PriceRequestModal({ isOpen, onClose }: PriceRequestModal
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Update brand when initialBrand changes
+  useEffect(() => {
+    if (initialBrand) {
+      setFormData(prev => ({ ...prev, brand: initialBrand }));
+    }
+  }, [initialBrand]);
 
   // Close on Escape key
   useEffect(() => {

@@ -1,17 +1,22 @@
-import { brands, getBrandsByRegion, regionNames } from '@/lib/brands';
-import Link from 'next/link';
-import BrandLogo from '@/components/BrandLogo';
+"use client";
 
-export const metadata = {
-  title: 'Каталог марок автомобилей | MotorSoft',
-  description: 'Полный каталог автомобильных марок для чип-тюнинга: европейские, американские, азиатские и китайские бренды.',
-};
+import { useState } from 'react';
+import { brands, getBrandsByRegion, regionNames } from '@/lib/brands';
+import BrandLogo from '@/components/BrandLogo';
+import PriceRequestModal from '@/components/PriceRequestModal';
 
 export default function CatalogPage() {
   const regions = ['europe', 'america', 'asia', 'china'] as const;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState("");
+
+  const handleBrandClick = (brandName: string) => {
+    setSelectedBrand(brandName);
+    setIsModalOpen(true);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 pt-24">
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,69,0,0.15),transparent_50%)]"></div>
@@ -24,7 +29,7 @@ export default function CatalogPage() {
             </span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Выберите марку вашего автомобиля для получения информации о возможностях чип-тюнинга
+            Нажмите на марку вашего автомобиля — откроется форма запроса стоимости с уже выбранным брендом
           </p>
         </div>
       </section>
@@ -46,10 +51,10 @@ export default function CatalogPage() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                   {regionBrands.map((brand) => (
-                    <Link
+                    <button
                       key={brand.id}
-                      href={`/catalog/${brand.slug}`}
-                      className="group relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20"
+                      onClick={() => handleBrandClick(brand.name)}
+                      className="group relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20 text-left"
                     >
                       {/* Brand Logo */}
                       <div className="aspect-square mb-3">
@@ -61,8 +66,8 @@ export default function CatalogPage() {
                       </h3>
 
                       {/* Hover effect */}
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-orange-500/0 to-red-500/0 group-hover:from-orange-500/10 group-hover:to-red-500/10 transition-all duration-300"></div>
-                    </Link>
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-orange-500/0 to-red-500/0 group-hover:from-orange-500/10 group-hover:to-red-500/10 transition-all duration-300 pointer-events-none"></div>
+                    </button>
                   ))}
                 </div>
 
@@ -106,6 +111,13 @@ export default function CatalogPage() {
           </div>
         </div>
       </section>
+
+      {/* Price Request Modal */}
+      <PriceRequestModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        initialBrand={selectedBrand}
+      />
     </div>
   );
 }
