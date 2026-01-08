@@ -198,7 +198,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services Section - 6 Stage Programs */}
       <section className="py-24 section-dark relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/3 to-transparent"></div>
         
@@ -217,116 +217,308 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
               <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
-              <span className="text-amber-500 text-xs tracking-[0.2em] uppercase font-semibold">Услуги</span>
+              <span className="text-amber-500 text-xs tracking-[0.2em] uppercase font-semibold">Программы тюнинга</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
-              ВЫБЕРИТЕ <span className="gradient-text">STAGE</span>
+              ВЫБЕРИТЕ <span className="gradient-text">ПРОГРАММУ</span>
             </h2>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto tracking-wide">
-              Полный спектр услуг по модификации прошивок ЭБУ
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto tracking-wide">
+              Полный спектр услуг по модификации прошивок ЭБУ — от базового тюнинга до премиальной настройки с увеличением ресурса
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto pt-8">
-            {[
-              {
-                icon: "⚡",
-                title: "STAGE 1",
-                subtitle: "Базовый тюнинг",
-                desc: "Увеличение мощности до 30% без аппаратных изменений",
-                features: [
-                  "Оптимизация топливных карт",
-                  "Коррекция углов зажигания",
-                  "Увеличение давления турбины",
-                ],
-                stageClass: "stage-1",
-                badgeClass: "stage-badge-1",
-                accentColor: "blue",
-              },
-              {
-                icon: "🔥",
-                title: "STAGE 2",
-                subtitle: "Продвинутый тюнинг",
-                desc: "Максимальная производительность с модификациями",
-                features: [
-                  "Удаление катализатора",
-                  "Даунпайп / выхлоп",
-                  "Впускная система",
-                ],
-                popular: true,
-                stageClass: "stage-2",
-                badgeClass: "stage-badge-2",
-                accentColor: "orange",
-              },
-              {
-                icon: "🌿",
-                title: "ECO OFF",
-                subtitle: "Отключение систем",
-                desc: "Отключение экологических систем автомобиля",
-                features: [
-                  "Удаление EGR",
-                  "Отключение AdBlue",
-                  "Удаление DPF/FAP",
-                ],
-                stageClass: "stage-eco",
-                badgeClass: "stage-badge-eco",
-                accentColor: "green",
-              },
-            ].map((service, i) => (
-              <div
-                key={i}
-                className={`stage-card ${service.stageClass} relative group overflow-visible`}
-              >
-                {service.popular && (
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-5 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-orange-500/30 z-20 whitespace-nowrap">
-                    🔥 ТОП ВЫБОР
-                  </div>
-                )}
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-black mb-1 tracking-wider">{service.title}</h3>
-                <p className={`font-semibold mb-4 text-sm tracking-widest uppercase ${
-                  service.accentColor === 'blue' ? 'text-blue-400' : 
-                  service.accentColor === 'orange' ? 'text-orange-400' : 'text-green-400'
-                }`}>{service.subtitle}</p>
-                <p className="text-gray-400 mb-6">{service.desc}</p>
-                <ul className="space-y-3 mb-8">
-                  {service.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded flex items-center justify-center ${
-                        service.accentColor === 'blue' ? 'bg-blue-500/20' : 
-                        service.accentColor === 'orange' ? 'bg-orange-500/20' : 'bg-green-500/20'
-                      }`}>
-                        <svg className={`w-3 h-3 ${
-                          service.accentColor === 'blue' ? 'text-blue-400' : 
-                          service.accentColor === 'orange' ? 'text-orange-400' : 'text-green-400'
-                        }`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                      </div>
-                      <span className="text-gray-300 text-sm tracking-wide">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="border-t border-white/5 pt-6 mt-auto">
-                  <a
-                    href="https://t.me/MotorSoftBot"
-                    target="_blank"
-                    className={`block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all ${
-                      service.accentColor === 'blue' 
-                        ? 'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30 hover:border-blue-500/50' 
-                        : service.accentColor === 'orange' 
-                        ? 'bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 border border-orange-500/30 hover:border-orange-500/50' 
-                        : 'bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30 hover:border-green-500/50'
-                    }`}
-                  >
-                    Заказать
-                  </a>
-                </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto pt-8">
+            {/* STAGE 1 */}
+            <div className="stage-card stage-1 relative group overflow-visible">
+              <div className="text-4xl mb-4">⚡</div>
+              <h3 className="text-2xl font-black mb-1 tracking-wider">STAGE 1</h3>
+              <p className="font-semibold mb-4 text-sm tracking-widest uppercase text-blue-400">Базовый тюнинг</p>
+              <p className="text-gray-400 mb-6">Увеличение мощности без аппаратных изменений. Идеально для стоковых автомобилей.</p>
+              <ul className="space-y-3 mb-8">
+                {["Оптимизация топливных карт", "Коррекция углов зажигания", "Увеличение давления турбины"].map((f, j) => (
+                  <li key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded flex items-center justify-center bg-blue-500/20">
+                      <svg className="w-3 h-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-gray-300 text-sm tracking-wide">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-white/5 pt-6 mt-auto">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30 hover:border-blue-500/50">
+                  Заказать
+                </a>
               </div>
-            ))}
+            </div>
+
+            {/* STAGE 2 */}
+            <div className="stage-card stage-2 relative group overflow-visible">
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-5 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-orange-500/30 z-20 whitespace-nowrap">
+                🔥 ТОП ВЫБОР
+              </div>
+              <div className="text-4xl mb-4">🔥</div>
+              <h3 className="text-2xl font-black mb-1 tracking-wider">STAGE 2</h3>
+              <p className="font-semibold mb-4 text-sm tracking-widest uppercase text-orange-400">Усиленный тюнинг</p>
+              <p className="text-gray-400 mb-6">Для автомобилей с модификациями железа. Максимальная отдача от доработок.</p>
+              <ul className="space-y-3 mb-8">
+                {["Даунпайп / спортвыхлоп", "Модифицированный впуск", "Удаление катализатора"].map((f, j) => (
+                  <li key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded flex items-center justify-center bg-orange-500/20">
+                      <svg className="w-3 h-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-gray-300 text-sm tracking-wide">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-white/5 pt-6 mt-auto">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 border border-orange-500/30 hover:border-orange-500/50">
+                  Заказать
+                </a>
+              </div>
+            </div>
+
+            {/* STAGE 3 / CUSTOM */}
+            <div className="stage-card relative group overflow-visible" style={{background: 'linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(30,30,30,0.95) 100%)', border: '1px solid rgba(139,92,246,0.2)'}}>
+              <div className="text-4xl mb-4">🛠️</div>
+              <h3 className="text-2xl font-black mb-1 tracking-wider">STAGE 3</h3>
+              <p className="font-semibold mb-4 text-sm tracking-widest uppercase text-purple-400">Кастомный тюнинг</p>
+              <p className="text-gray-400 mb-6">Под нестандартное железо и серьёзные механические доработки. Индивидуальная калибровка.</p>
+              <ul className="space-y-3 mb-8">
+                {["Большие турбины / компрессоры", "Форсированные моторы", "Индивидуальная настройка"].map((f, j) => (
+                  <li key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded flex items-center justify-center bg-purple-500/20">
+                      <svg className="w-3 h-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-gray-300 text-sm tracking-wide">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-white/5 pt-6 mt-auto">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50">
+                  Заказать
+                </a>
+              </div>
+            </div>
+
+            {/* РЕСУРСНЫЙ ТЮНИНГ */}
+            <div className="stage-card relative group overflow-visible" style={{background: 'linear-gradient(135deg, rgba(20,184,166,0.1) 0%, rgba(30,30,30,0.95) 100%)', border: '1px solid rgba(20,184,166,0.2)'}}>
+              <div className="text-4xl mb-4">🛡️</div>
+              <h3 className="text-2xl font-black mb-1 tracking-wider">РЕСУРСНЫЙ</h3>
+              <p className="font-semibold mb-4 text-sm tracking-widest uppercase text-teal-400">Продление ресурса</p>
+              <p className="text-gray-400 mb-6">Упор на продление срока службы двигателя. Снижение износа и термонагрузки.</p>
+              <ul className="space-y-3 mb-8">
+                {["Снижение температуры горения", "Активация защитных режимов", "Масляный насос на макс. давлении"].map((f, j) => (
+                  <li key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded flex items-center justify-center bg-teal-500/20">
+                      <svg className="w-3 h-3 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-gray-300 text-sm tracking-wide">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-white/5 pt-6 mt-auto">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 border border-teal-500/30 hover:border-teal-500/50">
+                  Заказать
+                </a>
+              </div>
+            </div>
+
+            {/* ПРЕМИАЛЬНЫЙ ТЮНИНГ */}
+            <div className="stage-card relative group overflow-visible" style={{background: 'linear-gradient(135deg, rgba(251,191,36,0.15) 0%, rgba(30,30,30,0.95) 100%)', border: '1px solid rgba(251,191,36,0.3)'}}>
+              <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-500 text-black text-xs font-bold px-5 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-amber-500/30 z-20 whitespace-nowrap">
+                ⭐ РЕКОМЕНДУЕМ
+              </div>
+              <div className="text-4xl mb-4">👑</div>
+              <h3 className="text-2xl font-black mb-1 tracking-wider">ПРЕМИАЛЬНЫЙ</h3>
+              <p className="font-semibold mb-4 text-sm tracking-widest uppercase text-amber-400">Мощность + Ресурс + Комфорт</p>
+              <p className="text-gray-400 mb-6">Высокоэффективная настройка комплекса МОТОР + КПП. ВАУ-эффект даже на атмосферниках!</p>
+              <ul className="space-y-3 mb-8">
+                {["Комплексная настройка мотор + КПП", "Все защиты и температурные режимы", "Максимальный комфорт вождения"].map((f, j) => (
+                  <li key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded flex items-center justify-center bg-amber-500/20">
+                      <svg className="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-gray-300 text-sm tracking-wide">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-white/5 pt-6 mt-auto">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50">
+                  Заказать
+                </a>
+              </div>
+            </div>
+
+            {/* ECO OFF */}
+            <div className="stage-card stage-eco relative group overflow-visible">
+              <div className="text-4xl mb-4">🌿</div>
+              <h3 className="text-2xl font-black mb-1 tracking-wider">ECO OFF</h3>
+              <p className="font-semibold mb-4 text-sm tracking-widest uppercase text-green-400">Отключение систем токсичности</p>
+              <p className="text-gray-400 mb-6">Отключение экологических систем, снижающих мощность и ресурс двигателя.</p>
+              <ul className="space-y-3 mb-8">
+                {["Удаление EGR / DPF / FAP", "Отключение AdBlue (SCR)", "Удаление катализатора"].map((f, j) => (
+                  <li key={j} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded flex items-center justify-center bg-green-500/20">
+                      <svg className="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-gray-300 text-sm tracking-wide">{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-white/5 pt-6 mt-auto">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30 hover:border-green-500/50">
+                  Заказать
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* How it works - Iron Man / Jarvis Style */}
+      <section className="py-24 relative overflow-hidden">
+
+      {/* КОМПЛЕКСНЫЙ ПОДХОД МОТОР + КПП */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505]">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-amber-500/10 via-transparent to-transparent blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
+              <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
+              <span className="text-amber-500 text-xs tracking-[0.2em] uppercase font-semibold">Наш подход</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
+              <span className="gradient-text">КОМПЛЕКСНЫЙ</span> ПОДХОД
+            </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto tracking-wide leading-relaxed">
+              В современных автомобилях <span className="text-amber-500 font-bold">невозможно настроить двигатель</span>, не затрагивая работу коробки передач. 
+              <span className="block mt-2 text-white font-semibold">Всё должно делаться в комплексе.</span>
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Мотор под КПП */}
+            <div className="card p-8 text-center group hover:border-amber-500/30 transition-all">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="text-4xl">🔧</span>
+              </div>
+              <h3 className="text-xl font-bold mb-4 tracking-wider text-amber-500">МОТОР ПОД КПП</h3>
+              <p className="text-gray-400 leading-relaxed">
+                Настраиваем двигатель под новый алгоритм работы коробки передач. Двигатель работает в оптимальном диапазоне оборотов.
+              </p>
+            </div>
+
+            {/* КПП под Мотор */}
+            <div className="card p-8 text-center group hover:border-amber-500/30 transition-all">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span className="text-4xl">⚙️</span>
+              </div>
+              <h3 className="text-xl font-bold mb-4 tracking-wider text-amber-500">КПП ПОД МОТОР</h3>
+              <p className="text-gray-400 leading-relaxed">
+                Настраиваем коробку передач под тюнинг двигателя. Коробка держит мотор в зоне максимального крутящего момента.
+              </p>
+            </div>
+          </div>
+
+          {/* Результат */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/30 rounded-2xl px-8 py-6">
+              <span className="text-3xl">✨</span>
+              <div className="text-left">
+                <p className="text-amber-500 font-bold tracking-wider uppercase text-sm">Результат</p>
+                <p className="text-white text-lg font-semibold">Усиливается эффект тюнинга и продлевается жизнь КПП</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ТЮНИНГ КОРОБКИ ПЕРЕДАЧ */}
+      <section className="py-24 section-dark relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/3 to-transparent"></div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full px-5 py-2 mb-6">
+              <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
+              <span className="text-cyan-400 text-xs tracking-[0.2em] uppercase font-semibold">Отдельная услуга</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
+              ТЮНИНГ <span className="text-cyan-400" style={{textShadow: '0 0 20px rgba(0,195,255,0.5)'}}>КОРОБКИ ПЕРЕДАЧ</span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto tracking-wide">
+              Классический автомат • Робот • Вариатор — настройка под ваш стиль вождения
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                icon: "🎯",
+                title: "Точки переключения",
+                desc: "Меняем рабочий диапазон двигателя при каждом положении педали газа"
+              },
+              {
+                icon: "⚡",
+                title: "Скорость реакции",
+                desc: "Ускоряем время переключения — переход на нужную передачу быстрее"
+              },
+              {
+                icon: "🔧",
+                title: "Давление фрикционов",
+                desc: "Повышаем давление — меньше пробуксовка, выше ресурс пакета фрикционов"
+              },
+              {
+                icon: "💧",
+                title: "Гидротрансформатор",
+                desc: "Оптимизируем давление на ГДТ — увеличиваем его ресурс"
+              },
+              {
+                icon: "📊",
+                title: "Upshift / Downshift",
+                desc: "Оптимизируем тайминги переключений вверх и вниз"
+              },
+              {
+                icon: "🏎️",
+                title: "Спортивные режимы",
+                desc: "Меняем алгоритм перехода на пониженные передачи"
+              },
+            ].map((item, i) => (
+              <div key={i} className="card p-6 group hover:border-cyan-500/30 transition-all">
+                <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">{item.icon}</div>
+                <h3 className="text-base font-bold mb-2 tracking-wider text-cyan-400 uppercase">{item.title}</h3>
+                <p className="text-gray-400 text-sm tracking-wide">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Результат для ресурса */}
+          <div className="mt-12 max-w-4xl mx-auto">
+            <div className="card p-8 border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 to-transparent">
+              <h3 className="text-xl font-bold mb-6 tracking-wider text-center text-white">🛡️ РЕЗУЛЬТАТ ДЛЯ РЕСУРСА</h3>
+              <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <p className="text-cyan-400 font-bold text-lg mb-2">Разгрузка двигателя</p>
+                  <p className="text-gray-400 text-sm">Коробка не даёт мотору работать в натяг на низких оборотах</p>
+                </div>
+                <div>
+                  <p className="text-cyan-400 font-bold text-lg mb-2">Быстрый даунш ифт</p>
+                  <p className="text-gray-400 text-sm">При высокой нагрузке — мгновенный переход на низкую передачу</p>
+                </div>
+                <div>
+                  <p className="text-cyan-400 font-bold text-lg mb-2">Защита КПП</p>
+                  <p className="text-gray-400 text-sm">Разгрузка редукторов и пакетов фрикционов</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works - 3 шага */}
       <section className="py-24 relative overflow-hidden">
         {/* Tech background lines */}
         <div className="absolute inset-0 opacity-5">
@@ -566,8 +758,13 @@ export default function HomePage() {
             <span className="text-white"> ПОТЕНЦИАЛ</span>
             <br />
             <span className="text-white">ВАШЕГО </span>
-            <span className="gradient-text text-glow">ДВИГАТЕЛЯ</span>
+            <span className="gradient-text text-glow">АВТОМОБИЛЯ</span>
           </h2>
+          
+          <p className="text-lg text-gray-300 mb-6 max-w-3xl mx-auto tracking-wide leading-relaxed">
+            В современных автомобилях невозможно настроить двигатель, не затрагивая работу коробки передач. 
+            <span className="text-amber-500 font-semibold"> Мы делаем всё в комплексе.</span>
+          </p>
           
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto tracking-wide">
             Присоединяйтесь к <span className="text-amber-500 font-black text-2xl">2783</span> довольным клиентам
