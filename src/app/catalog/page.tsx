@@ -96,16 +96,16 @@ export default function CatalogPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:+79882435620"
+                href="tel:+78612435620"
                 className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 text-center"
               >
-                📞 Позвонить
+                📞 8 (861) 243-56-20
               </a>
               <a
-                href="https://t.me/motorsoft"
+                href="mailto:motorsoft@ya.ru"
                 className="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300 text-center"
               >
-                💬 Написать в Telegram
+                ✉️ motorsoft@ya.ru
               </a>
             </div>
           </div>
