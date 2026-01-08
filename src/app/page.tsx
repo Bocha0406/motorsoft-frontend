@@ -375,9 +375,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it works - Iron Man / Jarvis Style */}
-      <section className="py-24 relative overflow-hidden">
-
       {/* КОМПЛЕКСНЫЙ ПОДХОД МОТОР + КПП */}
       <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505]">
         <div className="absolute inset-0">
