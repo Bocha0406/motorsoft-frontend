@@ -244,7 +244,10 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/5 pt-6 mt-auto">
+              <div className="border-t border-white/5 pt-4 mt-auto space-y-4">
+                <p className="text-xs text-gray-500 italic text-center">
+                  💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
+                </p>
                 <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30 hover:border-blue-500/50">
                   Заказать
                 </a>
@@ -270,7 +273,10 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/5 pt-6 mt-auto">
+              <div className="border-t border-white/5 pt-4 mt-auto space-y-4">
+                <p className="text-xs text-gray-500 italic text-center">
+                  💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
+                </p>
                 <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 border border-orange-500/30 hover:border-orange-500/50">
                   Заказать
                 </a>
@@ -293,7 +299,10 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/5 pt-6 mt-auto">
+              <div className="border-t border-white/5 pt-4 mt-auto space-y-4">
+                <p className="text-xs text-gray-500 italic text-center">
+                  💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
+                </p>
                 <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50">
                   Заказать
                 </a>
@@ -316,7 +325,10 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/5 pt-6 mt-auto">
+              <div className="border-t border-white/5 pt-4 mt-auto space-y-4">
+                <p className="text-xs text-gray-500 italic text-center">
+                  💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
+                </p>
                 <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 border border-teal-500/30 hover:border-teal-500/50">
                   Заказать
                 </a>
@@ -342,7 +354,10 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/5 pt-6 mt-auto">
+              <div className="border-t border-white/5 pt-4 mt-auto space-y-4">
+                <p className="text-xs text-gray-500 italic text-center">
+                  💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
+                </p>
                 <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50">
                   Заказать
                 </a>
@@ -365,9 +380,126 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/5 pt-6 mt-auto">
+              <div className="border-t border-white/5 pt-4 mt-auto space-y-4">
+                <p className="text-xs text-gray-500 italic text-center">
+                  💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
+                </p>
                 <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30 hover:border-green-500/50">
                   Заказать
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ЭКСКЛЮЗИВ */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#0a0a0a] via-[#050505] to-[#0a0a0a]">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-radial from-red-500/10 via-transparent to-transparent blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-5 py-2 mb-6">
+              <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
+              <span className="text-red-500 text-xs tracking-[0.2em] uppercase font-semibold">Уникальные возможности</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-wider">
+              <span className="gradient-text">ЭКСКЛЮЗИВ</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto tracking-wide leading-relaxed">
+              Мы специализируемся на сложных задачах, которые не решают другие
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* BRP */}
+            <div className="card group hover:border-red-500/50 transition-all duration-300">
+              <div className="text-5xl mb-6 text-center">🚤</div>
+              <h3 className="text-2xl font-bold mb-4 text-center group-hover:text-red-400 transition">
+                BRP — Уникальный тюнинг
+              </h3>
+              <p className="text-gray-400 mb-6 text-center">
+                Работаем с заблокированными процессорами без замены ЭБУ
+              </p>
+              <ul className="space-y-3 text-sm text-gray-400">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>SEA-DOO — гидроциклы</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>CAN-AM — квадроциклы и багги</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>SKI-DOO — снегоходы</span>
+                </li>
+              </ul>
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
+                  Узнать подробнее
+                </a>
+              </div>
+            </div>
+
+            {/* Land Rover */}
+            <div className="card group hover:border-red-500/50 transition-all duration-300">
+              <div className="text-5xl mb-6 text-center">🛡️</div>
+              <h3 className="text-2xl font-bold mb-4 text-center group-hover:text-red-400 transition">
+                Land Rover — Защита
+              </h3>
+              <p className="text-gray-400 mb-6 text-center">
+                Ресурсный тюнинг с активацией защитных режимов
+              </p>
+              <ul className="space-y-3 text-sm text-gray-400">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Защита коленвала 3.0</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Защита поршней 4.4</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Защита 1-го цилиндра Ingenium</span>
+                </li>
+              </ul>
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
+                  Узнать подробнее
+                </a>
+              </div>
+            </div>
+
+            {/* Индивидуальная разработка */}
+            <div className="card group hover:border-red-500/50 transition-all duration-300">
+              <div className="text-5xl mb-6 text-center">⚙️</div>
+              <h3 className="text-2xl font-bold mb-4 text-center group-hover:text-red-400 transition">
+                Индивидуальная разработка
+              </h3>
+              <p className="text-gray-400 mb-6 text-center">
+                Мы — прямые разработчики прошивок
+              </p>
+              <ul className="space-y-3 text-sm text-gray-400">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Решение любых нестандартных задач</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Разработка под уникальные конфигурации</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Исправление любых проблем с ЭБУ</span>
+                </li>
+              </ul>
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
+                  Узнать подробнее
                 </a>
               </div>
             </div>

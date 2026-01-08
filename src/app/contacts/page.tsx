@@ -49,22 +49,6 @@ export default function ContactsPage() {
                 </div>
               </a>
 
-              {/* Phone */}
-              <a
-                href="tel:+78612435620"
-                className="card flex items-center gap-4 group"
-              >
-                <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-2xl">
-                  📞
-                </div>
-                <div>
-                  <h3 className="font-semibold group-hover:text-green-400 transition">
-                    Телефон
-                  </h3>
-                  <p className="text-gray-400">8 (861) 243-56-20</p>
-                </div>
-              </a>
-
               {/* Email */}
               <a
                 href="mailto:motorsoft@ya.ru"
@@ -94,7 +78,7 @@ export default function ContactsPage() {
                   <h3 className="font-semibold group-hover:text-green-400 transition">
                     WhatsApp
                   </h3>
-                  <p className="text-gray-400">8 (861) 243-56-20</p>
+                  <p className="text-gray-400">Напишите нам</p>
                 </div>
               </a>
             </div>
