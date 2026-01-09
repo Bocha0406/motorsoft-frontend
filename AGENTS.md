@@ -1,40 +1,62 @@
 # Agent Instructions
 
-This project uses **bd** (beads) for issue tracking. Run `bd onboard` to get started.
+Этот проект использует **bd** (Beads) для отслеживания задач.
 
-## Quick Reference
+## 🚀 Быстрый старт
 
 ```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --status in_progress  # Claim work
-bd close <id>         # Complete work
-bd sync               # Sync with git
+bd ready              # Найти задачи готовые к работе
+bd show <id>          # Посмотреть детали задачи
+bd update <id> --status in_progress  # Взять задачу в работу
+bd close <id>         # Завершить задачу
+bd sync               # Синхронизировать с git
 ```
 
-## Landing the Plane (Session Completion)
+## 📋 Рабочий процесс
 
-**When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
+**Перед началом работы:**
+1. Выполни `bd ready` — увидишь список задач без блокеров
+2. Выбери задачу по приоритету (P0 > P1 > P2)
+3. Возьми в работу: `bd update <id> --status in_progress`
 
-**MANDATORY WORKFLOW:**
+**Во время работы:**
+4. Читай AI_Context.md для понимания проекта
+5. Делай изменения в коде
+6. Коммить изменения в git
 
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **PUSH TO REMOTE** - This is MANDATORY:
-   ```bash
-   git pull --rebase
-   bd sync
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-5. **Clean up** - Clear stashes, prune remote branches
-6. **Verify** - All changes committed AND pushed
-7. **Hand off** - Provide context for next session
+**После завершения:**
+7. Закрой задачу: `bd close <id>`
+8. Синхронизируй: `bd sync`
+9. Push в git: `git push`
 
-**CRITICAL RULES:**
-- Work is NOT complete until `git push` succeeds
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
+## ⚠️ ВАЖНО: Завершение сессии
+
+**Работа НЕ завершена пока `git push` не выполнен!**
+
+```bash
+git pull --rebase
+bd sync
+git push
+git status  # Должен показать "up to date with origin"
+```
+
+## 📁 Ключевые файлы
+
+- `AI_Context.md` — полная документация проекта, история изменений
+- `AGENTS.md` — этот файл с инструкциями
+- `.beads/` — база данных задач bd
+
+## 🎯 Текущие приоритеты (P0)
+
+1. Получить ключи Yandex Cloud (FOLDER_ID + API_KEY)
+2. Протестировать OCR на реальных скриншотах WinOLS
+3. Базовая аналитика — таблица user_activity + middleware
+4. Admin Panel — веб-интерфейс для операторов
+
+## 📚 Контекст проекта
+
+- **Платформа:** MotorSoft File Service — продажа прошивок ECU/TCU
+- **Стек:** FastAPI + PostgreSQL + aiogram (Telegram) + Next.js
+- **Фишка:** Telegram-бот с OCR распознаванием скриншотов WinOLS
+- **База:** 7,407 прошивок, 201 марка авто, 41 тип ECU
 
