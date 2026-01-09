@@ -1,0 +1,67 @@
+# ========================================
+# MotorSoft .gitignore
+# ========================================
+
+# === СЕКРЕТЫ (НИКОГДА НЕ КОММИТИТЬ!) ===
+credentials.txt
+.env
+*.pem
+*.key
+secrets/
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# === IDE ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# === Logs ===
+logs/
+*.log
+
+# === Test/Coverage ===
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# === Build ===
+*.out
+.next/
+out/
+
+# === Uploads (большие файлы) ===
+uploads/
+temp/
+tmp/
+
+# === macOS ===
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+bot/.env
