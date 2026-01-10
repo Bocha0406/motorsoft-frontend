@@ -14,7 +14,7 @@ export default function TelegramButton({
   children = "💬 Открыть Telegram бота"
 }: TelegramButtonProps) {
   
-  const BOT_USERNAME = "motorsoft_bot";
+  const BOT_USERNAME = "MotorSoft_bot";
   const TELEGRAM_URL = `https://t.me/${BOT_USERNAME}`;
 
   const baseStyles = "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-xl";
