@@ -15,6 +15,7 @@ from app.core.security import (
 )
 from app.models.admin_user import AdminUser, AdminRole
 from app.models.user import User
+from app.models.order import Order
 from app.core.config import settings
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
@@ -284,3 +285,41 @@ async def delete_user(
     await db.commit()
     
     return {"success": True, "deleted_user_id": user_id}
+
+
+# === ORDERS ===
+
+@router.get("/orders")
+async def get_orders(
+    skip: int = 0,
+    limit: int = 100,
+    status: str = None,
+    db: AsyncSession = Depends(get_db),
+    admin: AdminUser = Depends(get_current_admin)
+):
+    """
+    Получить список заказов с фильтрацией по статусу.
+    """
+    query = select(Order).offset(skip).limit(limit)
+    
+    if status:
+        query = query.where(Order.status == status)
+    
+    query = query.order_by(Order.created_at.desc())
+    
+    result = await db.execute(query)
+    orders = result.scalars().all()
+    
+    return {
+        "items": [
+            {
+                "id": o.id,
+                "user_id": o.user_id,
+                "firmware_id": o.firmware_id,
+                "status": o.status,
+                "amount": float(o.price) if o.price else 0.0,
+                "created_at": o.created_at.isoformat() if o.created_at else None
+            }
+            for o in orders
+        ]
+    }
