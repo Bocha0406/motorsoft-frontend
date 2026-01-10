@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import PriceRequestButton from "@/components/PriceRequestButton";
+import TelegramButton from "@/components/TelegramButton";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -81,9 +81,9 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-3">
-            <PriceRequestButton variant="secondary" size="sm">
-              💰 Цена
-            </PriceRequestButton>
+            <TelegramButton variant="secondary" size="sm">
+              💬 TELEGRAM
+            </TelegramButton>
             <a
               href="https://t.me/MotorSoftBot"
               target="_blank"
@@ -150,9 +150,9 @@ export default function Header() {
                 FAQ
               </Link>
               <div className="mt-4 flex flex-col gap-3">
-                <PriceRequestButton variant="outline" size="md" className="w-full">
-                  💰 Запросить цену
-                </PriceRequestButton>
+                <TelegramButton variant="outline" size="md" className="w-full">
+                  💬 Открыть Telegram бота
+                </TelegramButton>
                 <a
                   href="https://t.me/MotorSoftBot"
                   target="_blank"

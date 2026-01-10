@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PriceRequestButton from "@/components/PriceRequestButton";
+import TelegramButton from "@/components/TelegramButton";
 
 export const metadata = {
   title: "Услуги чип-тюнинга | MotorSoft",
@@ -119,9 +119,9 @@ export default function PricePage() {
               </div>
             </div>
             
-            <PriceRequestButton variant="primary" size="lg" className="w-full text-lg">
-              💰 Узнать стоимость
-            </PriceRequestButton>
+            <TelegramButton variant="primary" size="lg" className="w-full text-lg">
+              💬 Заказать в Telegram
+            </TelegramButton>
           </div>
         </div>
       </section>
@@ -225,9 +225,9 @@ export default function PricePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <PriceRequestButton variant="primary" size="lg" className="text-lg">
-                💰 Узнать стоимость
-              </PriceRequestButton>
+              <TelegramButton variant="primary" size="lg" className="text-lg">
+                💬 Заказать в Telegram
+              </TelegramButton>
               <a
                 href="tel:+79882435620"
                 className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"

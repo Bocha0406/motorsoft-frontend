@@ -1,7 +1,7 @@
 import { brands, getBrandBySlug } from '@/lib/brands';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import PriceRequestButton from '@/components/PriceRequestButton';
+import TelegramButton from '@/components/TelegramButton';
 import BrandLogo from '@/components/BrandLogo';
 
 interface PageProps {
@@ -87,9 +87,9 @@ export default function BrandPage({ params }: PageProps) {
                   с учётом всех характеристик вашего автомобиля
                 </p>
                 
-                <PriceRequestButton variant="primary" size="lg" className="w-full text-lg py-4">
-                  📋 Заполнить форму запроса
-                </PriceRequestButton>
+                <TelegramButton variant="primary" size="lg" className="w-full text-lg py-4">
+                  💬 Заказать в Telegram
+                </TelegramButton>
                 
                 <div className="mt-4 flex items-center justify-center gap-4 text-sm text-gray-400">
                   <span className="flex items-center gap-1">
@@ -274,7 +274,7 @@ export default function BrandPage({ params }: PageProps) {
               Запишитесь на консультацию или узнайте стоимость чип-тюнинга для вашей модели
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <PriceRequestButton variant="primary" size="lg" />
+              <TelegramButton variant="primary" size="lg" />
               <a
                 href="https://t.me/motorsoft"
                 className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"

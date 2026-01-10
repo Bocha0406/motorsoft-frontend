@@ -88,9 +88,9 @@ export default function HomePage() {
                   Смотреть прайс
                 </Link>
                 <span className="text-gray-600 text-sm">или</span>
-                <PriceRequestButton variant="outline" size="sm">
-                  💰 Запросить цену
-                </PriceRequestButton>
+                <TelegramButton variant="outline" size="sm">
+                  💬 Открыть бота
+                </TelegramButton>
               </div>
               <div className="mt-4">
                 <Link
