@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { requestCategories } from "@/lib/categories";
-import PriceRequestButton from "@/components/PriceRequestButton";
+import TelegramButton from "@/components/TelegramButton";
 
 export default function HomePage() {
   return (
