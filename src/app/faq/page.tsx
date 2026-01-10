@@ -44,7 +44,7 @@ const faqItems = [
   {
     question: "Как отправить вам файл прошивки?",
     answer:
-      "Просто отправьте файл (.bin, .ori, .fls и др.) нашему Telegram боту @MotorSoftBot. Бот автоматически определит марку, модель и тип ЭБУ.",
+      "Просто отправьте файл (.bin, .ori, .fls и др.) нашему Telegram боту @motorsoft_bot. Бот автоматически определит марку, модель и тип ЭБУ.",
   },
   {
     question: "Как происходит оплата?",
@@ -102,7 +102,7 @@ export default function FAQPage() {
             Напишите нам в Telegram — ответим в течение 5 минут
           </p>
           <a
-            href="https://t.me/MotorSoftBot"
+            href="https://t.me/motorsoft_bot"
             target="_blank"
             className="btn-gradient inline-flex items-center gap-2 text-lg"
           >

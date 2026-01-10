@@ -149,7 +149,7 @@ export default function AboutPage() {
               15-30 минут
             </p>
             <a
-              href="https://t.me/MotorSoftBot"
+              href="https://t.me/motorsoft_bot"
               target="_blank"
               className="btn-gradient inline-flex items-center gap-2 text-lg"
             >

@@ -23,6 +23,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Admin Panel Override */
+.admin-panel {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
 /* ═══════════════════════════════════════════════════════════
    TYPOGRAPHY — Premium Extended Style
    ═══════════════════════════════════════════════════════════ */

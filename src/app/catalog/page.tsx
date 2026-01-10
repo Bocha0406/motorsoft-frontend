@@ -102,7 +102,7 @@ export default function CatalogPage() {
                 ✉️ motorsoft@ya.ru
               </a>
               <a
-                href="https://t.me/MotorSoftBot"
+                href="https://t.me/motorsoft_bot"
                 target="_blank"
                 className="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300 text-center"
               >

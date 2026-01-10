@@ -1,5 +1,9 @@
 // API client для Admin Panel
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+// В продакшене нужно задать NEXT_PUBLIC_API_URL в Vercel
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+    ? 'https://api.motorsoft.pro/api/v1'  // TODO: заменить на реальный URL backend
+    : 'http://localhost:8000/api/v1');
 
 export interface AdminUser {
   id: number;

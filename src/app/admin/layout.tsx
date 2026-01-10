@@ -37,6 +37,28 @@ export default function AdminLayout({
     checkAuthentication();
   }, [pathname, router]);
 
+  // Скрываем основной контент сайта когда админ-панель активна
+  useEffect(() => {
+    if (pathname.startsWith('/admin')) {
+      document.body.style.overflow = 'hidden';
+      const root = document.documentElement;
+      root.style.overflow = 'hidden';
+      root.style.width = '100vw';
+      root.style.height = '100vh';
+      document.body.style.width = '100vw';
+      document.body.style.height = '100vh';
+      
+      return () => {
+        document.body.style.overflow = '';
+        root.style.overflow = '';
+        root.style.width = '';
+        root.style.height = '';
+        document.body.style.width = '';
+        document.body.style.height = '';
+      };
+    }
+  }, [pathname]);
+
   // Показать загрузку только для защищённых страниц
   if (loading && pathname !== '/admin/login') {
     return (
@@ -49,6 +71,41 @@ export default function AdminLayout({
     );
   }
 
+  return (
+    <div 
+      className="admin-panel fixed inset-0 z-[9999] overflow-auto"
+      style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh'
+      }}
+    >
+      <AdminPanelContent 
+        pathname={pathname} 
+        loading={loading} 
+        admin={admin}
+      >
+        {children}
+      </AdminPanelContent>
+    </div>
+  );
+}
+
+function AdminPanelContent({
+  pathname,
+  loading,
+  admin,
+  children,
+}: {
+  pathname: string;
+  loading: boolean;
+  admin: AdminUser | null;
+  children: React.ReactNode;
+}) {
   // Страница логина - без layout
   if (pathname === '/admin/login') {
     return <>{children}</>;
@@ -56,7 +113,7 @@ export default function AdminLayout({
 
   // Админ layout с навигацией
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900 z-[9998]">
       {/* Header */}
       <header className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
