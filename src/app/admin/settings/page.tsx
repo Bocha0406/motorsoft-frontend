@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+
 interface AdminUser {
   id: number;
   username: string;
@@ -33,7 +35,7 @@ export default function SettingsPage() {
 
   const loadAdmins = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/api/admin/users?skip=0&limit=1000', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/users?skip=0&limit=1000`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
         },
@@ -55,7 +57,7 @@ export default function SettingsPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/api/admin/add', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/add`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
@@ -86,7 +88,7 @@ export default function SettingsPage() {
     if (!confirm('Удалить администратора?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/api/admin/remove/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/remove/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
@@ -110,7 +112,7 @@ export default function SettingsPage() {
   const handleBackup = async () => {
     try {
       setMessage('⏳ Создание резервной копии...');
-      const response = await fetch('http://localhost:8000/api/v1/api/admin/backup', {
+      const response = await fetch(`${API_BASE_URL}/api/admin/backup`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
         },
@@ -214,7 +216,7 @@ export default function SettingsPage() {
               <label className="block text-sm text-gray-400 mb-2">API URL</label>
               <input
                 type="text"
-                defaultValue="http://localhost:8000/api/v1"
+                defaultValue={API_BASE_URL}
                 className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:border-orange-500 transition"
               />
             </div>

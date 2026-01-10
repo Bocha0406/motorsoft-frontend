@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+
 interface Order {
   id: number;
   user_id: number;
@@ -19,7 +21,7 @@ export default function OrdersPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const url = new URL('http://localhost:8000/api/v1/api/admin/orders');
+        const url = new URL(`${API_BASE_URL}/api/admin/orders`);
         if (filter !== 'all') {
           url.searchParams.append('status', filter);
         }

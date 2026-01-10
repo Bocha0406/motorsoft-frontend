@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+// API URL - используем переменную окружения
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+
 export default function FirmwaresPage() {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -54,7 +57,7 @@ export default function FirmwaresPage() {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await fetch('http://localhost:8000/api/v1/api/admin/firmwares/upload', {
+        const response = await fetch(`${API_BASE_URL}/api/admin/firmwares/upload`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
