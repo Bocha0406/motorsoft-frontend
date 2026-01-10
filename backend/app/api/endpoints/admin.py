@@ -1,7 +1,9 @@
 """Admin endpoints - управление админ-панелью."""
+import os
+import shutil
 from datetime import datetime, timedelta
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_
 from pydantic import BaseModel
@@ -323,3 +325,88 @@ async def get_orders(
             for o in orders
         ]
     }
+
+
+# === FIRMWARES ===
+
+UPLOAD_DIR = "/app/uploads"
+
+
+@router.post("/firmwares/upload")
+async def upload_firmware(
+    file: UploadFile = File(...),
+    admin: AdminUser = Depends(get_current_admin)
+):
+    """
+    Загрузить файл прошивки.
+    
+    Принимает .bin и .hex файлы.
+    Сохраняет в папку uploads.
+    """
+    # Проверка расширения
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No filename provided")
+    
+    ext = file.filename.lower().split('.')[-1]
+    if ext not in ['bin', 'hex']:
+        raise HTTPException(
+            status_code=400,
+            detail="Only .bin and .hex files are allowed"
+        )
+    
+    # Создать папку uploads если не существует
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    
+    # Уникальное имя файла
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    safe_filename = f"{timestamp}_{file.filename}"
+    file_path = os.path.join(UPLOAD_DIR, safe_filename)
+    
+    # Сохранить файл
+    try:
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to save file: {str(e)}"
+        )
+    
+    # Получить размер файла
+    file_size = os.path.getsize(file_path)
+    
+    return {
+        "success": True,
+        "filename": safe_filename,
+        "original_name": file.filename,
+        "size": file_size,
+        "uploaded_by": admin.username,
+        "uploaded_at": datetime.utcnow().isoformat()
+    }
+
+
+@router.get("/firmwares")
+async def list_uploaded_firmwares(
+    admin: AdminUser = Depends(get_current_admin)
+):
+    """
+    Получить список загруженных файлов прошивок.
+    """
+    if not os.path.exists(UPLOAD_DIR):
+        return {"items": []}
+    
+    files = []
+    for filename in os.listdir(UPLOAD_DIR):
+        if filename.endswith(('.bin', '.hex')):
+            file_path = os.path.join(UPLOAD_DIR, filename)
+            stat = os.stat(file_path)
+            files.append({
+                "filename": filename,
+                "size": stat.st_size,
+                "uploaded_at": datetime.fromtimestamp(stat.st_mtime).isoformat()
+            })
+    
+    # Сортировка по дате (новые первые)
+    files.sort(key=lambda x: x["uploaded_at"], reverse=True)
+    
+    return {"items": files}
