@@ -4,7 +4,7 @@ API endpoint для поиска прошивки по загруженному 
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import select, or_
-from typing import Dict, List
+from typing import Dict, List, Optional, Any
 import tempfile
 import os
 import re
@@ -20,6 +20,10 @@ parser = FirmwareParser()
 
 # Chinese ECU patterns to extract from filename
 FILENAME_PATTERNS = [
+    # Hyundai/Kia Bosch calibration: GRBRB44CQS6-A000, GRBRB44CFS8-5000
+    r'(GR[A-Z0-9]{6,12}[-_]?[A-Z0-9]{4,6})',
+    # Hyundai/Kia software IDs: GN26ST2E2
+    r'(GN[0-9]{2}[A-Z0-9]{4,8})',
     # Full Chinese calibration: GCQBRB44CQS03A00 (16+ chars)
     r'([A-Z]{3,5}[A-Z0-9]{10,15})',
     # UAES/Bosch China: F01R0AD3G0, F01RB0D2T4
@@ -65,6 +69,52 @@ def extract_ids_from_filename(filename: str) -> List[str]:
     return unique
 
 
+def smart_search_by_filename(filename: str, db: Session) -> Optional[Any]:
+    """
+    Умный поиск по имени файла - разбивает на части и ищет в базе.
+    Например: Hyundai_Solaris_1.2_(Оригинал)_GATA-BE42QS09A00_.bin
+    -> пробует найти GATA-BE42QS09A00 в software_id
+    """
+    if not filename:
+        return None
+    
+    # Убираем расширение
+    clean = re.sub(r'\.\w{2,4}$', '', filename)
+    
+    # Разбиваем на части по _ и пробелам
+    parts = re.split(r'[_\s]+', clean)
+    
+    # Фильтруем части длиннее 6 символов (потенциальные ID)
+    potential_ids = [p for p in parts if len(p) >= 6 and not p.lower() in ['hyundai', 'solaris', 'accent', 'toyota', 'kia', 'оригинал', 'original']]
+    
+    logger.info(f"Smart search parts from filename: {potential_ids}")
+    
+    for part in potential_ids:
+        # Ищем полное совпадение части
+        stmt = select(Firmware).where(
+            Firmware.software_id.ilike(f"%{part}%")
+        ).limit(1)
+        result = db.execute(stmt)
+        firmware = result.scalar_one_or_none()
+        if firmware:
+            logger.info(f"Smart search found by part: {part}")
+            return firmware
+        
+        # Пробуем без дефисов
+        clean_part = part.replace('-', '').replace('_', '')
+        if clean_part != part:
+            stmt = select(Firmware).where(
+                Firmware.software_id.ilike(f"%{clean_part}%")
+            ).limit(1)
+            result = db.execute(stmt)
+            firmware = result.scalar_one_or_none()
+            if firmware:
+                logger.info(f"Smart search found by clean part: {clean_part}")
+                return firmware
+    
+    return None
+
+
 @router.post("/search")
 def search_firmware(
     file: UploadFile = File(...),
@@ -77,9 +127,35 @@ def search_firmware(
     1. Загружаем файл во временную папку
     2. Парсим файл и извлекаем ID
     3. Также пробуем извлечь ID из имени файла!
-    4. Ищем в базе по software_id
+    4. УМНЫЙ ПОИСК: разбиваем имя на части и ищем каждую в базе
     5. Возвращаем информацию о прошивке
     """
+    
+    # =============================================
+    # СНАЧАЛА: Умный поиск по имени файла (самый надёжный!)
+    # =============================================
+    logger.info(f"Processing file: {file.filename}")
+    
+    smart_result = smart_search_by_filename(file.filename, db)
+    if smart_result:
+        return {
+            "found": True,
+            "message": "Firmware found by smart filename search",
+            "extracted_id": smart_result.software_id,
+            "firmware": {
+                "id": smart_result.id,
+                "brand": smart_result.brand,
+                "series": smart_result.series,
+                "ecu_brand": smart_result.ecu_brand,
+                "software_id": smart_result.software_id,
+                "hardware_id": smart_result.hardware_id,
+                "file_size": smart_result.file_size,
+                "price": float(smart_result.price) if smart_result.price else 50.0,
+                "winols_file": smart_result.winols_file,
+            },
+            "parse_result": {"method": "smart_filename_search"},
+            "search_ids": [smart_result.software_id],
+        }
     
     # Сохраняем во временный файл
     with tempfile.NamedTemporaryFile(delete=False, suffix='.bin') as tmp_file:
@@ -197,6 +273,58 @@ def search_firmware(
         # Удаляем временный файл
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
+
+
+@router.get("/search")
+def search_firmware_by_id(
+    software_id: str,
+    db: Session = Depends(get_db_sync)
+) -> Dict:
+    """
+    Поиск прошивки по software_id (например, после OCR распознавания)
+    GET /api/firmware/search?software_id=39101-2F310
+    """
+    logger.info(f"GET search request for software_id: {software_id}")
+    
+    # Ищем напрямую с ILIKE
+    stmt = select(Firmware).where(
+        Firmware.software_id.ilike(f"%{software_id}%")
+    )
+    result = db.execute(stmt)
+    firmware = result.scalar_one_or_none()
+    
+    # Если не найдено, пробуем без дефисов
+    if not firmware:
+        clean_id = software_id.replace('-', '').replace(' ', '').replace('_', '')
+        stmt = select(Firmware).where(
+            Firmware.software_id.ilike(f"%{clean_id}%")
+        )
+        result = db.execute(stmt)
+        firmware = result.scalar_one_or_none()
+    
+    if firmware:
+        return {
+            "found": True,
+            "message": "Firmware found in database",
+            "extracted_id": software_id,
+            "firmware": {
+                "id": firmware.id,
+                "brand": firmware.brand,
+                "series": firmware.series,
+                "ecu_brand": firmware.ecu_brand,
+                "software_id": firmware.software_id,
+                "hardware_id": firmware.hardware_id,
+                "file_size": firmware.file_size,
+                "price": float(firmware.price) if firmware.price else 50.0,
+                "winols_file": firmware.winols_file,
+            },
+        }
+    else:
+        return {
+            "found": False,
+            "message": "Firmware not found in database",
+            "extracted_id": software_id,
+        }
 
 
 @router.get("/stats")

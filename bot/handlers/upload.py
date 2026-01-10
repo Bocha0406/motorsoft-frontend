@@ -161,22 +161,43 @@ async def handle_photo(message: Message, state: FSMContext, bot: Bot):
         await message.answer(text, reply_markup=get_confirm_keyboard(order_id))
     
     else:
-        # Not found in database - show what was recognized
+        # Not found in database - notify operator and inform user
         ids_text = "\n".join([
             f"• <code>{item['id']}</code> ({item['type']}, {item['confidence']*100:.0f}%)"
             for item in all_ids[:5]
         ])
         
+        # Отправляем запрос операторам
+        for operator_id in settings.OPERATOR_IDS:
+            try:
+                await bot.send_photo(
+                    operator_id,
+                    photo.file_id,
+                    caption=(
+                        f"🔍 <b>Запрос прошивки (не найдена в базе)</b>\n\n"
+                        f"👤 От: @{message.from_user.username or 'без username'} "
+                        f"(ID: <code>{message.from_user.id}</code>)\n"
+                        f"📛 Имя: {message.from_user.full_name}\n"
+                        f"🕐 Время: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
+                        f"📋 <b>Распознанные ID:</b>\n{ids_text}\n\n"
+                        f"🎯 Лучший результат: <code>{best['id']}</code>"
+                    )
+                )
+            except Exception as e:
+                pass  # Оператор недоступен
+        
         text = f"""
-🔍 <b>Распознанные ID прошивок:</b>
+👋 <b>Привет!</b>
 
+🔍 <b>Распознанный ID:</b> <code>{best['id']}</code>
+
+⚠️ К сожалению, такой прошивки пока нет в нашей базе.
+
+✅ <b>Я уже отправил ваш запрос инженеру!</b>
+📞 Он ответит вам в течение часа.
+
+<i>Распознанные варианты:</i>
 {ids_text}
-
-⚠️ <b>Прошивка не найдена в базе</b>
-
-Лучший результат: <code>{best['id']}</code>
-
-📤 Загрузи СТОК файл (.bin) для создания заявки, или напиши ID оператору.
 """
         await message.answer(text, reply_markup=get_back_keyboard())
 
