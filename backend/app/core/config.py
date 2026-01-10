@@ -18,6 +18,11 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     SECRET_KEY: str = "your-secret-key-change-in-production"
     
+    # JWT для Admin Panel
+    JWT_SECRET_KEY: str = "jwt-secret-key-change-in-production-123456789"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 24 часа
+    
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://motorsoft:motorsoft@localhost:5432/motorsoft"
     

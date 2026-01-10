@@ -41,6 +41,7 @@ class User(Base):
     # Partner program
     is_partner = Column(Boolean, default=False)
     is_slave = Column(Boolean, default=False)  # В БД называется is_slave, не is_slave_device
+    is_blocked = Column(Boolean, default=False)  # Блокировка пользователя админом
     
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())

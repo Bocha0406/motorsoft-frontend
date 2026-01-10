@@ -56,18 +56,6 @@ services:
       - backend
     restart: unless-stopped
 
-  # Frontend (Admin Panel + Public Site)
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: motorsoft_frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    restart: unless-stopped
-
 volumes:
   postgres_data:
   uploads_data:

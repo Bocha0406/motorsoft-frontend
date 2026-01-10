@@ -7,6 +7,7 @@ from app.models.user import User
 from app.models.firmware import Firmware
 from app.models.order import Order
 from app.models.transaction import Transaction
+from app.models.admin_user import AdminUser
 from loguru import logger
 
 
