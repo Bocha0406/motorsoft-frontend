@@ -19,7 +19,57 @@
 | **Telegram интеграция сайта** | ✅ Все формы заменены | 100% |
 | **Admin Panel MVP** | ✅ ЗАВЕРШЁН 10.01.2026! | 100% |
 | **Yandex Object Storage** | ✅ **НАСТРОЕН 13.01.2026!** | 100% |
+| **🆕 Stage 1/2/3 выбор** | ✅ **ДОБАВЛЕН 13.01.2026!** | 100% |
 | **Deploy Backend (VPS)** | 🔴 **КРИТИЧНО!** | 0% |
+
+---
+
+## 🎯 STAGE 1/2/3 СИСТЕМА (13.01.2026 — НОВОЕ!)
+
+### Как работает:
+
+1. **Клиент загружает файл** (.bin или скриншот WinOLS)
+2. **Бот находит прошивку в базе** (OCR или умный поиск)
+3. **Показывает варианты Stage:**
+   - 🔹 **Stage 1 — Базовый** (+15-25% мощности) — 50₽
+   - 🔸 **Stage 2 — Умеренный** (+25-35% мощности) — 65₽ (+30%)
+   - 🔥 **Stage 3 — Максимум** (+40-60% мощности) — 80₽ (+60%)
+4. **Клиент выбирает Stage и подтверждает покупку**
+5. **Бот списывает деньги и выдаёт Presigned URL из S3**
+
+### Новые файлы:
+
+| Файл | Описание |
+|------|----------|
+| `backend/app/models/firmware_variant.py` | Модель FirmwareVariant для Stage |
+| `backend/migrations/001_add_stage_support.sql` | SQL миграция |
+| `bot/keyboards/upload.py` | Клавиатуры Stage выбора |
+| `bot/handlers/upload.py` | Обработчики Stage |
+
+### Новые поля в Order:
+
+```sql
+ALTER TABLE orders ADD COLUMN stage VARCHAR(50);       -- "stage1", "stage2", "stage3"
+ALTER TABLE orders ADD COLUMN variant_id INTEGER;      -- FK на firmware_variants
+ALTER TABLE orders ADD COLUMN s3_key VARCHAR(500);     -- Ключ файла в S3
+```
+
+### Как загрузить Stage файлы:
+
+```python
+# 1. Загрузить файл в Object Storage
+from backend.app.services.s3_storage import s3_storage
+
+with open("stage1_file.bin", "rb") as f:
+    result = s3_storage.upload_file(f, "Toyota_89663-52N02_Stage1.bin")
+    s3_key = result["key"]  # "firmwares/20260113_Toyota_89663-52N02_Stage1.bin"
+
+# 2. Создать запись в firmware_variants
+INSERT INTO firmware_variants 
+(firmware_id, stage, stage_name, price, s3_key, description)
+VALUES
+(123, 'stage1', 'Stage 1 - Базовый', 50.0, 'firmwares/...', 'Оптимизация калибровок');
+```
 
 ---
 
