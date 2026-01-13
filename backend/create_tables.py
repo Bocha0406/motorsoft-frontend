@@ -5,6 +5,7 @@ import asyncio
 from app.core.database import engine, Base
 from app.models.user import User
 from app.models.firmware import Firmware
+from app.models.firmware_variant import FirmwareVariant
 from app.models.order import Order
 from app.models.transaction import Transaction
 from app.models.admin_user import AdminUser

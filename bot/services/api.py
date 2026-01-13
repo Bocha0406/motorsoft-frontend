@@ -93,6 +93,13 @@ class APIClient:
             params={"software_id": software_id}
         )
     
+    async def get_firmware_variants(self, firmware_id: int) -> Dict:
+        """Get Stage variants for firmware (Stage 1/2/3)"""
+        return await self._request(
+            "GET",
+            f"/api/firmware/{firmware_id}/variants"
+        )
+    
     async def get_firmware_stats(self) -> Dict:
         """Get firmware database statistics"""
         return await self._request("GET", "/api/firmware/stats")
@@ -115,9 +122,10 @@ class APIClient:
         telegram_id: int, 
         firmware_id: int,
         original_filename: str = None,
-        original_file_path: str = None
+        original_file_path: str = None,
+        stage: str = None  # "stage1", "stage2", "stage3"
     ) -> Dict:
-        """Create a new order for purchase"""
+        """Create a new order for purchase with optional Stage"""
         return await self._request(
             "POST",
             "/orders/create",
@@ -125,7 +133,8 @@ class APIClient:
                 "telegram_id": telegram_id,
                 "firmware_id": firmware_id,
                 "original_filename": original_filename,
-                "original_file_path": original_file_path
+                "original_file_path": original_file_path,
+                "stage": stage
             }
         )
     

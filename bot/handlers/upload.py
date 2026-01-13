@@ -2,6 +2,13 @@
 File upload handlers
 Main functionality - upload firmware and get mod
 Also handles OCR for screenshot recognition (Yandex Vision + Tesseract fallback)
+
+FLOW (Stage selection):
+1. Client uploads .bin file or screenshot
+2. Bot finds firmware in database
+3. Bot shows Stage 1/2/3 variants with prices
+4. Client selects Stage and confirms purchase
+5. Bot returns Presigned URL from Object Storage
 """
 
 from aiogram import Router, F, Bot
@@ -12,7 +19,12 @@ import aiofiles
 import os
 from datetime import datetime
 
-from keyboards.upload import get_confirm_keyboard, get_payment_keyboard
+from keyboards.upload import (
+    get_confirm_keyboard, 
+    get_payment_keyboard,
+    get_stage_selection_keyboard,
+    get_stage_confirm_keyboard
+)
 from keyboards.main import get_back_keyboard
 from services.api import api_client
 from services.ocr_yandex import get_ocr_service, init_yandex_ocr
@@ -32,6 +44,7 @@ if settings.YANDEX_CLOUD_FOLDER_ID:
 class UploadStates(StatesGroup):
     """Upload flow states"""
     waiting_file = State()
+    select_stage = State()  # New: selecting Stage 1/2/3
     confirm_purchase = State()
 
 
@@ -117,31 +130,19 @@ async def handle_photo(message: Message, state: FSMContext, bot: Bot):
     search_result = await api_client.search_firmware(best["id"])
     
     if search_result.get("found"):
-        # Found in database!
+        # Found in database! Get Stage variants
         firmware = search_result["firmware"]
         
-        # Create order first
-        order_result = await api_client.create_order(
-            telegram_id=message.from_user.id,
-            firmware_id=firmware.get('id'),
-            original_filename=f"OCR_{best['id']}.jpg"
-        )
+        # Get Stage variants (Stage 1/2/3)
+        variants_result = await api_client.get_firmware_variants(firmware.get('id'))
+        variants = variants_result.get("variants", [])
         
-        if order_result.get("error"):
-            await message.answer(
-                f"❌ <b>Ошибка создания заказа:</b>\n{order_result['error']}"
-            )
-            return
-        
-        order_id = order_result.get("order_id")
-        price = order_result.get("price", 50)
-        
-        # Save to state
+        # Save to state for later
         await state.update_data(
             firmware=firmware,
             extracted_id=best["id"],
             from_ocr=True,
-            order_id=order_id
+            variants=variants
         )
         
         text = f"""
@@ -153,12 +154,14 @@ async def handle_photo(message: Message, state: FSMContext, bot: Bot):
 🚗 <b>Авто:</b> {firmware.get('brand', '')} {firmware.get('series', '')}
 🔧 <b>ЭБУ:</b> {firmware.get('ecu_brand', '')}
 
-💰 <b>Цена:</b> {price} ₽
-
-Подтвердить покупку?
+<b>Выберите вариант тюнинга:</b>
 """
-        await state.set_state(UploadStates.confirm_purchase)
-        await message.answer(text, reply_markup=get_confirm_keyboard(order_id))
+        # Show Stage selection
+        await state.set_state(UploadStates.select_stage)
+        await message.answer(
+            text, 
+            reply_markup=get_stage_selection_keyboard(firmware.get('id'), variants)
+        )
     
     else:
         # Not found in database - notify operator and inform user
@@ -270,29 +273,21 @@ async def handle_document(message: Message, state: FSMContext, bot: Bot):
     
     # Check if firmware was found in database
     if result.get("found"):
-        # Found in database - CREATE ORDER first, then show purchase option
+        # Found in database - get Stage variants
         firmware = result["firmware"]
         parse_result = result.get("parse_result", {})
         
-        # Create order in database
-        order_result = await api_client.create_order(
-            telegram_id=message.from_user.id,
-            firmware_id=firmware.get('id'),
+        # Get Stage variants (Stage 1/2/3)
+        variants_result = await api_client.get_firmware_variants(firmware.get('id'))
+        variants = variants_result.get("variants", [])
+        
+        # Save to state
+        await state.update_data(
+            firmware=firmware,
+            variants=variants,
             original_filename=document.file_name,
             original_file_path=temp_path
         )
-        
-        if order_result.get("error"):
-            await message.answer(
-                f"❌ <b>Ошибка создания заказа:</b>\n{order_result['error']}"
-            )
-            return
-        
-        order_id = order_result.get("order_id")
-        price = order_result.get("price", 50)
-        
-        # Save order_id to state
-        await state.update_data(order_id=order_id)
         
         text = f"""
 ✅ <b>Прошивка найдена в базе!</b>
@@ -303,12 +298,14 @@ async def handle_document(message: Message, state: FSMContext, bot: Bot):
 🚗 <b>Авто:</b> {firmware.get('brand', '')} {firmware.get('series', '')}
 🔧 <b>ЭБУ:</b> {firmware.get('ecu_brand', '')}
 
-💰 <b>Цена:</b> {price} ₽
-
-Подтвердить покупку?
+<b>Выберите вариант тюнинга:</b>
 """
-        await state.set_state(UploadStates.confirm_purchase)
-        await message.answer(text, reply_markup=get_confirm_keyboard(order_id))
+        # Show Stage selection
+        await state.set_state(UploadStates.select_stage)
+        await message.answer(
+            text, 
+            reply_markup=get_stage_selection_keyboard(firmware.get('id'), variants)
+        )
         
     else:
         # Not found - send to operator
@@ -424,3 +421,180 @@ async def cancel_purchase(callback: CallbackQuery, state: FSMContext):
         "Ты можешь загрузить другой файл."
     )
     await callback.answer()
+
+
+# =============================================================================
+# 🎯 STAGE SELECTION HANDLERS
+# =============================================================================
+
+@router.callback_query(F.data.startswith("select_stage:"))
+async def select_stage(callback: CallbackQuery, state: FSMContext):
+    """Handle Stage selection (Stage 1/2/3)"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]  # "stage1", "stage2", "stage3"
+    
+    data = await state.get_data()
+    firmware = data.get("firmware", {})
+    variants = data.get("variants", [])
+    
+    # Find selected variant
+    selected = None
+    for v in variants:
+        if v["stage"] == stage:
+            selected = v
+            break
+    
+    if not selected:
+        await callback.answer("❌ Вариант не найден", show_alert=True)
+        return
+    
+    price = selected["price"]
+    stage_name = selected["stage_name"]
+    
+    # Save selected stage
+    await state.update_data(selected_stage=stage, selected_price=price)
+    
+    text = f"""
+🎯 <b>Выбран: {stage_name}</b>
+
+🚗 <b>Авто:</b> {firmware.get('brand', '')} {firmware.get('series', '')}
+🔧 <b>ЭБУ:</b> {firmware.get('ecu_brand', '')}
+
+📈 <b>Прирост мощности:</b> {selected.get('power_increase', 'N/A')}
+📊 <b>Прирост момента:</b> {selected.get('torque_increase', 'N/A')}
+
+💰 <b>Цена:</b> {price:.0f} ₽
+
+{selected.get('description', '')}
+
+Подтвердить покупку?
+"""
+    
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_stage_confirm_keyboard(firmware_id, stage, price)
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("back_to_stages:"))
+async def back_to_stages(callback: CallbackQuery, state: FSMContext):
+    """Go back to Stage selection"""
+    firmware_id = int(callback.data.split(":")[1])
+    
+    data = await state.get_data()
+    firmware = data.get("firmware", {})
+    variants = data.get("variants", [])
+    
+    text = f"""
+✅ <b>Прошивка найдена!</b>
+
+🚗 <b>Авто:</b> {firmware.get('brand', '')} {firmware.get('series', '')}
+🔧 <b>ЭБУ:</b> {firmware.get('ecu_brand', '')}
+
+<b>Выберите вариант тюнинга:</b>
+"""
+    
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_stage_selection_keyboard(firmware_id, variants)
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("confirm_stage:"))
+async def confirm_stage_purchase(callback: CallbackQuery, state: FSMContext):
+    """Confirm and process Stage purchase"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    
+    data = await state.get_data()
+    firmware = data.get("firmware", {})
+    original_filename = data.get("original_filename")
+    original_file_path = data.get("original_file_path")
+    
+    # Create order with Stage
+    order_result = await api_client.create_order(
+        telegram_id=callback.from_user.id,
+        firmware_id=firmware_id,
+        original_filename=original_filename,
+        original_file_path=original_file_path,
+        stage=stage
+    )
+    
+    if order_result.get("error"):
+        await callback.message.edit_text(
+            f"❌ <b>Ошибка создания заказа:</b>\n{order_result['error']}"
+        )
+        await callback.answer("❌ Ошибка")
+        return
+    
+    order_id = order_result.get("order_id")
+    price = order_result.get("price", 50)
+    stage_name = order_result.get("stage_name", stage)
+    has_file = order_result.get("has_file", False)
+    
+    # Process purchase
+    result = await api_client.process_purchase(
+        order_id=order_id,
+        user_id=callback.from_user.id
+    )
+    
+    if result.get("error"):
+        error_msg = result["error"]
+        if "balance" in error_msg.lower() or "средств" in error_msg.lower():
+            await callback.message.edit_text(
+                f"❌ <b>Недостаточно средств на балансе</b>\n\n"
+                f"{error_msg}\n\n"
+                f"💳 Пополни баланс и попробуй снова.",
+                reply_markup=get_payment_keyboard()
+            )
+        else:
+            await callback.message.edit_text(
+                f"❌ <b>Ошибка:</b> {error_msg}"
+            )
+        await callback.answer("❌ Ошибка")
+        return
+    
+    # Success!
+    if result.get("download_url"):
+        # File ready - send download link
+        await callback.message.edit_text(
+            f"✅ <b>Покупка успешна!</b>\n\n"
+            f"🎯 <b>Stage:</b> {stage_name}\n"
+            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
+            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽\n\n"
+            f"📥 <b>Ссылка на скачивание (действует 1 час):</b>\n"
+            f"{result['download_url']}"
+        )
+    elif result.get("awaiting_file"):
+        # File not ready yet - operator will prepare
+        await callback.message.edit_text(
+            f"✅ <b>Заказ оформлен!</b>\n\n"
+            f"🎯 <b>Stage:</b> {stage_name}\n"
+            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
+            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽\n\n"
+            f"⏳ <b>Файл готовится</b>\n"
+            f"Наш инженер подготовит прошивку и отправит вам.\n"
+            f"Обычно это занимает от 15 минут до нескольких часов."
+        )
+    else:
+        # Legacy file path
+        await callback.message.edit_text(
+            f"✅ <b>Покупка успешна!</b>\n\n"
+            f"🎯 <b>Stage:</b> {stage_name}\n"
+            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
+            f"📁 Файл готов к скачиванию"
+        )
+        
+        if result.get("file_path"):
+            file = FSInputFile(result["file_path"])
+            await callback.message.answer_document(
+                file,
+                caption="📦 <b>Ваш модифицированный файл</b>\n\nСпасибо за покупку!"
+            )
+    
+    await state.clear()
+    await callback.answer("✅ Готово!")

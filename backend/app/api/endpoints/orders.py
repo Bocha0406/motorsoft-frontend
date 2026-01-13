@@ -12,6 +12,7 @@ from app.core.database import get_db
 from app.models.order import Order
 from app.models.user import User
 from app.models.firmware import Firmware
+from app.models.firmware_variant import FirmwareVariant, STAGE_TEMPLATES
 
 router = APIRouter()
 
@@ -22,6 +23,7 @@ class CreateOrderRequest(BaseModel):
     firmware_id: int
     original_filename: Optional[str] = None
     original_file_path: Optional[str] = None
+    stage: Optional[str] = None  # "stage1", "stage2", "stage3"
 
 
 @router.post("/create")
@@ -30,8 +32,8 @@ async def create_order(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Create a new order for firmware purchase
-    Called when firmware is found in database
+    Create a new order for firmware purchase with Stage selection.
+    Called when user selects Stage 1/2/3 variant.
     """
     # Get user
     result = await db.execute(
@@ -49,21 +51,55 @@ async def create_order(
     if not firmware:
         raise HTTPException(status_code=404, detail="Firmware not found")
     
-    # Calculate price (use firmware price or default)
-    # Convert to float to avoid Decimal * float issues
+    # Calculate price based on Stage
     base_price = float(firmware.price) if firmware.price else 50.0
     coefficient = float(user.coefficient) if user.coefficient else 1.0
     
+    stage = request.stage
+    variant_id = None
+    s3_key = None
+    
+    if stage:
+        # Check if there's a real variant in DB
+        result = await db.execute(
+            select(FirmwareVariant).where(
+                FirmwareVariant.firmware_id == request.firmware_id,
+                FirmwareVariant.stage == stage
+            )
+        )
+        variant = result.scalar_one_or_none()
+        
+        if variant:
+            # Real variant with file in S3
+            variant_id = variant.id
+            s3_key = variant.s3_key
+            final_price = float(variant.price) if variant.price else base_price
+        else:
+            # Template Stage - use multipliers
+            if stage == "stage1":
+                final_price = base_price
+            elif stage == "stage2":
+                final_price = base_price * 1.3
+            elif stage == "stage3":
+                final_price = base_price * 1.6
+            else:
+                final_price = base_price
+    else:
+        final_price = base_price
+    
     # Apply user coefficient (discount)
-    final_price = base_price * coefficient
+    final_price = final_price * coefficient
     discount_percent = (1 - coefficient) * 100
     
-    # Create order (using only columns that exist in DB)
+    # Create order with Stage info
     order = Order(
         user_id=user.id,
         firmware_id=firmware.id,
+        variant_id=variant_id,
+        stage=stage,
         original_file_path=request.original_file_path,
-        status="pending",
+        s3_key=s3_key,
+        status="pending" if s3_key else "awaiting_file",  # awaiting_file если файла нет
         price=final_price,
         discount=discount_percent
     )
@@ -72,10 +108,15 @@ async def create_order(
     await db.commit()
     await db.refresh(order)
     
+    stage_name = STAGE_TEMPLATES.get(stage, {}).get("stage_name", stage) if stage else None
+    
     return {
         "status": "ok",
         "order_id": order.id,
         "price": final_price,
+        "stage": stage,
+        "stage_name": stage_name,
+        "has_file": s3_key is not None,
         "firmware": {
             "id": firmware.id,
             "brand": firmware.brand,
@@ -165,10 +206,11 @@ async def purchase_order(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Process purchase - check balance, deduct money, complete order
-    This is called when user clicks "Купить" in bot
+    Process purchase - check balance, deduct money, generate download URL.
+    Returns Presigned URL from S3 if file exists, otherwise marks for manual processing.
     """
     from datetime import datetime
+    from app.services.s3_storage import s3_storage
     
     # Get user by telegram_id
     result = await db.execute(
@@ -208,19 +250,25 @@ async def purchase_order(
     user.total_purchases = (user.total_purchases or 0) + 1
     user.last_active = datetime.utcnow()
     
-    # Update order status
-    order.status = "completed"
+    # Generate download URL if file exists in S3
+    download_url = None
+    if order.s3_key:
+        download_url = s3_storage.generate_download_url(order.s3_key, expires_in=3600)
+        order.status = "completed"
+    else:
+        # No file yet - mark for manual processing
+        order.status = "awaiting_file"
     
     # Create transaction record
     from app.models.transaction import Transaction, TransactionType
     transaction = Transaction(
         user_id=user.id,
         amount=-price,
-        type=TransactionType.PURCHASE,  # Теперь это строка "purchase"
-        description=f"Покупка прошивки #{order.id}",
+        type=TransactionType.PURCHASE,
+        description=f"Покупка прошивки #{order.id} ({order.stage or 'standard'})",
         order_id=order.id,
-        balance_before=user.balance + price,  # До списания
-        balance_after=user.balance  # После списания
+        balance_before=user.balance + price,
+        balance_after=user.balance
     )
     db.add(transaction)
     
@@ -231,7 +279,10 @@ async def purchase_order(
         "price": price,
         "new_balance": user.balance,
         "order_id": order.id,
-        "file_path": order.modified_file_path  # Path to download
+        "stage": order.stage,
+        "download_url": download_url,  # Presigned URL or None
+        "file_path": order.modified_file_path,  # Legacy local path
+        "awaiting_file": download_url is None and order.s3_key is None
     }
 
 

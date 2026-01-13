@@ -50,6 +50,7 @@ class Firmware(Base):
     
     # Relationships
     orders = relationship("Order", back_populates="firmware")
+    variants = relationship("FirmwareVariant", back_populates="firmware", lazy="selectin")
     
     def __repr__(self):
         return f"<Firmware {self.brand} {self.series}: {self.software_id}>"

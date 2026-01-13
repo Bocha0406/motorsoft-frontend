@@ -19,10 +19,15 @@ class Order(Base):
     # Relations
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     firmware_id = Column(Integer, ForeignKey("firmwares.id"), nullable=True)
+    variant_id = Column(Integer, ForeignKey("firmware_variants.id"), nullable=True)  # Stage variant
+    
+    # Stage info (для шаблонных Stage без реального variant)
+    stage = Column(String(50), nullable=True)  # "stage1", "stage2", "stage3"
     
     # Files
     original_file_path = Column(Text, nullable=True)  # Сток от клиента
-    modified_file_path = Column(Text, nullable=True)  # Мод для клиента
+    modified_file_path = Column(Text, nullable=True)  # Мод для клиента (локальный путь или S3 key)
+    s3_key = Column(String(500), nullable=True)  # Ключ файла в Object Storage
     
     # Status (varchar в БД, не Enum)
     status = Column(String(50), default="pending")
@@ -39,6 +44,4 @@ class Order(Base):
     firmware = relationship("Firmware", back_populates="orders")
     
     def __repr__(self):
-        return f"<Order {self.id}: {self.status}>"
-        self.final_price = self.base_price * user_coefficient
-        self.discount = (1 - user_coefficient) * 100
+        return f"<Order {self.id}: {self.status} ({self.stage or 'no stage'})>"

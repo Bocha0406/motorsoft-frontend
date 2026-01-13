@@ -380,3 +380,92 @@ def get_firmware_by_id(
         "maps_count": firmware.maps_count,
         "versions_info": firmware.versions_info,
     }
+
+
+@router.get("/{firmware_id}/variants")
+def get_firmware_variants(
+    firmware_id: int,
+    db: Session = Depends(get_db_sync)
+) -> Dict:
+    """
+    Получить все Stage варианты для прошивки.
+    Если вариантов нет - возвращаем стандартные шаблоны Stage 1/2/3.
+    """
+    from app.models.firmware_variant import FirmwareVariant, STAGE_TEMPLATES
+    
+    # Проверяем что прошивка существует
+    stmt = select(Firmware).where(Firmware.id == firmware_id)
+    result = db.execute(stmt)
+    firmware = result.scalar_one_or_none()
+    
+    if not firmware:
+        raise HTTPException(status_code=404, detail="Firmware not found")
+    
+    # Получаем варианты из БД
+    stmt = select(FirmwareVariant).where(FirmwareVariant.firmware_id == firmware_id)
+    result = db.execute(stmt)
+    variants = result.scalars().all()
+    
+    if variants:
+        # Есть реальные варианты в базе
+        return {
+            "firmware_id": firmware_id,
+            "variants": [
+                {
+                    "id": v.id,
+                    "stage": v.stage,
+                    "stage_name": v.stage_name,
+                    "description": v.description,
+                    "power_increase": v.power_increase,
+                    "torque_increase": v.torque_increase,
+                    "modifications": v.modifications,
+                    "price": float(v.price) if v.price else 50.0,
+                    "has_file": v.s3_key is not None,
+                }
+                for v in variants
+            ]
+        }
+    else:
+        # Нет вариантов - возвращаем шаблоны
+        # Цены рассчитываем от базовой цены прошивки
+        base_price = float(firmware.price) if firmware.price else 50.0
+        
+        return {
+            "firmware_id": firmware_id,
+            "variants": [
+                {
+                    "id": None,  # Шаблон, не реальный вариант
+                    "stage": "stage1",
+                    "stage_name": STAGE_TEMPLATES["stage1"]["stage_name"],
+                    "description": STAGE_TEMPLATES["stage1"]["description"],
+                    "power_increase": STAGE_TEMPLATES["stage1"]["power_increase"],
+                    "torque_increase": STAGE_TEMPLATES["stage1"]["torque_increase"],
+                    "modifications": None,
+                    "price": base_price,
+                    "has_file": False,  # Файл будет подготовлен после заказа
+                },
+                {
+                    "id": None,
+                    "stage": "stage2",
+                    "stage_name": STAGE_TEMPLATES["stage2"]["stage_name"],
+                    "description": STAGE_TEMPLATES["stage2"]["description"],
+                    "power_increase": STAGE_TEMPLATES["stage2"]["power_increase"],
+                    "torque_increase": STAGE_TEMPLATES["stage2"]["torque_increase"],
+                    "modifications": None,
+                    "price": base_price * 1.3,  # Stage 2 на 30% дороже
+                    "has_file": False,
+                },
+                {
+                    "id": None,
+                    "stage": "stage3",
+                    "stage_name": STAGE_TEMPLATES["stage3"]["stage_name"],
+                    "description": STAGE_TEMPLATES["stage3"]["description"],
+                    "power_increase": STAGE_TEMPLATES["stage3"]["power_increase"],
+                    "torque_increase": STAGE_TEMPLATES["stage3"]["torque_increase"],
+                    "modifications": None,
+                    "price": base_price * 1.6,  # Stage 3 на 60% дороже
+                    "has_file": False,
+                },
+            ],
+            "note": "Стандартные варианты. Файл будет подготовлен после оплаты."
+        }
