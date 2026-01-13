@@ -327,9 +327,9 @@ async def get_orders(
     }
 
 
-# === FIRMWARES ===
+# === FIRMWARES (Yandex Object Storage) ===
 
-UPLOAD_DIR = "/app/uploads"
+from app.services.s3_storage import s3_storage
 
 
 @router.post("/firmwares/upload")
@@ -338,10 +338,10 @@ async def upload_firmware(
     admin: AdminUser = Depends(get_current_admin)
 ):
     """
-    Загрузить файл прошивки.
+    Загрузить файл прошивки в Yandex Object Storage.
     
     Принимает .bin и .hex файлы.
-    Сохраняет в папку uploads.
+    Сохраняет в Yandex Cloud S3.
     """
     # Проверка расширения
     if not file.filename:
@@ -354,34 +354,27 @@ async def upload_firmware(
             detail="Only .bin and .hex files are allowed"
         )
     
-    # Создать папку uploads если не существует
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    # Загрузить в Yandex Object Storage
+    result = s3_storage.upload_file(
+        file_obj=file.file,
+        filename=file.filename,
+        content_type='application/octet-stream'
+    )
     
-    # Уникальное имя файла
-    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
-    safe_filename = f"{timestamp}_{file.filename}"
-    file_path = os.path.join(UPLOAD_DIR, safe_filename)
-    
-    # Сохранить файл
-    try:
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-    except Exception as e:
+    if not result['success']:
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to save file: {str(e)}"
+            detail=f"Failed to upload to S3: {result.get('error', 'Unknown error')}"
         )
-    
-    # Получить размер файла
-    file_size = os.path.getsize(file_path)
     
     return {
         "success": True,
-        "filename": safe_filename,
-        "original_name": file.filename,
-        "size": file_size,
+        "key": result['key'],
+        "filename": result['filename'],
+        "size": result['size'],
+        "bucket": result['bucket'],
         "uploaded_by": admin.username,
-        "uploaded_at": datetime.utcnow().isoformat()
+        "uploaded_at": result['uploaded_at']
     }
 
 
@@ -390,23 +383,27 @@ async def list_uploaded_firmwares(
     admin: AdminUser = Depends(get_current_admin)
 ):
     """
-    Получить список загруженных файлов прошивок.
+    Получить список загруженных файлов прошивок из Yandex Object Storage.
     """
-    if not os.path.exists(UPLOAD_DIR):
-        return {"items": []}
-    
-    files = []
-    for filename in os.listdir(UPLOAD_DIR):
-        if filename.endswith(('.bin', '.hex')):
-            file_path = os.path.join(UPLOAD_DIR, filename)
-            stat = os.stat(file_path)
-            files.append({
-                "filename": filename,
-                "size": stat.st_size,
-                "uploaded_at": datetime.fromtimestamp(stat.st_mtime).isoformat()
-            })
-    
-    # Сортировка по дате (новые первые)
-    files.sort(key=lambda x: x["uploaded_at"], reverse=True)
+    files = s3_storage.list_files(prefix='firmwares/')
     
     return {"items": files}
+
+
+@router.get("/firmwares/download-url/{key:path}")
+async def get_firmware_download_url(
+    key: str,
+    admin: AdminUser = Depends(get_current_admin)
+):
+    """
+    Получить временную ссылку на скачивание прошивки.
+    
+    Presigned URL действует 1 час.
+    """
+    url = s3_storage.generate_download_url(key, expires_in=3600)
+    
+    if not url:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    return {"url": url, "expires_in": 3600}
+

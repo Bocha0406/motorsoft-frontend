@@ -32,12 +32,17 @@ class Settings(BaseSettings):
     # Telegram Bot
     TELEGRAM_BOT_TOKEN: str = ""
     
-    # S3 Storage
+    # S3 Storage (старые настройки)
     S3_ENDPOINT: str = ""
     S3_ACCESS_KEY: str = ""
     S3_SECRET_KEY: str = ""
     S3_BUCKET_ORIGINALS: str = "motorsoft-originals"
     S3_BUCKET_MODIFIED: str = "motorsoft-modified"
+    
+    # Yandex Object Storage (новые настройки для прошивок)
+    YANDEX_S3_BUCKET: str = "motorsoft-storage"
+    YANDEX_S3_ACCESS_KEY_ID: str = "YCAJEvmMGOXHn1b0xNhq0VUYT"
+    YANDEX_S3_SECRET_ACCESS_KEY: str = "YCPtKQ_M4IZG_xZitEH_ah13peZdv3no9OXrfdnh"
     
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000"]
