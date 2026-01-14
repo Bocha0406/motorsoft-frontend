@@ -18,12 +18,19 @@ class S3Storage:
     
     def __init__(self):
         """Инициализация S3 клиента для Yandex Cloud."""
-        self.bucket_name = settings.YANDEX_S3_BUCKET
+        # Поддержка обоих форматов переменных окружения
+        # S3_ACCESS_KEY (из docker-compose) или YANDEX_S3_ACCESS_KEY_ID (старый)
+        access_key = os.getenv('S3_ACCESS_KEY') or settings.YANDEX_S3_ACCESS_KEY_ID
+        secret_key = os.getenv('S3_SECRET_KEY') or settings.YANDEX_S3_SECRET_ACCESS_KEY
+        bucket_name = os.getenv('S3_BUCKET_NAME') or settings.YANDEX_S3_BUCKET
+        endpoint_url = os.getenv('S3_ENDPOINT_URL') or 'https://storage.yandexcloud.net'
+        
+        self.bucket_name = bucket_name
         self.client = boto3.client(
             's3',
-            endpoint_url='https://storage.yandexcloud.net',
-            aws_access_key_id=settings.YANDEX_S3_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.YANDEX_S3_SECRET_ACCESS_KEY,
+            endpoint_url=endpoint_url,
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
             region_name='ru-central1'
         )
     

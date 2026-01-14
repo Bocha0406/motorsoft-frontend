@@ -559,15 +559,31 @@ async def confirm_stage_purchase(callback: CallbackQuery, state: FSMContext):
         return
     
     # Success!
+    # Check for loyalty upgrade
+    loyalty_msg = ""
+    if result.get("loyalty_upgrade"):
+        upgrade = result["loyalty_upgrade"]
+        loyalty_msg = (
+            f"\n\n🎉 <b>ПОЗДРАВЛЯЕМ!</b>\n"
+            f"Вы достигли нового уровня: <b>{upgrade['new_level'].upper()}</b>\n"
+            f"🏆 Теперь ваша скидка: <b>{upgrade['new_discount']}%</b> на все покупки!"
+        )
+    
+    discount_info = ""
+    if result.get("current_discount", 0) > 0:
+        discount_info = f"\n🏷️ <b>Ваша скидка:</b> {result['current_discount']}%"
+    
     if result.get("download_url"):
         # File ready - send download link
         await callback.message.edit_text(
             f"✅ <b>Покупка успешна!</b>\n\n"
             f"🎯 <b>Stage:</b> {stage_name}\n"
             f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
-            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽\n\n"
-            f"📥 <b>Ссылка на скачивание (действует 1 час):</b>\n"
+            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽"
+            f"{discount_info}\n\n"
+            f"📥 <b>Ссылка на скачивание (действует 10 минут):</b>\n"
             f"{result['download_url']}"
+            f"{loyalty_msg}"
         )
     elif result.get("awaiting_file"):
         # File not ready yet - operator will prepare
@@ -575,18 +591,22 @@ async def confirm_stage_purchase(callback: CallbackQuery, state: FSMContext):
             f"✅ <b>Заказ оформлен!</b>\n\n"
             f"🎯 <b>Stage:</b> {stage_name}\n"
             f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
-            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽\n\n"
+            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽"
+            f"{discount_info}\n\n"
             f"⏳ <b>Файл готовится</b>\n"
             f"Наш инженер подготовит прошивку и отправит вам.\n"
             f"Обычно это занимает от 15 минут до нескольких часов."
+            f"{loyalty_msg}"
         )
     else:
         # Legacy file path
         await callback.message.edit_text(
             f"✅ <b>Покупка успешна!</b>\n\n"
             f"🎯 <b>Stage:</b> {stage_name}\n"
-            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
+            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽"
+            f"{discount_info}\n"
             f"📁 Файл готов к скачиванию"
+            f"{loyalty_msg}"
         )
         
         if result.get("file_path"):

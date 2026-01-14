@@ -2,7 +2,7 @@
 import os
 import shutil
 from datetime import datetime, timedelta
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_
@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from app.core.database import get_db
 from app.core.security import (
     verify_password,
+    get_password_hash,
     create_access_token,
     get_current_admin,
     require_admin_role
@@ -20,7 +21,7 @@ from app.models.user import User
 from app.models.order import Order
 from app.core.config import settings
 
-router = APIRouter(prefix="/api/admin", tags=["admin"])
+router = APIRouter(prefix="/admin", tags=["admin"])
 
 
 # === Pydantic Schemas ===
@@ -49,6 +50,20 @@ class AdminUserInfo(BaseModel):
     last_login: datetime | None
 
 
+class CreateStaffRequest(BaseModel):
+    """Запрос на создание сотрудника."""
+    username: str
+    password: str
+    role: str = "operator"  # "admin" или "operator"
+
+
+class UpdateStaffRequest(BaseModel):
+    """Запрос на обновление сотрудника."""
+    is_active: Optional[bool] = None
+    role: Optional[str] = None
+    password: Optional[str] = None
+
+
 class UserListItem(BaseModel):
     """Элемент списка пользователей."""
     id: int
@@ -57,8 +72,19 @@ class UserListItem(BaseModel):
     balance: float
     total_purchases: int
     is_blocked: bool
+    is_partner: bool = False
+    is_slave: bool = False
+    coefficient: float = 1.0
+    level: str = "newbie"
     created_at: datetime
     last_active: datetime | None
+
+
+class UpdateUserPartnerRequest(BaseModel):
+    """Запрос на обновление партнёрского статуса."""
+    is_partner: Optional[bool] = None
+    is_slave: Optional[bool] = None
+    coefficient: Optional[float] = None  # Ручной коэффициент скидки
 
 
 class UserStats(BaseModel):
@@ -133,12 +159,164 @@ async def get_current_admin_info(
     )
 
 
+# === STAFF MANAGEMENT ===
+
+@router.get("/staff", response_model=List[AdminUserInfo])
+async def get_staff_list(
+    current_admin: AdminUser = Depends(require_admin_role),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Получить список всех сотрудников (админов и операторов).
+    
+    Только для ADMIN роли.
+    """
+    result = await db.execute(
+        select(AdminUser).order_by(AdminUser.created_at.desc())
+    )
+    staff = result.scalars().all()
+    
+    return [
+        AdminUserInfo(
+            id=s.id,
+            username=s.username,
+            role=s.role.value,
+            is_active=s.is_active,
+            created_at=s.created_at,
+            last_login=s.last_login
+        )
+        for s in staff
+    ]
+
+
+@router.post("/staff", response_model=AdminUserInfo)
+async def create_staff(
+    data: CreateStaffRequest,
+    current_admin: AdminUser = Depends(require_admin_role),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Создать нового сотрудника (оператора или админа).
+    
+    Только для ADMIN роли.
+    """
+    # Проверить уникальность username
+    existing = await db.execute(
+        select(AdminUser).where(AdminUser.username == data.username)
+    )
+    if existing.scalar_one_or_none():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already exists"
+        )
+    
+    # Определить роль
+    role = AdminRole.ADMIN if data.role.lower() == "admin" else AdminRole.OPERATOR
+    
+    # Создать сотрудника
+    new_staff = AdminUser(
+        username=data.username,
+        password_hash=get_password_hash(data.password),
+        role=role,
+        is_active=True,
+        created_at=datetime.utcnow()
+    )
+    
+    db.add(new_staff)
+    await db.commit()
+    await db.refresh(new_staff)
+    
+    return AdminUserInfo(
+        id=new_staff.id,
+        username=new_staff.username,
+        role=new_staff.role.value,
+        is_active=new_staff.is_active,
+        created_at=new_staff.created_at,
+        last_login=new_staff.last_login
+    )
+
+
+@router.patch("/staff/{staff_id}")
+async def update_staff(
+    staff_id: int,
+    data: UpdateStaffRequest,
+    current_admin: AdminUser = Depends(require_admin_role),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Обновить сотрудника (активность, роль, пароль).
+    
+    Только для ADMIN роли.
+    """
+    result = await db.execute(
+        select(AdminUser).where(AdminUser.id == staff_id)
+    )
+    staff = result.scalar_one_or_none()
+    
+    if not staff:
+        raise HTTPException(status_code=404, detail="Staff not found")
+    
+    # Нельзя редактировать себя
+    if staff.id == current_admin.id:
+        raise HTTPException(
+            status_code=400,
+            detail="Cannot modify your own account"
+        )
+    
+    # Обновить поля
+    if data.is_active is not None:
+        staff.is_active = data.is_active
+    
+    if data.role is not None:
+        staff.role = AdminRole.ADMIN if data.role.lower() == "admin" else AdminRole.OPERATOR
+    
+    if data.password is not None:
+        staff.password_hash = get_password_hash(data.password)
+    
+    await db.commit()
+    
+    return {"success": True, "staff_id": staff_id}
+
+
+@router.delete("/staff/{staff_id}")
+async def delete_staff(
+    staff_id: int,
+    current_admin: AdminUser = Depends(require_admin_role),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Удалить сотрудника.
+    
+    Только для ADMIN роли.
+    """
+    result = await db.execute(
+        select(AdminUser).where(AdminUser.id == staff_id)
+    )
+    staff = result.scalar_one_or_none()
+    
+    if not staff:
+        raise HTTPException(status_code=404, detail="Staff not found")
+    
+    # Нельзя удалить себя
+    if staff.id == current_admin.id:
+        raise HTTPException(
+            status_code=400,
+            detail="Cannot delete your own account"
+        )
+    
+    await db.delete(staff)
+    await db.commit()
+    
+    return {"success": True, "deleted_staff_id": staff_id}
+
+
 @router.get("/users", response_model=List[UserListItem])
 async def get_users_list(
     skip: int = 0,
     limit: int = 100,
     search: str | None = None,
     blocked: bool | None = None,
+    activity: str | None = None,  # "active", "inactive", "dead"
     current_admin: AdminUser = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db)
 ):
@@ -150,6 +328,7 @@ async def get_users_list(
     - limit: максимальное количество записей
     - search: поиск по username
     - blocked: фильтр по is_blocked (True/False/None)
+    - activity: "active" (за 7 дней), "inactive" (7-30 дней), "dead" (>30 дней)
     """
     query = select(User)
     
@@ -166,6 +345,38 @@ async def get_users_list(
     if blocked is not None:
         query = query.where(User.is_blocked == blocked)
     
+    # Фильтр по активности
+    if activity:
+        now = datetime.utcnow()
+        if activity == "active":
+            # Были активны за последние 7 дней
+            week_ago = now - timedelta(days=7)
+            query = query.where(User.last_active >= week_ago)
+        elif activity == "inactive":
+            # Не были активны 7-30 дней
+            week_ago = now - timedelta(days=7)
+            month_ago = now - timedelta(days=30)
+            query = query.where(
+                or_(
+                    User.last_active < week_ago,
+                    User.last_active.is_(None)
+                )
+            ).where(
+                or_(
+                    User.last_active >= month_ago,
+                    User.last_active.is_(None)
+                )
+            )
+        elif activity == "dead":
+            # Не были активны более 30 дней (мёртвые)
+            month_ago = now - timedelta(days=30)
+            query = query.where(
+                or_(
+                    User.last_active < month_ago,
+                    User.last_active.is_(None)
+                )
+            )
+    
     # Сортировка и пагинация
     query = query.order_by(User.created_at.desc()).offset(skip).limit(limit)
     
@@ -177,9 +388,13 @@ async def get_users_list(
             id=user.id,
             telegram_id=user.telegram_id,
             username=user.username,
-            balance=user.balance,
-            total_purchases=user.total_purchases,
-            is_blocked=user.is_blocked,
+            balance=user.balance or 0.0,
+            total_purchases=user.total_purchases or 0,
+            is_blocked=user.is_blocked or False,
+            is_partner=user.is_partner or False,
+            is_slave=user.is_slave or False,
+            coefficient=user.coefficient or 1.0,
+            level=user.level or "newbie",
             created_at=user.created_at,
             last_active=user.last_active
         )
@@ -262,6 +477,66 @@ async def block_user(
     await db.commit()
     
     return {"success": True, "user_id": user_id, "is_blocked": blocked}
+
+
+@router.patch("/users/{user_id}/partner")
+async def update_user_partner_status(
+    user_id: int,
+    data: UpdateUserPartnerRequest,
+    current_admin: AdminUser = Depends(require_admin_role),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Обновить партнёрский статус пользователя.
+    
+    - is_partner: сделать партнёром (скидка 40%)
+    - is_slave: отметить как Slave-прибор
+    - coefficient: установить ручной коэффициент скидки (0.5 = 50% скидка)
+    
+    Только для ADMIN роли.
+    """
+    result = await db.execute(
+        select(User).where(User.id == user_id)
+    )
+    user = result.scalar_one_or_none()
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Обновляем поля
+    if data.is_partner is not None:
+        user.is_partner = data.is_partner
+        if data.is_partner:
+            user.level = "partner"
+            # Партнёр получает 40% скидку по умолчанию
+            if data.coefficient is None:
+                user.coefficient = 0.6
+    
+    if data.is_slave is not None:
+        user.is_slave = data.is_slave
+    
+    if data.coefficient is not None:
+        # Проверка валидности коэффициента (0.1 - 1.0)
+        if data.coefficient < 0.1 or data.coefficient > 1.0:
+            raise HTTPException(
+                status_code=400,
+                detail="Коэффициент должен быть от 0.1 до 1.0"
+            )
+        user.coefficient = data.coefficient
+    
+    await db.commit()
+    
+    discount = int((1 - float(user.coefficient)) * 100)
+    
+    return {
+        "success": True,
+        "user_id": user_id,
+        "is_partner": user.is_partner,
+        "is_slave": user.is_slave,
+        "coefficient": user.coefficient,
+        "discount_percent": discount,
+        "level": user.level
+    }
 
 
 @router.delete("/users/{user_id}")

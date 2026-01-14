@@ -17,6 +17,31 @@ from app.models.firmware_variant import FirmwareVariant, STAGE_TEMPLATES
 router = APIRouter()
 
 
+# === LOYALTY SYSTEM: Auto-discounts ===
+LOYALTY_LEVELS = [
+    {"min_purchases": 200, "coefficient": 0.70, "level": "vip", "discount": 30},      # 200+ = 30% скидка
+    {"min_purchases": 100, "coefficient": 0.80, "level": "pro", "discount": 20},      # 100+ = 20% скидка
+    {"min_purchases": 50, "coefficient": 0.90, "level": "specialist", "discount": 10}, # 50+ = 10% скидка
+    {"min_purchases": 20, "coefficient": 0.95, "level": "regular", "discount": 5},    # 20+ = 5% скидка
+    {"min_purchases": 0, "coefficient": 1.0, "level": "newbie", "discount": 0},       # новичок
+]
+
+
+def calculate_loyalty(total_purchases: int) -> dict:
+    """
+    Calculate user's loyalty level and coefficient based on total purchases.
+    Returns dict with coefficient, level, discount percentage.
+    """
+    for level in LOYALTY_LEVELS:
+        if total_purchases >= level["min_purchases"]:
+            return {
+                "coefficient": level["coefficient"],
+                "level": level["level"],
+                "discount": level["discount"]
+            }
+    return {"coefficient": 1.0, "level": "newbie", "discount": 0}
+
+
 class CreateOrderRequest(BaseModel):
     """Request body for creating order"""
     telegram_id: int
@@ -250,10 +275,28 @@ async def purchase_order(
     user.total_purchases = (user.total_purchases or 0) + 1
     user.last_active = datetime.utcnow()
     
+    # === AUTO-DISCOUNT: Update loyalty level based on total purchases ===
+    new_loyalty = calculate_loyalty(user.total_purchases)
+    old_coefficient = float(user.coefficient) if user.coefficient else 1.0
+    
+    if new_loyalty["coefficient"] < old_coefficient:
+        # User got a NEW discount level!
+        user.coefficient = new_loyalty["coefficient"]
+        user.level = new_loyalty["level"]
+        loyalty_upgrade = {
+            "upgraded": True,
+            "new_level": new_loyalty["level"],
+            "new_discount": new_loyalty["discount"]
+        }
+    else:
+        loyalty_upgrade = None
+    
     # Generate download URL if file exists in S3
     download_url = None
     if order.s3_key:
-        download_url = s3_storage.generate_download_url(order.s3_key, expires_in=3600)
+        # Presigned URL живёт 10 минут (600 секунд) для безопасности
+        # Чем меньше время — тем сложнее передать ссылку другу
+        download_url = s3_storage.generate_download_url(order.s3_key, expires_in=600)
         order.status = "completed"
     else:
         # No file yet - mark for manual processing
@@ -282,7 +325,10 @@ async def purchase_order(
         "stage": order.stage,
         "download_url": download_url,  # Presigned URL or None
         "file_path": order.modified_file_path,  # Legacy local path
-        "awaiting_file": download_url is None and order.s3_key is None
+        "awaiting_file": download_url is None and order.s3_key is None,
+        "loyalty_upgrade": loyalty_upgrade,  # Info about new discount level
+        "total_purchases": user.total_purchases,
+        "current_discount": int((1 - float(user.coefficient)) * 100)
     }
 
 

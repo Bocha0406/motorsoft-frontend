@@ -74,6 +74,8 @@ def smart_search_by_filename(filename: str, db: Session) -> Optional[Any]:
     Умный поиск по имени файла - разбивает на части и ищет в базе.
     Например: Hyundai_Solaris_1.2_(Оригинал)_GATA-BE42QS09A00_.bin
     -> пробует найти GATA-BE42QS09A00 в software_id
+    
+    Также: EL4YP2AS1F1D-20260112-184331_E2.bin -> EL4YP2AS1F1D
     """
     if not filename:
         return None
@@ -81,11 +83,17 @@ def smart_search_by_filename(filename: str, db: Session) -> Optional[Any]:
     # Убираем расширение
     clean = re.sub(r'\.\w{2,4}$', '', filename)
     
-    # Разбиваем на части по _ и пробелам
-    parts = re.split(r'[_\s]+', clean)
+    # Убираем даты в формате YYYYMMDD или YYYYMMDD-HHMMSS
+    clean = re.sub(r'-?\d{8}(-\d{6})?', '', clean)
+    
+    # Разбиваем на части по _, пробелам, дефисам
+    parts = re.split(r'[_\s\-]+', clean)
     
     # Фильтруем части длиннее 6 символов (потенциальные ID)
-    potential_ids = [p for p in parts if len(p) >= 6 and not p.lower() in ['hyundai', 'solaris', 'accent', 'toyota', 'kia', 'оригинал', 'original']]
+    # Исключаем общие слова
+    skip_words = ['hyundai', 'solaris', 'accent', 'toyota', 'kia', 'bmw', 'nissan', 
+                  'оригинал', 'original', 'stage', 'mod', 'tuned', 'stock']
+    potential_ids = [p for p in parts if len(p) >= 6 and p.lower() not in skip_words]
     
     logger.info(f"Smart search parts from filename: {potential_ids}")
     
@@ -100,7 +108,7 @@ def smart_search_by_filename(filename: str, db: Session) -> Optional[Any]:
             logger.info(f"Smart search found by part: {part}")
             return firmware
         
-        # Пробуем без дефисов
+        # Пробуем без дефисов и подчёркиваний
         clean_part = part.replace('-', '').replace('_', '')
         if clean_part != part:
             stmt = select(Firmware).where(
@@ -110,6 +118,18 @@ def smart_search_by_filename(filename: str, db: Session) -> Optional[Any]:
             firmware = result.scalar_one_or_none()
             if firmware:
                 logger.info(f"Smart search found by clean part: {clean_part}")
+                return firmware
+        
+        # Пробуем первые 10-12 символов (часто ID сокращён)
+        if len(part) > 12:
+            short_part = part[:12]
+            stmt = select(Firmware).where(
+                Firmware.software_id.ilike(f"%{short_part}%")
+            ).limit(1)
+            result = db.execute(stmt)
+            firmware = result.scalar_one_or_none()
+            if firmware:
+                logger.info(f"Smart search found by short part: {short_part}")
                 return firmware
     
     return None

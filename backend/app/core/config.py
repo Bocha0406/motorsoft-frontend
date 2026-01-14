@@ -38,11 +38,18 @@ class Settings(BaseSettings):
     S3_SECRET_KEY: str = ""
     S3_BUCKET_ORIGINALS: str = "motorsoft-originals"
     S3_BUCKET_MODIFIED: str = "motorsoft-modified"
+    S3_BUCKET_NAME: str = "motorsoft-storage"
+    S3_ENDPOINT_URL: str = "https://storage.yandexcloud.net"
     
     # Yandex Object Storage (новые настройки для прошивок)
+    # Эти значения будут перезаписаны из переменных окружения S3_*
     YANDEX_S3_BUCKET: str = "motorsoft-storage"
-    YANDEX_S3_ACCESS_KEY_ID: str = "YCAJEvmMGOXHn1b0xNhq0VUYT"
-    YANDEX_S3_SECRET_ACCESS_KEY: str = "YCPtKQ_M4IZG_xZitEH_ah13peZdv3no9OXrfdnh"
+    YANDEX_S3_ACCESS_KEY_ID: str = ""
+    YANDEX_S3_SECRET_ACCESS_KEY: str = ""
+    
+    # Yandex Vision OCR
+    YANDEX_FOLDER_ID: str = "ajed5u8if1re5dntstk5"
+    YANDEX_API_KEY: str = ""
     
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000"]
