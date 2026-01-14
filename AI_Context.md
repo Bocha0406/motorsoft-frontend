@@ -157,11 +157,13 @@ WHERE username = 'admin';
 **Проблема:** В docker-compose.yml не были переданы S3 ключи
 **Решение:** Добавлены переменные окружения:
 ```yaml
-- S3_ACCESS_KEY=YCAJEvmMGOXHn1b0xNhq0VUYT
-- S3_SECRET_KEY=YCPtKQ_M4IZG_xZitEH_...
+- S3_ACCESS_KEY=${S3_ACCESS_KEY}  # из credentials.txt
+- S3_SECRET_KEY=${S3_SECRET_KEY}  # из credentials.txt
 - S3_BUCKET_NAME=motorsoft-storage
 - S3_ENDPOINT_URL=https://storage.yandexcloud.net
 ```
+
+> ⚠️ Реальные ключи хранятся в credentials.txt (НЕ в git!)
 
 ### 2️⃣ Умный поиск улучшен
 
@@ -400,14 +402,12 @@ make sure that only one bot instance is running
 **🔧 ПРИЧИНА:** Кто-то ещё использует тот же токен
 
 **🔧 РЕШЕНИЕ:** Сделали Revoke токена через @BotFather
-- Старый токен: `8366390064:AAEXfpwWKE2Wx-0etu0ORtUMArqbnZyI2dY` ❌
-- Новый токен: `8366390064:AAGTJk76B1EpHDEFSEaKMznaGVvQoaS7KRA` ✅
+- Старый токен: отозван ❌
+- Новый токен: в credentials.txt ✅
 
 ### Шаг 7: Обновление токена на сервере
 
-```bash
-sed -i 's/AAEXfpwWKE2Wx-0etu0ORtUMArqbnZyI2dY/AAGTJk76B1EpHDEFSEaKMznaGVvQoaS7KRA/' /root/motorsoft/bot/.env
-```
+> Токен обновлён через sed, перезапустили контейнеры
 
 **❌ ОШИБКА:** Контейнер не подхватил новый токен
 ```
@@ -490,20 +490,20 @@ curl "http://185.152.92.157:8000/api/v1/api/firmware/search?software_id=10373720
 
 ## 🔑 УЧЁТНЫЕ ДАННЫЕ ДЕПЛОЯ
 
+> ⚠️ ВСЕ СЕКРЕТЫ хранятся в `credentials.txt` (НЕ в git!)
+
 | Сервис | Данные |
 |--------|--------|
-| **VPS SSH** | `ssh root@185.152.92.157` / `pXd1MmgS-n*MRF` |
-| **Docker Hub** | `motorsoft` / Token: `dckr_pat_MNVLjdIuDcs_...` |
-| **Bot Token** | `8366390064:AAGTJk76B1EpHDEFSEaKMznaGVvQoaS7KRA` |
+| **VPS SSH** | `ssh root@185.152.92.157` (ключ в credentials.txt) |
+| **Docker Hub** | `motorsoft` (токен в credentials.txt) |
+| **Bot Token** | в credentials.txt |
 | **PostgreSQL** | `motorsoft:motorsoft@postgres:5432/motorsoft` |
 
 ---
 
 ### Новый токен бота
 
-```
-BOT_TOKEN=8366390064:AAGTJk76B1EpHDEFSEaKMznaGVvQoaS7KRA
-```
+> Хранится в credentials.txt (НЕ в git!)
 
 ### Следующие шаги
 
@@ -738,9 +738,7 @@ docker-compose up -d
 **Тип:** Standard (быстрый доступ)
 **Доступ:** Private
 
-**Ключи (сохранены в credentials.txt):**
-- Access Key ID: `YCAJEvmMGOXHn1b0xNhq0VUYT`
-- Secret Access Key: `YCPtKQ_M4IZG_xZitEH_...` (скрыт)
+**Ключи:** хранятся в credentials.txt (НЕ в git!)
 
 **Загруженные тестовые файлы (5 штук):**
 - `BMW_[20240919_BMW_G07_50D_B57...]` — 7.5 МБ
@@ -782,10 +780,7 @@ url = s3.generate_presigned_url(
 - ✅ Безопасно (ссылку нельзя передать другу через день)
 - ✅ Максимально быстрое скачивание
 
-**Нужны ключи:**
-- ✅ FOLDER_ID: `ajed5u8if1re5dntstk5` (уже есть)
-- ✅ ACCESS_KEY_ID: `YCAJEvmMGOXHn1b0xNhq0VUYT`
-- ✅ SECRET_ACCESS_KEY: сохранён в credentials.txt
+**Ключи:** хранятся в credentials.txt (НЕ в git!)
 
 ---
 
@@ -4391,7 +4386,7 @@ bot:
 - ✅ ◀️ Назад — возврат в главное меню
 - ✅ 📸 **OCR Распознавание скриншотов** — NEW!
 
-**Токен бота:** `8366390064:AAEXfpwWKE2Wx-...`
+**Токен бота:** в credentials.txt
 **Админы:** `[404254766, 363999497]`
 
 ---
@@ -4460,7 +4455,7 @@ cd bot && source ../.venv/bin/activate && python3 main.py
 
 ```
 bot/
-├── .env              ✅ С ТОКЕНОМ (8366390064:...)
+├── .env              ✅ С ТОКЕНОМ (в credentials.txt)
 ├── config.py         ✅ ИСПРАВЛЕН (env_file = ".env")
 ├── Dockerfile        ✅ Готов
 ├── main.py           ✅ Готов
