@@ -154,6 +154,12 @@ export default function Footer() {
             >
               WhatsApp
             </a>
+            <Link
+              href="/admin"
+              className="text-gray-500 hover:text-amber-500 transition text-xs tracking-widest uppercase"
+            >
+              Вход
+            </Link>
           </div>
         </div>
       </div>
