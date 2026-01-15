@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 БЫСТРЫЙ СТАТУС (14.01.2026 — СЕССИЯ #2 — ФИНАЛ!)
+## 🚀 БЫСТРЫЙ СТАТУС (15.01.2026 — СЕССИЯ #3)
 
 | Компонент | Статус | Прогресс |
 |-----------|--------|----------|
@@ -17,19 +17,118 @@
 | **Поиск по скриншотам** | ✅ Работает | 100% |
 | **Поиск по .bin файлам** | ✅ **УМНЫЙ ПОИСК УЛУЧШЕН!** | 100% |
 | **Telegram интеграция сайта** | ✅ Все формы заменены | 100% |
-| **Admin Panel MVP** | ✅ **ГОТОВА + АДМИН СОЗДАН!** | 100% |
+| **Admin Panel MVP** | ✅ **ГОТОВА + ПАРОЛЬ: motorsoft2026** | 100% |
 | **Yandex Object Storage** | ✅ **S3 ПОДКЛЮЧЁН!** | 100% |
 | **Stage 1/2/3 выбор** | ✅ ДОБАВЛЕН | 100% |
 | **Deploy Backend (VPS)** | ✅ ЗАДЕПЛОЕН | 100% |
 | **Presigned URLs** | ✅ **РАБОТАЕТ (10 мин)!** | 100% |
 | **SSH без пароля** | ✅ **НАСТРОЕН!** | 100% |
 | **Vercel Environment** | ✅ **NEXT_PUBLIC_API_URL добавлен** | 100% |
-| **🆕 Staff Management** | ✅ **CRUD для сотрудников!** | 100% |
-| **🆕 Auto-Discounts** | ✅ **Loyalty система!** | 100% |
-| **🆕 Partner Program** | ✅ **is_partner, is_slave, coefficient!** | 100% |
-| **🆕 Activity Filter** | ✅ **active/inactive/dead!** | 100% |
-| **🆕 Drag-Drop Upload** | ✅ **Прогресс бар для каждого файла!** | 100% |
-| **🆕 API Routing Fix** | ✅ **Frontend → Backend работает!** | 100% |
+| **Staff Management** | ✅ **CRUD для сотрудников!** | 100% |
+| **Auto-Discounts** | ✅ **Loyalty система!** | 100% |
+| **Partner Program** | ✅ **is_partner, is_slave, coefficient!** | 100% |
+| **Activity Filter** | ✅ **active/inactive/dead!** | 100% |
+| **Drag-Drop Upload** | ✅ **Прогресс бар для каждого файла!** | 100% |
+| **API Routing Fix** | ✅ **Frontend → Backend работает!** | 100% |
+| **🆕 Nginx Proxy** | ✅ **Установлен на VPS!** | 100% |
+| **🆕 Frontend Restore** | ✅ **Код восстановлен из git!** | 100% |
+| **⏳ SSL Certificate** | ⏳ Ждёт DNS api.motorsoft.pro | 0% |
+
+---
+
+## 🎉 СЕССИЯ #3 — 15.01.2026
+
+### 1️⃣5️⃣ Admin Password Changed
+
+**Новый пароль админки:**
+- **URL:** https://motorsoft.pro/admin/login
+- **Логин:** `admin`
+- **Пароль:** `motorsoft2026`
+
+**SHA256 хеш:**
+```sql
+UPDATE admin_users 
+SET password_hash = '712a0612f0a6bd7a33c573d806e51d1367a06fec926414aa9526eae5e51f6fde'
+WHERE username = 'admin';
+```
+
+### 1️⃣6️⃣ Nginx Proxy Installed
+
+**Установлен Nginx на VPS:**
+- ✅ Проксирование localhost:8000 → порт 80
+- ✅ CORS headers добавлены
+- ✅ Готов для SSL (Certbot)
+
+**Конфиг:** `/etc/nginx/sites-available/default`
+```nginx
+server {
+    listen 80 default_server;
+    server_name _;
+    
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        
+        # CORS
+        add_header Access-Control-Allow-Origin "*" always;
+        add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+    }
+}
+```
+
+**Тестирование:**
+```bash
+curl -s http://185.152.92.157/api/v1/admin/login -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"motorsoft2026"}'
+# Возвращает JWT токен ✅
+```
+
+### 1️⃣7️⃣ Frontend Code Restored
+
+**Проблема:** Vercel не мог собрать — package.json и src/ пропали из git
+
+**Причина:** Репозиторий motorsoft-frontend содержал весь проект, но frontend/ был пустым submodule
+
+**Решение:**
+1. Восстановлен package.json из коммита `4b78f2c`
+2. Восстановлен src/ из коммита `4b78f2c`
+3. Создан tailwind.config.ts
+4. Билд проходит локально ✅
+5. Запушено в GitHub → Vercel деплоит
+
+**Файлы восстановлены:**
+- `package.json`
+- `next.config.ts`
+- `tsconfig.json`
+- `eslint.config.mjs`
+- `postcss.config.mjs`
+- `tailwind.config.ts`
+- `src/app/**` (все страницы)
+- `src/components/**` (Header, Footer)
+- `src/lib/**` (categories.ts)
+- `public/**` (SVG иконки)
+
+### 1️⃣8️⃣ DNS Requirements
+
+**Для полного HTTPS нужна A-запись:**
+
+| Тип | Имя | Значение |
+|-----|-----|----------|
+| **A** | `api` | `185.152.92.157` |
+
+**После добавления DNS:**
+```bash
+# На VPS выполнить:
+certbot --nginx -d api.motorsoft.pro
+```
+
+**Vercel Environment Variable:**
+```
+NEXT_PUBLIC_API_URL=https://api.motorsoft.pro/api/v1
+```
 
 ---
 
