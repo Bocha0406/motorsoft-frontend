@@ -115,7 +115,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://t.me/MotorSoftBot"
+                  href="https://t.me/motorsoft_bot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-amber-500 transition text-sm flex items-center gap-3 tracking-wide cursor-pointer"
@@ -139,7 +139,7 @@ export default function Footer() {
           </p>
           <div className="flex gap-6">
             <a
-              href="https://t.me/MotorSoftBot"
+              href="https://t.me/motorsoft_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-amber-500 transition text-xs tracking-widest uppercase cursor-pointer"

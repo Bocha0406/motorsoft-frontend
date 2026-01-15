@@ -67,7 +67,7 @@ export default function HomePage() {
             {/* START ENGINE Button - Sports Car Style */}
             <div className="flex flex-col items-center gap-8">
               <a
-                href="https://t.me/MotorSoftBot"
+                href="https://t.me/motorsoft_bot"
                 target="_blank"
                 className="btn-engine group"
               >
@@ -183,7 +183,7 @@ export default function HomePage() {
             {requestCategories.map((cat) => (
               <a
                 key={cat.id}
-                href="https://t.me/MotorSoftBot"
+                href="https://t.me/motorsoft_bot"
                 target="_blank"
                 className="group card text-center"
               >
@@ -248,7 +248,7 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 italic text-center">
                   💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
                 </p>
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30 hover:border-blue-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30 hover:border-blue-500/50">
                   Заказать
                 </a>
               </div>
@@ -277,7 +277,7 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 italic text-center">
                   💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
                 </p>
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 border border-orange-500/30 hover:border-orange-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 border border-orange-500/30 hover:border-orange-500/50">
                   Заказать
                 </a>
               </div>
@@ -303,7 +303,7 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 italic text-center">
                   💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
                 </p>
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50">
                   Заказать
                 </a>
               </div>
@@ -329,7 +329,7 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 italic text-center">
                   💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
                 </p>
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 border border-teal-500/30 hover:border-teal-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 border border-teal-500/30 hover:border-teal-500/50">
                   Заказать
                 </a>
               </div>
@@ -358,7 +358,7 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 italic text-center">
                   💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
                 </p>
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50">
                   Заказать
                 </a>
               </div>
@@ -384,7 +384,7 @@ export default function HomePage() {
                 <p className="text-xs text-gray-500 italic text-center">
                   💡 Для максимального эффекта рекомендуется делать совместно с тюнингом КПП
                 </p>
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30 hover:border-green-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30 hover:border-green-500/50">
                   Заказать
                 </a>
               </div>
@@ -438,7 +438,7 @@ export default function HomePage() {
                 </li>
               </ul>
               <div className="mt-6 pt-6 border-t border-white/5">
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
                   Узнать подробнее
                 </a>
               </div>
@@ -468,7 +468,7 @@ export default function HomePage() {
                 </li>
               </ul>
               <div className="mt-6 pt-6 border-t border-white/5">
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
                   Узнать подробнее
                 </a>
               </div>
@@ -498,7 +498,7 @@ export default function HomePage() {
                 </li>
               </ul>
               <div className="mt-6 pt-6 border-t border-white/5">
-                <a href="https://t.me/MotorSoftBot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
+                <a href="https://t.me/motorsoft_bot" target="_blank" className="block w-full text-center py-3 rounded-lg font-bold tracking-widest uppercase text-sm transition-all bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50">
                   Узнать подробнее
                 </a>
               </div>
@@ -726,7 +726,7 @@ export default function HomePage() {
 
           <div className="text-center mt-16 relative z-10">
             <a
-              href="https://t.me/MotorSoftBot"
+              href="https://t.me/motorsoft_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-cyan-500/10 border border-cyan-500/30 hover:border-cyan-500/60 text-cyan-400 hover:text-cyan-300 px-8 py-4 rounded-lg font-bold tracking-widest uppercase transition-all hover:shadow-[0_0_30px_rgba(0,195,255,0.2)] cursor-pointer z-20"
@@ -904,7 +904,7 @@ export default function HomePage() {
           </p>
           
           <a
-            href="https://t.me/MotorSoftBot"
+            href="https://t.me/motorsoft_bot"
             target="_blank"
             className="btn-gradient inline-flex items-center gap-4 text-xl px-12 py-6 shadow-2xl shadow-amber-500/40 hover:shadow-amber-500/60 transition-all hover:scale-105"
           >

@@ -34,7 +34,7 @@ export default function ContactsPage() {
             <div className="space-y-6">
               {/* Telegram */}
               <a
-                href="https://t.me/MotorSoftBot"
+                href="https://t.me/motorsoft_bot"
                 target="_blank"
                 className="card flex items-center gap-4 group"
               >

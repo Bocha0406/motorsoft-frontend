@@ -85,7 +85,7 @@ export default function Header() {
               💬 TELEGRAM
             </TelegramButton>
             <a
-              href="https://t.me/MotorSoftBot"
+              href="https://t.me/motorsoft_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient inline-flex items-center gap-2 text-sm px-6 py-2.5 cursor-pointer"
@@ -154,7 +154,7 @@ export default function Header() {
                   💬 Открыть Telegram бота
                 </TelegramButton>
                 <a
-                  href="https://t.me/MotorSoftBot"
+                  href="https://t.me/motorsoft_bot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-gradient text-center py-3 text-sm tracking-widest uppercase font-bold cursor-pointer"
