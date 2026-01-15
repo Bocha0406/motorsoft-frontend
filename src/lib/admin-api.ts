@@ -2,7 +2,7 @@
  * Admin API client for MotorSoft admin panel
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.motorsoft.pro/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://185.152.92.157/api/v1';
 
 // === AUTH ===
 
