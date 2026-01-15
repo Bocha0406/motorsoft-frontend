@@ -8,10 +8,10 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   
   // Для админки — не показываем Header/Footer
-  const isAdmin = pathname?.startsWith('/admin');
+  const isAdmin = pathname ? pathname.startsWith('/admin') : false;
   
   if (isAdmin) {
-    return <>{children}</>;
+    return <div className="min-h-screen">{children}</div>;
   }
   
   // Для публичного сайта — показываем Header/Footer
