@@ -27,11 +27,8 @@ export default function Header() {
       <div className={`border-b border-white/5 transition-all duration-300 ${isScrolled ? 'h-0 overflow-hidden opacity-0' : 'py-2 opacity-100'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center text-xs tracking-wide">
           <div className="flex items-center gap-6 text-gray-400">
-            <a href="tel:+79000000000" className="hover:text-amber-500 transition">
-              +7 (900) 000-00-00
-            </a>
-            <a href="mailto:info@motorsoft.pro" className="hover:text-amber-500 transition">
-              info@motorsoft.pro
+            <a href="mailto:motorsoft@ya.ru" className="hover:text-amber-500 transition">
+              motorsoft@ya.ru
             </a>
           </div>
           <div className="flex items-center gap-2">
