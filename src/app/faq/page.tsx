@@ -60,7 +60,7 @@ const faqItems = [
 
 export default function FAQPage() {
   return (
-    <div className="py-12">
+    <div className="pt-40 pb-12">
       <div className="container mx-auto px-4">
         {/* Breadcrumbs */}
         <nav className="text-sm mb-8">
@@ -82,7 +82,7 @@ export default function FAQPage() {
           {faqItems.map((item, i) => (
             <details
               key={i}
-              className="group bg-gray-800 rounded-xl overflow-hidden"
+              className="group card overflow-hidden"
             >
               <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                 <h3 className="font-semibold pr-4">{item.question}</h3>
@@ -96,7 +96,7 @@ export default function FAQPage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 bg-gray-800 rounded-2xl p-8 text-center max-w-3xl mx-auto">
+        <div className="mt-16 card text-center max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">Остались вопросы?</h2>
           <p className="text-gray-400 mb-6">
             Напишите нам в Telegram — ответим в течение 5 минут
@@ -104,7 +104,7 @@ export default function FAQPage() {
           <a
             href="https://t.me/MotorSoftBot"
             target="_blank"
-            className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-semibold text-lg transition inline-flex items-center gap-2"
+            className="btn-gradient inline-flex items-center gap-2 text-lg"
           >
             🤖 Задать вопрос в Telegram
           </a>

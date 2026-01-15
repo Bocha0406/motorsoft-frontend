@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f0f0f;
+  --background: #050505;
   --foreground: #ffffff;
-  --card: #1a1a1a;
-  --card-hover: #222222;
+  --card: rgba(15, 15, 15, 0.8);
+  --card-border: rgba(255, 255, 255, 0.08);
   --primary: #f59e0b;
-  --primary-hover: #d97706;
+  --primary-glow: rgba(245, 158, 11, 0.4);
   --accent: #fbbf24;
-  --muted: #737373;
+  --muted: #525252;
 }
 
 * {
@@ -20,76 +20,599 @@ body {
   color: var(--foreground);
   font-size: 16px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Улучшенная читаемость */
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY — Premium Extended Style
+   ═══════════════════════════════════════════════════════════ */
+
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 2.25rem; }
-h3 { font-size: 1.5rem; }
+h1 { 
+  font-size: 4rem; 
+  letter-spacing: 0.1em;
+}
+h2 { 
+  font-size: 2.5rem; 
+  letter-spacing: 0.08em;
+}
+h3 { 
+  font-size: 1.5rem; 
+  letter-spacing: 0.06em;
+}
 
 @media (max-width: 768px) {
-  h1 { font-size: 2rem; }
+  h1 { font-size: 2.5rem; }
   h2 { font-size: 1.75rem; }
   h3 { font-size: 1.25rem; }
 }
 
 p {
   font-size: 1.125rem;
-  color: #d1d5db;
+  color: #a3a3a3;
+  letter-spacing: 0.02em;
 }
 
-/* Кнопки */
+/* ═══════════════════════════════════════════════════════════
+   PREMIUM BUTTONS — Start Engine Style
+   ═══════════════════════════════════════════════════════════ */
+
 .btn-primary {
-  background: #f59e0b;
-  color: #000000;
-  padding: 0.875rem 2rem;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  color: #f59e0b;
+  padding: 1rem 2.5rem;
   border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.2s;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
+  gap: 0.75rem;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  overflow: hidden;
+}
+
+/* Gradient border */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  padding: 1px;
+  background: linear-gradient(135deg, #f59e0b, #d97706, #f59e0b);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Inner glow */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 0.4rem;
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .btn-primary:hover {
-  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 30px rgba(245, 158, 11, 0.3),
+    0 0 60px rgba(245, 158, 11, 0.15),
+    inset 0 0 20px rgba(245, 158, 11, 0.1);
 }
 
-/* Карточки */
-.card {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+.btn-primary:hover::before {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+  animation: borderGlow 2s linear infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Secondary button */
+.btn-secondary {
+  position: relative;
+  background: transparent;
+  color: #ffffff;
+  padding: 1rem 2.5rem;
   border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLASSMORPHISM CARDS — Carbon Fiber + Chrome Edge
+   ═══════════════════════════════════════════════════════════ */
+
+.card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
   padding: 2rem;
-  transition: all 0.2s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* Chrome edge effect */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Subtle noise texture */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
 }
 
 .card:hover {
-  border-color: #f59e0b;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(245, 158, 11, 0.2);
 }
 
-/* Секции */
+.card:hover::before {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(245, 158, 11, 0.3) 100%
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SPOTLIGHT EFFECTS — Cinematic Lighting
+   ═══════════════════════════════════════════════════════════ */
+
+.spotlight {
+  position: relative;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center top,
+    rgba(245, 158, 11, 0.15) 0%,
+    rgba(245, 158, 11, 0.05) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GRADIENT TEXT — Premium Gold
+   ═══════════════════════════════════════════════════════════ */
+
+.gradient-text {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLOW EFFECTS
+   ═══════════════════════════════════════════════════════════ */
+
+.glow {
+  box-shadow: 
+    0 0 20px rgba(245, 158, 11, 0.2),
+    0 0 40px rgba(245, 158, 11, 0.1);
+}
+
+.text-glow {
+  text-shadow: 
+    0 0 10px rgba(245, 158, 11, 0.5),
+    0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAT CARDS — Dashboard Style
+   ═══════════════════════════════════════════════════════════ */
+
+.stat-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.5), transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════ */
+
 section {
   padding: 5rem 0;
+  position: relative;
 }
 
-/* Контейнер */
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* Градиентный текст */
-.gradient-text {
-  color: #f59e0b;
+/* Section divider */
+.section-dark {
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.5) 0%, rgba(5, 5, 5, 0.8) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   START ENGINE BUTTON — Sports Car Style
+   ═══════════════════════════════════════════════════════════ */
+
+.btn-engine {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 3px solid rgba(220, 38, 38, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 0 30px rgba(220, 38, 38, 0.2),
+    inset 0 -5px 20px rgba(0, 0, 0, 0.5),
+    inset 0 5px 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Outer ring - pulsing */
+.btn-engine::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 2px solid rgba(220, 38, 38, 0.4);
+  animation: enginePulse 2s ease-in-out infinite;
+}
+
+/* Inner glow ring */
+.btn-engine::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.2);
+}
+
+.btn-engine:hover {
+  border-color: rgba(220, 38, 38, 0.8);
+  box-shadow: 
+    0 0 60px rgba(220, 38, 38, 0.5),
+    0 0 120px rgba(220, 38, 38, 0.2),
+    inset 0 -5px 20px rgba(0, 0, 0, 0.5),
+    inset 0 5px 10px rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.btn-engine:hover::before {
+  border-color: rgba(220, 38, 38, 0.8);
+  animation: enginePulseIntense 0.5s ease-in-out infinite;
+}
+
+.btn-engine-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.btn-engine-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #dc2626;
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+@keyframes enginePulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.3; }
+}
+
+@keyframes enginePulseIntense {
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px rgba(220, 38, 38, 0.5); }
+  50% { transform: scale(1.15); opacity: 0.8; box-shadow: 0 0 40px rgba(220, 38, 38, 0.8); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PORTFOLIO CARDS — Need For Speed Garage
+   ═══════════════════════════════════════════════════════════ */
+
+.portfolio-card {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.portfolio-card img {
+  filter: brightness(0.3) saturate(0.7);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 0%,
+    transparent 0%,
+    transparent 100%
+  );
+  z-index: 1;
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.portfolio-card:hover img {
+  filter: brightness(0.9) saturate(1.2) contrast(1.1);
+  transform: scale(1.1);
+}
+
+/* Spotlight effect on hover */
+.portfolio-card:hover::before {
+  background: radial-gradient(
+    ellipse 100% 100% at 50% -20%,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    transparent 60%
+  );
+}
+
+/* Neon HP text */
+.neon-text {
+  color: #00ff88;
+  text-shadow: 
+    0 0 5px #00ff88,
+    0 0 10px #00ff88,
+    0 0 20px #00ff88,
+    0 0 40px #00ff44;
+  animation: neonFlicker 3s ease-in-out infinite;
+}
+
+@keyframes neonFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   IRON MAN TECH STEPS — Jarvis UI
+   ═══════════════════════════════════════════════════════════ */
+
+.tech-step {
+  position: relative;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(0, 195, 255, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.tech-step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 195, 255, 0.8), transparent);
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+.tech-step::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00c3ff;
+  box-shadow: 0 0 10px #00c3ff;
+  animation: techBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes techBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.tech-icon {
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(0, 195, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto 1rem;
+}
+
+.tech-icon::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px dashed rgba(0, 195, 255, 0.3);
+  border-radius: 50%;
+  animation: techRotate 10s linear infinite;
+}
+
+@keyframes techRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Progress line between steps */
+.tech-progress-line {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 195, 255, 0.5), rgba(0, 195, 255, 0.1));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAGE CARDS — Colored Glassmorphism
+   ═══════════════════════════════════════════════════════════ */
+
+.stage-card {
+  position: relative;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(20px);
+  border-radius: 2rem;
+  padding: 2rem;
+  overflow: visible;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stage-card:hover {
+  border-color: var(--stage-border-color, rgba(255, 255, 255, 0.15));
+}
+
+/* Stage 1 - Calm Blue */
+.stage-1 {
+  --stage-border-color: rgba(59, 130, 246, 0.4);
+}
+
+.stage-1:hover {
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Stage 2 - Aggressive Red/Orange */
+.stage-2 {
+  --stage-border-color: rgba(249, 115, 22, 0.4);
+}
+
+.stage-2:hover {
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.2);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+/* Eco - Green */
+.stage-eco {
+  --stage-border-color: rgba(34, 197, 94, 0.4);
+}
+
+.stage-eco:hover {
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+/* Stage badge */
+.stage-badge {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.stage-badge-1 {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.stage-badge-2 {
+  background: rgba(249, 115, 22, 0.2);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.stage-badge-eco {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }

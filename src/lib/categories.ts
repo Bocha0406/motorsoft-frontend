@@ -38,24 +38,33 @@ export const mainCategories: Category[] = [
   },
 ];
 
-// Категории по запросу
+// Категории экстремального транспорта (по запросу)
 export const requestCategories: Category[] = [
-  {
-    id: "trucks",
-    name: "Грузовики",
-    slug: "trucks",
-    icon: "🚛",
-    description: "Тягачи, фуры, спецтранспорт",
-    image: "/images/categories/trucks.jpg",
-    isOnRequest: true,
-  },
   {
     id: "watercraft",
     name: "Гидроциклы",
     slug: "watercraft",
     icon: "🚤",
-    description: "Гидроциклы, катера, лодочные моторы",
+    description: "Тюнинг соревновательного уровня для спортсменов",
     image: "/images/categories/watercraft.jpg",
+    isOnRequest: true,
+  },
+  {
+    id: "buggy",
+    name: "Баги",
+    slug: "buggy",
+    icon: "🏎️",
+    description: "Экстремальная подготовка для багги",
+    image: "/images/categories/buggy.jpg",
+    isOnRequest: true,
+  },
+  {
+    id: "atv",
+    name: "Квадроциклы",
+    slug: "atv",
+    icon: "🏍️",
+    description: "ATV/UTV для спорта и экстремальных условий",
+    image: "/images/categories/atv.jpg",
     isOnRequest: true,
   },
   {
@@ -63,17 +72,8 @@ export const requestCategories: Category[] = [
     name: "Снегоходы",
     slug: "snowmobile",
     icon: "🛷",
-    description: "Снегоходы всех производителей",
+    description: "Подготовка для гонок и экстремального катания",
     image: "/images/categories/snowmobile.jpg",
-    isOnRequest: true,
-  },
-  {
-    id: "special",
-    name: "Спецтехника",
-    slug: "special",
-    icon: "🚜",
-    description: "Тракторы, экскаваторы, погрузчики",
-    image: "/images/categories/special.jpg",
     isOnRequest: true,
   },
 ];
