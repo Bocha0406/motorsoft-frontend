@@ -23,7 +23,9 @@ from keyboards.upload import (
     get_confirm_keyboard, 
     get_payment_keyboard,
     get_stage_selection_keyboard,
-    get_stage_confirm_keyboard
+    get_stage_confirm_keyboard,
+    get_options_keyboard,
+    get_all_options_keyboard
 )
 from keyboards.main import get_back_keyboard
 from services.api import api_client
@@ -615,6 +617,320 @@ async def confirm_stage_purchase(callback: CallbackQuery, state: FSMContext):
                 file,
                 caption="📦 <b>Ваш модифицированный файл</b>\n\nСпасибо за покупку!"
             )
+    
+    await state.clear()
+    await callback.answer("✅ Готово!")
+
+
+# =============================================================================
+# 🔧 ADDITIONAL OPTIONS HANDLERS (Pop&Bang, Launch Control, etc.)
+# =============================================================================
+
+@router.callback_query(F.data.startswith("add_options:"))
+async def add_options(callback: CallbackQuery, state: FSMContext):
+    """Show additional tuning options selection"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    
+    data = await state.get_data()
+    selected_options = data.get("selected_options", set())
+    
+    text = """
+🔧 <b>Дополнительные опции</b>
+
+Выберите необходимые модификации.
+Отмеченные опции будут включены в заказ.
+
+<i>Нажмите на опцию для выбора/отмены</i>
+"""
+    
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_options_keyboard(firmware_id, stage, selected_options)
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("toggle_option:"))
+async def toggle_option(callback: CallbackQuery, state: FSMContext):
+    """Toggle a tuning option on/off"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    option_code = parts[3]
+    
+    data = await state.get_data()
+    selected_options = set(data.get("selected_options", []))
+    current_category = data.get("options_category", "eco")
+    
+    # Toggle option
+    if option_code in selected_options:
+        selected_options.discard(option_code)
+    else:
+        selected_options.add(option_code)
+    
+    # Save to state
+    await state.update_data(selected_options=list(selected_options))
+    
+    # Check if we're in "all options" view or basic view
+    if data.get("in_all_options"):
+        await callback.message.edit_reply_markup(
+            reply_markup=get_all_options_keyboard(firmware_id, stage, current_category, selected_options)
+        )
+    else:
+        await callback.message.edit_reply_markup(
+            reply_markup=get_options_keyboard(firmware_id, stage, selected_options)
+        )
+    
+    # Show feedback
+    action = "добавлена" if option_code in selected_options else "убрана"
+    await callback.answer(f"Опция {action}")
+
+
+@router.callback_query(F.data.startswith("all_options:"))
+async def show_all_options(callback: CallbackQuery, state: FSMContext):
+    """Show full options list with categories"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    
+    data = await state.get_data()
+    selected_options = set(data.get("selected_options", []))
+    
+    # Save that we're in "all options" view
+    await state.update_data(in_all_options=True, options_category="eco")
+    
+    text = """
+📋 <b>Все опции тюнинга</b>
+
+Выберите категорию и нужные опции.
+"""
+    
+    await callback.message.edit_text(
+        text,
+        reply_markup=get_all_options_keyboard(firmware_id, stage, "eco", selected_options)
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("options_cat:"))
+async def change_options_category(callback: CallbackQuery, state: FSMContext):
+    """Switch between option categories"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    category = parts[3]  # "eco", "performance", "comfort"
+    
+    data = await state.get_data()
+    selected_options = set(data.get("selected_options", []))
+    
+    await state.update_data(options_category=category)
+    
+    await callback.message.edit_reply_markup(
+        reply_markup=get_all_options_keyboard(firmware_id, stage, category, selected_options)
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("options_done:"))
+async def options_done(callback: CallbackQuery, state: FSMContext):
+    """Finish options selection and show final confirmation"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    
+    data = await state.get_data()
+    firmware = data.get("firmware", {})
+    selected_options = set(data.get("selected_options", []))
+    selected_price = data.get("selected_price", 50)
+    
+    # Clear "all options" flag
+    await state.update_data(in_all_options=False)
+    
+    # Build options text
+    options_text = ""
+    if selected_options:
+        options_list = []
+        option_names = {
+            "dpf_off": "🔥 DPF OFF",
+            "egr_off": "💨 EGR OFF", 
+            "adblue_off": "💧 AdBlue OFF",
+            "catalyst_off": "⚗️ CAT OFF",
+            "o2_off": "📡 O2 OFF",
+            "evap_off": "♻️ EVAP OFF",
+            "swirl_off": "🌀 Swirl Flaps OFF",
+            "pop_bang": "💥 Pop & Bang",
+            "launch_control": "🚀 Launch Control",
+            "burble_map": "🔊 Burble Map",
+            "speed_limiter_off": "⚡ Speed Limiter OFF",
+            "vmax_off": "🏎️ Vmax OFF",
+            "flat_foot_shift": "👟 Flat Foot Shift",
+            "start_stop_off": "🔑 Start/Stop OFF",
+            "hot_start_fix": "🌡️ Hot Start Fix",
+            "dtc_off": "🚫 DTC OFF",
+            "immo_off": "🔓 IMMO OFF",
+            "readiness_fix": "✅ Readiness Fix",
+        }
+        for opt in selected_options:
+            options_list.append(option_names.get(opt, opt))
+        options_text = "\n🔧 <b>Доп. опции:</b>\n" + "\n".join(f"  • {o}" for o in options_list)
+    
+    # Find stage name
+    variants = data.get("variants", [])
+    stage_name = stage
+    for v in variants:
+        if v["stage"] == stage:
+            stage_name = v["stage_name"]
+            break
+    
+    text = f"""
+🎯 <b>Подтверждение заказа</b>
+
+🚗 <b>Авто:</b> {firmware.get('brand', '')} {firmware.get('series', '')}
+🔧 <b>ЭБУ:</b> {firmware.get('ecu_brand', '')}
+
+📈 <b>Тюнинг:</b> {stage_name}
+{options_text}
+
+💰 <b>Цена:</b> {selected_price:.0f} ₽
+
+Подтвердить покупку?
+"""
+    
+    # Save options to state for order creation
+    await state.update_data(final_options=list(selected_options))
+    
+    from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+    
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text=f"✅ Купить за {selected_price:.0f}₽", 
+                callback_data=f"confirm_stage_options:{firmware_id}:{stage}"
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text="🔧 Изменить опции", 
+                callback_data=f"add_options:{firmware_id}:{stage}"
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text="◀️ Другой Stage", 
+                callback_data=f"back_to_stages:{firmware_id}"
+            ),
+            InlineKeyboardButton(
+                text="❌ Отмена", 
+                callback_data="cancel_purchase"
+            ),
+        ],
+    ])
+    
+    await callback.message.edit_text(text, reply_markup=keyboard)
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("confirm_stage_options:"))
+async def confirm_stage_with_options(callback: CallbackQuery, state: FSMContext):
+    """Confirm purchase with Stage + additional options"""
+    parts = callback.data.split(":")
+    firmware_id = int(parts[1])
+    stage = parts[2]
+    
+    data = await state.get_data()
+    firmware = data.get("firmware", {})
+    original_filename = data.get("original_filename")
+    original_file_path = data.get("original_file_path")
+    final_options = data.get("final_options", [])
+    
+    # Create order with Stage AND options
+    order_result = await api_client.create_order(
+        telegram_id=callback.from_user.id,
+        firmware_id=firmware_id,
+        original_filename=original_filename,
+        original_file_path=original_file_path,
+        stage=stage,
+        options=final_options  # NEW: pass options
+    )
+    
+    if order_result.get("error"):
+        await callback.message.edit_text(
+            f"❌ <b>Ошибка создания заказа:</b>\n{order_result['error']}"
+        )
+        await callback.answer("❌ Ошибка")
+        return
+    
+    order_id = order_result.get("order_id")
+    price = order_result.get("price", 50)
+    stage_name = order_result.get("stage_name", stage)
+    
+    # Process purchase
+    result = await api_client.process_purchase(
+        order_id=order_id,
+        user_id=callback.from_user.id
+    )
+    
+    if result.get("error"):
+        error_msg = result["error"]
+        if "balance" in error_msg.lower() or "средств" in error_msg.lower():
+            await callback.message.edit_text(
+                f"❌ <b>Недостаточно средств на балансе</b>\n\n"
+                f"{error_msg}\n\n"
+                f"💳 Пополни баланс и попробуй снова.",
+                reply_markup=get_payment_keyboard()
+            )
+        else:
+            await callback.message.edit_text(
+                f"❌ <b>Ошибка:</b> {error_msg}"
+            )
+        await callback.answer("❌ Ошибка")
+        return
+    
+    # Build options text for confirmation
+    options_text = ""
+    if final_options:
+        options_text = "\n🔧 <b>Опции:</b> " + ", ".join(final_options)
+    
+    # Success!
+    loyalty_msg = ""
+    if result.get("loyalty_upgrade"):
+        upgrade = result["loyalty_upgrade"]
+        loyalty_msg = (
+            f"\n\n🎉 <b>ПОЗДРАВЛЯЕМ!</b>\n"
+            f"Вы достигли нового уровня: <b>{upgrade['new_level'].upper()}</b>\n"
+            f"🏆 Теперь ваша скидка: <b>{upgrade['new_discount']}%</b> на все покупки!"
+        )
+    
+    discount_info = ""
+    if result.get("current_discount", 0) > 0:
+        discount_info = f"\n🏷️ <b>Ваша скидка:</b> {result['current_discount']}%"
+    
+    if result.get("download_url"):
+        await callback.message.edit_text(
+            f"✅ <b>Покупка успешна!</b>\n\n"
+            f"🎯 <b>Stage:</b> {stage_name}"
+            f"{options_text}\n"
+            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
+            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽"
+            f"{discount_info}\n\n"
+            f"📥 <b>Ссылка на скачивание (действует 10 минут):</b>\n"
+            f"{result['download_url']}"
+            f"{loyalty_msg}"
+        )
+    else:
+        await callback.message.edit_text(
+            f"✅ <b>Заказ оформлен!</b>\n\n"
+            f"🎯 <b>Stage:</b> {stage_name}"
+            f"{options_text}\n"
+            f"💰 <b>Списано:</b> {result.get('price', 0):.0f} ₽\n"
+            f"💳 <b>Остаток:</b> {result.get('new_balance', 0):.0f} ₽"
+            f"{discount_info}\n\n"
+            f"⏳ <b>Файл готовится</b>\n"
+            f"Наш инженер подготовит прошивку и отправит вам."
+            f"{loyalty_msg}"
+        )
     
     await state.clear()
     await callback.answer("✅ Готово!")

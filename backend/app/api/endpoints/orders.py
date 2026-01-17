@@ -49,6 +49,7 @@ class CreateOrderRequest(BaseModel):
     original_filename: Optional[str] = None
     original_file_path: Optional[str] = None
     stage: Optional[str] = None  # "stage1", "stage2", "stage3"
+    options: Optional[list] = None  # ["dpf_off", "pop_bang", "launch_control", ...]
 
 
 @router.post("/create")
@@ -57,8 +58,8 @@ async def create_order(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Create a new order for firmware purchase with Stage selection.
-    Called when user selects Stage 1/2/3 variant.
+    Create a new order for firmware purchase with Stage selection and tuning options.
+    Called when user selects Stage 1/2/3 variant and additional options.
     """
     # Get user
     result = await db.execute(

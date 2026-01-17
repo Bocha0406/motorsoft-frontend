@@ -72,6 +72,7 @@ class APIClient:
         file_path: str,
         filename: str,
         user_id: int,
+        is_guest: bool = False
     ) -> Dict:
         """
         Upload firmware file and search in database.
@@ -79,10 +80,14 @@ class APIClient:
         """
         with open(file_path, "rb") as f:
             files = {"file": (filename, f, "application/octet-stream")}
+            params = {}
+            if is_guest:
+                params["is_guest"] = "true"
             return await self._request(
                 "POST",
                 "/api/firmware/search",
-                files=files
+                files=files,
+                params=params if params else None
             )
     
     async def search_firmware(self, software_id: str) -> Dict:
@@ -123,9 +128,10 @@ class APIClient:
         firmware_id: int,
         original_filename: str = None,
         original_file_path: str = None,
-        stage: str = None  # "stage1", "stage2", "stage3"
+        stage: str = None,  # "stage1", "stage2", "stage3"
+        options: list = None  # ["dpf_off", "pop_bang", ...]
     ) -> Dict:
-        """Create a new order for purchase with optional Stage"""
+        """Create a new order for purchase with optional Stage and tuning options"""
         return await self._request(
             "POST",
             "/orders/create",
@@ -134,7 +140,8 @@ class APIClient:
                 "firmware_id": firmware_id,
                 "original_filename": original_filename,
                 "original_file_path": original_file_path,
-                "stage": stage
+                "stage": stage,
+                "options": options or []
             }
         )
     
