@@ -124,7 +124,7 @@ export default function AdminUploadPage() {
             multiple
             onChange={handleFileSelect}
             className="hidden"
-            accept=".ols,.bin,.ori,.mod"
+            accept=".bin,.hex"
           />
         </label>
       </div>
